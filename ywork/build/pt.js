@@ -18,6 +18,7 @@ module.exports = function(app, data, dir){
 
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     console.log('Req "'+data.suburl+'" -> NEW CONNECTION -> IP:'+ip);
+    console.log('Req "'+data.suburl+'" -> NEW CONNECTION -> HOST:'+req.headers.host);
     res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
     res.write(
 

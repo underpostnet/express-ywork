@@ -1,12 +1,14 @@
 module.exports = function(app, dir, port){
 
-	app.use(function (req,res,next){
+	//app.use(function (req,res,next){
 
-		//res.status(404).type('txt').send('Not found');
+	//	console.log('test');
 
-		next();
+	//	next();
 
-	});
+	//	res.status(400).json({ errors: errors.array() }); 
+
+	//});
 
 	app.get(('/pathfinding-browser.min.js'), function(req, res){
 
