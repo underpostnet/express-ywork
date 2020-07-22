@@ -18,11 +18,11 @@ module.exports = function(app, data, dir){
   for(var i=0;i<data.modules.length;i++){
 
     meta_mod = meta_mod + `<link rel='stylesheet' type='text/css' href='/modules/`+data.modules[i]+`/style.css'>
-    
-      `;
+
+    `;
     meta_mod = meta_mod + `<script type='text/javascript' src='/modules/`+data.modules[i]+`/main.js'></script>
-    
-      `;
+
+    `;
 
     //``
 
@@ -47,6 +47,10 @@ module.exports = function(app, data, dir){
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     console.log('Req "'+data.suburl+'" -> NEW CONNECTION -> IP:'+ip);
     console.log('Req "'+data.suburl+'" -> NEW CONNECTION -> HOST:'+req.headers.host);
+
+    //var idioma = req.acceptsLanguages( 'es', 'en');
+    //if(!idioma) idioma = 'en';
+
     res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
     res.write(
 

@@ -59,6 +59,12 @@ function fadeIn(el, display){
 	})();
 };
 
+function l(size){
+
+	return size.length;
+
+}
+
 document.oncontextmenu = function(){ return false; }
 
 document.ondragstart = function(){ return false; }
