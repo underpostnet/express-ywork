@@ -14,6 +14,34 @@ module.exports = function(app, data, dir){
 
   }
 
+  var meta_mod = '';
+  for(var i=0;i<data.modules.length;i++){
+
+    meta_mod = meta_mod + `<link rel='stylesheet' type='text/css' href='/modules/`+data.modules[i]+`/style.css'>
+    
+      `;
+    meta_mod = meta_mod + `<script type='text/javascript' src='/modules/`+data.modules[i]+`/main.js'></script>
+    
+      `;
+
+    //``
+
+    const path_mod = data.modules[i];
+
+    app.get(("/modules/"+path_mod+"/style.css"), function(req, res) {
+
+      res.sendFile(dir.get("/modules/"+path_mod+"/style.css"));
+
+    });
+
+    app.get(("/modules/"+path_mod+"/main.js"), function(req, res) {
+
+      res.sendFile(dir.get("/modules/"+path_mod+"/main.js"));
+
+    });
+
+  }
+
   app.get(data.suburl, function(req, res) {
 
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -91,6 +119,8 @@ module.exports = function(app, data, dir){
 
       <script type='text/javascript' src='/pathfinding-browser.min.js'></script>
 
+      `+meta_mod+`
+
       </head>
 
       <body>
@@ -99,9 +129,7 @@ module.exports = function(app, data, dir){
 
       `+strH2+`
 
-      <link rel='stylesheet' type='text/css' href='/`+data.pathname+`/style.css'>
-
-      <script type='text/javascript' src='/`+data.pathname+`/main.js'></script>
+      <script type='text/javascript' src='/path/`+data.pathname+`.js'></script>
 
       </body>
 
@@ -127,15 +155,9 @@ module.exports = function(app, data, dir){
 
   });
 
-  app.get(('/'+data.pathname+'/main.js'), function(req, res) {
+  app.get(('/path/'+data.pathname+'.js'), function(req, res) {
 
-    res.sendFile(dir.get('/path/'+data.pathname+'/main.js'));
-
-  });
-
-  app.get(('/'+data.pathname+'/style.css'), function(req, res) {
-
-    res.sendFile(dir.get('/path/'+data.pathname+'/style.css'));
+    res.sendFile(dir.get('/path/'+data.pathname+'.js'));
 
   });
 
