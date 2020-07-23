@@ -45,11 +45,12 @@ module.exports = function(app, data, dir){
   app.get(data.suburl, function(req, res) {
 
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    console.log('Req "'+data.suburl+'" -> NEW CONNECTION -> IP:'+ip);
-    console.log('Req "'+data.suburl+'" -> NEW CONNECTION -> HOST:'+req.headers.host);
 
-    //var idioma = req.acceptsLanguages( 'es', 'en');
-    //if(!idioma) idioma = 'en';
+    console.log('');
+    console.log('----- REQ "'+data.suburl+'" NEW CONNECTION -----');
+    console.log('IP:'+ip);
+    console.log('HOST:'+req.headers.host);
+    console.log('LANG:'+req.acceptsLanguages());
 
     res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
     res.write(
@@ -62,6 +63,12 @@ module.exports = function(app, data, dir){
       <head>
 
       <title>`+data.title+`</title>
+
+      <script type="application/ld+json">
+
+      `+data.microdata+`
+
+      </script>
 
       <meta name='title' content='`+data.title+`' />
       <meta name='description' content='`+data.description+`' />
