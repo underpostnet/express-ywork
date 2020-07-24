@@ -42,6 +42,21 @@ module.exports = function(app, data, dir){
 
   }
 
+  var microdata = '';
+  for(var i=0;i<data.microdata.length;i++){
+
+    microdata = microdata + `
+
+    <script type="application/ld+json">
+
+    `+data.microdata[i]+`
+
+    </script>
+
+    `;
+
+  }
+
   app.get(data.suburl, function(req, res) {
 
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -70,14 +85,11 @@ module.exports = function(app, data, dir){
 
         <title>`+data.title+`</title>
 
-        <script type="application/ld+json">
+        `+microdata+`
 
-        `+data.microdata+`
-
-        </script>
-
-        <meta name='title' content='`+data.title+`' />
-        <meta name='description' content='`+data.description+`' />
+        <meta name ='title' content='`+data.title+`' />
+        <meta name ='description' content='`+data.description+`' />
+        <meta name ='theme-color' content = '`+data.color+`' />
 
         <link rel='canonical' href='`+data.url+`' />
 
