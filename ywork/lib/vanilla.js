@@ -1,3 +1,12 @@
+//<input type='text' class='subInputChat' spellcheck='false' autocomplete='new-password' placeholder=' . . .' value='' />
+//.split() .join()
+// replace(/reemplazar todos los lugares en que este esto/g, 'por esto');
+// location.reload();
+// location.href = "https://www.w3schools.com";
+//obtener contenido  .value
+//incitar focus  .focus()
+// .attr = ''
+
 function random(min, max){
 
 	return Math.floor(Math.random() * (max - min + 1) ) + min;

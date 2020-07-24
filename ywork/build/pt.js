@@ -52,124 +52,130 @@ module.exports = function(app, data, dir){
     console.log('HOST:'+req.headers.host);
     console.log('LANG:'+req.acceptsLanguages());
 
-    res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
+    res.writeHead(200, {
+
+      'Content-Type': 'text/html; charset=utf-8',
+      'Content-Language': (''+data.lang)
+
+    });
+
     res.write(
 
-      `
-      <!DOCTYPE html>
+      (`
+        <!DOCTYPE html>
 
-      <html dir='`+data.dir+`' lang='`+data.lang+`'>
+        <html dir='`+data.dir+`' lang='`+data.lang[0]+`'>
 
-      <head>
+        <head>
 
-      <title>`+data.title+`</title>
+        <title>`+data.title+`</title>
 
-      <script type="application/ld+json">
+        <script type="application/ld+json">
 
-      `+data.microdata+`
+        `+data.microdata+`
 
-      </script>
+        </script>
 
-      <meta name='title' content='`+data.title+`' />
-      <meta name='description' content='`+data.description+`' />
+        <meta name='title' content='`+data.title+`' />
+        <meta name='description' content='`+data.description+`' />
 
-      <link rel='canonical' href='`+data.url+`' />
-
-
-      <link rel='icon' type='image/png' href='/`+data.favicon+`' />
+        <link rel='canonical' href='`+data.url+`' />
 
 
-      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-      <link rel="icon" type="image/png" sizes="194x194" href="/favicon-194x194.png">
-
-      <link rel="icon" type="image/png" sizes="36x36" href="/android-chrome-36x36.png">
-      <link rel="icon" type="image/png" sizes="48x48" href="/android-chrome-48x48.png">
-      <link rel="icon" type="image/png" sizes="72x72" href="/android-chrome-72x72.png">
-      <link rel="icon" type="image/png" sizes="96x96" href="/android-chrome-96x96.png">
-      <link rel="icon" type="image/png" sizes="144x144" href="/android-chrome-144x144.png">
-      <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
-      <link rel="icon" type="image/png" sizes="256x256" href="/android-chrome-256x256.png">
-      <link rel="icon" type="image/png" sizes="384x384" href="/android-chrome-384x384.png">
-
-      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-      <link rel="manifest" href="/site.webmanifest">
-      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="`+data.color+`">
-      <meta name="apple-mobile-web-app-title" content="`+data.title+`">
-      <meta name="application-name" content="`+data.title+`">
-      <meta name="msapplication-config" content="/browserconfig.xml" />
-      <meta name="msapplication-TileColor" content="`+data.color+`">
-      <meta name="msapplication-TileImage" content="/mstile-144x144.png">
-      <meta name="theme-color" content="`+data.color+`">
+        <link rel='icon' type='image/png' href='/`+data.favicon+`' />
 
 
-      <meta property='og:title' content='`+data.title+`' />
-      <meta property='og:description' content='`+data.description+`' />
-      <meta property='og:image' content='`+data.url+`/`+data.image+`' />
-      <meta property='og:url' content='`+data.url+`' />
-      <meta name='twitter:card' content='summary_large_image' />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="194x194" href="/favicon-194x194.png">
 
-      <link rel='stylesheet' type='text/css' href='/style.css'>
+        <link rel="icon" type="image/png" sizes="36x36" href="/android-chrome-36x36.png">
+        <link rel="icon" type="image/png" sizes="48x48" href="/android-chrome-48x48.png">
+        <link rel="icon" type="image/png" sizes="72x72" href="/android-chrome-72x72.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/android-chrome-96x96.png">
+        <link rel="icon" type="image/png" sizes="144x144" href="/android-chrome-144x144.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+        <link rel="icon" type="image/png" sizes="256x256" href="/android-chrome-256x256.png">
+        <link rel="icon" type="image/png" sizes="384x384" href="/android-chrome-384x384.png">
 
-      <meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="`+data.color+`">
+        <meta name="apple-mobile-web-app-title" content="`+data.title+`">
+        <meta name="application-name" content="`+data.title+`">
+        <meta name="msapplication-config" content="/browserconfig.xml" />
+        <meta name="msapplication-TileColor" content="`+data.color+`">
+        <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+        <meta name="theme-color" content="`+data.color+`">
 
-      <meta name='viewport' content='width=device-width, user-scalable=no' />
 
-      <script async src='https://www.googletagmanager.com/gtag/js?id=`+data.googletag+`'></script>
+        <meta property='og:title' content='`+data.title+`' />
+        <meta property='og:description' content='`+data.description+`' />
+        <meta property='og:image' content='`+data.url+`/`+data.image+`' />
+        <meta property='og:url' content='`+data.url+`' />
+        <meta name='twitter:card' content='summary_large_image' />
 
-      <script>
+        <link rel='stylesheet' type='text/css' href='/style.css'>
 
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', '`+data.googletag+`');
+        <meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
 
-      </script>
+        <meta name='viewport' content='width=device-width, user-scalable=no' />
 
-      <script type='text/javascript' src='/vanilla.js'></script>
+        <script async src='https://www.googletagmanager.com/gtag/js?id=`+data.googletag+`'></script>
 
-      <script type='text/javascript' src='/pathfinding-browser.min.js'></script>
+        <script>
 
-      `+meta_mod+`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '`+data.googletag+`');
 
-      </head>
+        </script>
 
-      <body>
+        <script type='text/javascript' src='/vanilla.js'></script>
 
-      `+strH1+`
+        <script type='text/javascript' src='/pathfinding-browser.min.js'></script>
 
-      `+strH2+`
+        `+meta_mod+`
 
-      <script type='text/javascript' src='/path/`+data.pathname+`.js'></script>
+        </head>
 
-      </body>
+        <body>
 
-      </html>
+        `+strH1+`
 
-      `
+        `+strH2+`
 
-    );
+        <script type='text/javascript' src='/path/`+data.pathname+`.js'></script>
 
-    res.end();
+        </body>
 
-  });
+        </html>
 
-  app.get(('/'+data.favicon), function(req, res) {
+        `).replace(/\n|\t/g, ' ')
 
-    res.sendFile(dir.get('/assets/'+data.favicon));
+      );
 
-  });
+      res.end();
 
-  app.get(('/'+data.image), function(req, res) {
+    });
 
-    res.sendFile(dir.get('/assets/'+data.image));
+    app.get(('/'+data.favicon), function(req, res) {
 
-  });
+      res.sendFile(dir.get('/assets/'+data.favicon));
 
-  app.get(('/path/'+data.pathname+'.js'), function(req, res) {
+    });
 
-    res.sendFile(dir.get('/path/'+data.pathname+'.js'));
+    app.get(('/'+data.image), function(req, res) {
 
-  });
+      res.sendFile(dir.get('/assets/'+data.image));
 
-};
+    });
+
+    app.get(('/path/'+data.pathname+'.js'), function(req, res) {
+
+      res.sendFile(dir.get('/path/'+data.pathname+'.js'));
+
+    });
+
+  };
