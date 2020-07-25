@@ -6,7 +6,7 @@ module.exports = function(app, dir, port){
 
 	//	next();
 
-	//	res.status(400).json({ errors: errors.array() }); 
+	//	res.status(400).json({ errors: errors.array() });
 
 	//});
 
@@ -19,6 +19,12 @@ module.exports = function(app, dir, port){
 	app.get(('/vanilla.js'), function(req, res){
 
 		res.sendFile(dir.get('/../ywork/lib/vanilla.js'));
+
+	})
+
+	app.get(('/wsnode.js'), function(req, res){
+
+		res.sendFile(dir.get('/../ywork/lib/wsnode.js'));
 
 	})
 
@@ -192,7 +198,7 @@ module.exports = function(app, dir, port){
 
 	app.listen(port, function () {
 
-		console.log('SERVER ONLINE -> PORT:'+port);
+		console.log('HTTP SERVER ONLINE -> PORT:'+port);
 
 	});
 

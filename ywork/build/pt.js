@@ -61,11 +61,18 @@ module.exports = function(app, data, dir){
 
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-    console.log('');
-    console.log('----- REQ "'+data.suburl+'" NEW CONNECTION -----');
-    console.log('IP:'+ip);
-    console.log('HOST:'+req.headers.host);
-    console.log('LANG:'+req.acceptsLanguages());
+    console.log(
+
+      `
+      http connection
+      ip: `+ip+`
+      time: `+new Date()+`
+      host: `+req.headers.host+`
+      lang: `+req.acceptsLanguages()+`
+
+      `
+
+    );
 
     res.writeHead(200, {
 
@@ -147,6 +154,8 @@ module.exports = function(app, data, dir){
         <script type='text/javascript' src='/vanilla.js'></script>
 
         <script type='text/javascript' src='/pathfinding-browser.min.js'></script>
+
+        <script type='text/javascript' src='/wsnode.js'></script>
 
         `+meta_mod+`
 

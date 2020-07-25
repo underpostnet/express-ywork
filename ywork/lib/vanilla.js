@@ -74,6 +74,26 @@ function l(size){
 
 }
 
+function getHash(){
+	function chr4(){
+		return Math.random().toString(16).slice(-4);
+	}
+	return chr4() + chr4() +
+	'-' + chr4() +
+	'-' + chr4() +
+	'-' + chr4() +
+	'-' + chr4() + chr4() + chr4();
+}
+
+function isJSON(str) {
+	try {
+		JSON.parse(str);
+	} catch (e) {
+		return false;
+	}
+	return true;
+}
+
 document.oncontextmenu = function(){ return false; }
 
 document.ondragstart = function(){ return false; }
