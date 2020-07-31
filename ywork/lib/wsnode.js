@@ -25,3 +25,15 @@ function wsTest(ws){
 	}
 
 }
+
+function onLogWs(ws, time){
+
+	wsTest(ws);
+
+	setInterval(function(){
+
+		wsTest(ws);
+
+	}, time);
+
+}

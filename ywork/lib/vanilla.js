@@ -87,9 +87,17 @@ function getHash(){
 
 function isJSON(str) {
 	try {
+
+		//if(x < 5) throw "is too low"; crear errores
+
 		JSON.parse(str);
+
 	} catch (e) {
+
+		console.log(e);
+
 		return false;
+
 	}
 	return true;
 }
