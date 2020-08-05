@@ -102,8 +102,8 @@ function isJSON(str) {
 	return true;
 }
 
-document.oncontextmenu = function(){ return false; }
+function lang(){
 
-document.ondragstart = function(){ return false; }
+	return navigator.language.split('-')[0];
 
-document.onselectstart = function(){ return false; }
+}
