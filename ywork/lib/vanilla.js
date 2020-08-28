@@ -6,6 +6,15 @@
 //obtener contenido  .value
 //incitar focus  .focus()
 // .attr = ''
+//.includes('php') detectar string en string
+//async function load_foro_sietechakras() {
+//	const foro_sietechakras = await import('https://www.somosindia.cl/sv/gestor/foro_sietechakras.js');
+//}
+//load_foro_sietechakras(data);
+//JSON.parse() JSON.stringify()
+//str.trim() limpiar string
+//this.className.split('_')
+//s().onevent = function(){}; sobree escritura de evento
 
 function random(min, max){
 
@@ -68,6 +77,48 @@ function fadeIn(el, display){
 	})();
 };
 
+function setScrollTouchX(el){
+
+	const slider = s(el);
+	let isDown = false;
+	let startX;
+	let scrollLeft;
+
+	slider.onmousedown = function (e) {
+
+	  isDown = true;
+	  slider.classList.add("active");
+	  startX = e.pageX - slider.offsetLeft;
+	  scrollLeft = slider.scrollLeft;
+
+	};
+
+	slider.onmouseleave = function (e) {
+
+	  isDown = false;
+	  slider.classList.remove("active");
+
+	};
+
+	slider.onmouseup = function (e) {
+
+	  isDown = false;
+	  slider.classList.remove("active");
+
+	};
+
+	slider.onmousemove = function (e) {
+
+	  if (!isDown) return;
+	  e.preventDefault();
+	  const x = e.pageX - slider.offsetLeft;
+	  const walk = x - startX;
+	  slider.scrollLeft = scrollLeft - walk;
+
+	};
+
+}
+
 function l(size){
 
 	return size.length;
@@ -105,5 +156,52 @@ function isJSON(str) {
 function lang(){
 
 	return navigator.language.split('-')[0];
+
+}
+
+function YoutubeUrl(url) {
+	 var p = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+	 if(url.match(p)){
+			 return url.match(p)[1];
+	 }
+	 return false;
+}
+
+function getFecha(){
+
+	var f = new Date();
+
+	var hour = f.getHours();
+	var mins = f.getMinutes();
+
+	if(hour<10){
+
+		hour = '0'+hour;
+
+	}
+
+	if(mins<10){
+
+		mins = '0'+mins;
+
+	}
+
+	var date = f.getDate();
+	var month = (f.getMonth() +1);
+	var year = f.getFullYear();
+
+	if(date<10){
+
+	date = '0'+date
+
+	}
+
+	if(month<10){
+
+		month = '0'+month;
+
+	}
+
+	return [ date , month , year , hour , mins];
 
 }
