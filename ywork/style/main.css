@@ -29,6 +29,13 @@ html, body {
 
 }
 
+.inl {
+
+	position: relative;
+	display: inline;
+
+}
+
 .center {
 
 	transform: translate(-50%,-50%);

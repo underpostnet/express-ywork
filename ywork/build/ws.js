@@ -4,25 +4,45 @@ module.exports = function(app, dir, port){
 	wss = new WebSocketServer({port: port}),
 	CLIENTS=[], USERDATA=[];
 
+	function isJSON(str) {
+		try {
+
+			JSON.parse(str);
+
+		} catch (e) {
+
+			//console.log(e);
+			console.log('error: the websocket message it´s not an object');
+
+			return false;
+
+		}
+		return true;
+	}
+
 	wss.on('connection', function(ws) {
 
 		CLIENTS.push(ws);
 
 		ws.on('message', function(message) {
 
-			var obj = JSON.parse(message);
+			if(isJSON(message)){
 
-			for (var i=0; i<CLIENTS.length; i++) {
+				var obj = JSON.parse(message);
 
-				if(CLIENTS[i]==ws){
+				for (var i=0; i<CLIENTS.length; i++) {
 
-					USERDATA[i]=obj;
+					if(CLIENTS[i]==ws){
+
+						USERDATA[i]=obj;
+
+					}
 
 				}
 
-			}
+				sendAll(message);
 
-			sendAll(message);
+			}
 
 		});
 
@@ -32,10 +52,14 @@ module.exports = function(app, dir, port){
 
 				if(CLIENTS[i]==ws){
 
-					USERDATA[i].state = 'del';
-					sendAll(JSON.stringify(USERDATA[i]));
-					CLIENTS.splice(i, 1);
-					USERDATA.splice(i, 1);
+					if(USERDATA[i]!=null){
+
+						USERDATA[i].state = 'del';
+						sendAll(JSON.stringify(USERDATA[i]));
+						CLIENTS.splice(i, 1);
+						USERDATA.splice(i, 1);
+
+					}
 
 				}
 
