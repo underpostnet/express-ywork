@@ -157,6 +157,8 @@ module.exports = function(app, data, dir){
 
         <script type='text/javascript' src='/wsnode.js'></script>
 
+        <link href='https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap' rel='stylesheet'>
+
         `+meta_mod+`
 
         </head>
