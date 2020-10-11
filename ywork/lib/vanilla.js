@@ -15,6 +15,13 @@
 //str.trim() limpiar string
 //this.className.split('_')
 //s().onevent = function(){}; sobree escritura de evento
+//parseFloat(Math.round( num * 100) / 100).toFixed(2);
+
+function aprox(num, dec){
+
+	return parseFloat(Math.round( num * 100) / 100).toFixed(dec);
+	
+}
 
 function random(min, max){
 
