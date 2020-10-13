@@ -170,11 +170,30 @@ module.exports = function(app, data, dir){
 
         </style>
 
+        <script>
+
+          var grecaptchaTest;
+      		var onloadCallback = function() {
+      		  grecaptcha.render('test-recaptcha', {
+      		    'sitekey' : '`+data.gcap+`'
+      		  });
+      		  grecaptchaTest = grecaptcha;
+      		};
+
+      		function isCaptchaChecked() {
+      		  return grecaptchaTest && grecaptchaTest.getResponse().length !== 0;
+      		}
+
+        </script>
+
         `+meta_mod+`
 
         </head>
 
         <body>
+
+        <script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit'
+  			async defer></script>         			
 
         `+strH1+`
 
