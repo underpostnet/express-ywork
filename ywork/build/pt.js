@@ -74,10 +74,14 @@ module.exports = function(app, data, dir){
 
     );
 
+    let lang = ''+req.acceptsLanguages();
+    lang = lang.split('-')[0];
+    if(!(lang=='es')){ lang = 'en'; }
+
     res.writeHead(200, {
 
       'Content-Type': 'text/html; charset=utf-8',
-      'Content-Language': (''+data.lang)
+      'Content-Language': (''+lang)
 
     });
 
@@ -86,7 +90,7 @@ module.exports = function(app, data, dir){
       (`
         <!DOCTYPE html>
 
-        <html dir='`+data.dir+`' lang='`+data.lang[0]+`'>
+        <html dir='`+data.dir+`' lang='`+lang+`'>
 
         <head>
 
@@ -192,14 +196,14 @@ module.exports = function(app, data, dir){
 
         <body>
 
-        <script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit'
-  			async defer></script>         			
+        <script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=`+lang+`'
+  			async defer></script>
 
         `+strH1+`
 
         `+strH2+`
 
-        <script type='text/javascript' src='/path/`+data.pathname+`.js'></script>
+        <script type='text/javascript' src='/path/`+data.pathname+`.js' async defer></script>
 
         </body>
 
