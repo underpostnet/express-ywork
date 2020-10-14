@@ -1,4 +1,4 @@
-//<input type='text' class='subInputChat' spellcheck='false' autocomplete='new-password' placeholder=' . . .' value='' />
+//<input type='text' class='subInputChat' spellcheck='false' autocomplete='new-password' onfocusout="mod_session.outUserNameInput();" placeholder=' . . .' value='' />
 //.split() .join()
 // replace(/reemplazar todos los lugares en que este esto/g, 'por esto');
 // location.reload();
@@ -16,11 +16,12 @@
 //this.className.split('_')
 //s().onevent = function(){}; sobree escritura de evento
 //parseFloat(Math.round( num * 100) / 100).toFixed(2);
+//&nbsp; &nbsp;
 
 function aprox(num, dec){
 
 	return parseFloat(Math.round( num * 100) / 100).toFixed(dec);
-	
+
 }
 
 function random(min, max){

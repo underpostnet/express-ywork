@@ -36,6 +36,13 @@ html, body {
 
 }
 
+.fix {
+
+	position: fixed;
+	display: block;
+
+}
+
 .center {
 
 	transform: translate(-50%,-50%);
@@ -50,6 +57,19 @@ h1, h2 {
 
 	display: none;
 
+}
+
+::placeholder {
+  color: white;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+ color: white;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+ color: white;
 }
 
 ::-moz-selection { /* Code for Firefox */
