@@ -15,6 +15,14 @@ html, body {
 
 }
 
+a {
+
+	color: magenta;
+	text-decoration: underline;
+	cursor: pointer;
+
+}
+
 .abs {
 
 	position: absolute;
@@ -56,6 +64,13 @@ html, body {
 h1, h2 {
 
 	display: none;
+
+}
+
+input {
+
+	outline: none !important;
+	border: none;
 
 }
 

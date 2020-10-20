@@ -4,7 +4,7 @@
 // location.reload();
 // location.href = "https://www.w3schools.com";
 //obtener contenido  .value
-//incitar focus  .focus()
+//incitar focus  .focus() fuera focus .blur()
 // .attr = ''
 //.includes('php') detectar string en string
 //async function load_foro_sietechakras() {
