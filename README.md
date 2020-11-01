@@ -6,10 +6,12 @@ npm install path
 
 npm install ws
 
-npm install image-to-slices
+off npm install image-to-slices
 
-npm install canvas
+off npm install canvas
 
 npm install pg-promise
 
 npm install var_dump
+
+npm install crypto-js

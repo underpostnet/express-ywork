@@ -1,139 +1,130 @@
 module.exports = function(app, data, dir){
 
-	//http://vitaly-t.github.io/pg-promise/Database.html#multi
+	//------------------------------------
+	//------------------------------------
+
 	let pgp = require("pg-promise")(/*options*/);
-	let connect = "postgres://"+data.bd.username+":"+data.bd.password+"@"+data.bd.host+":"+data.bd.port+"/"+data.bd.database+"";
+	let connect = "postgres://"+data.db.username+":"+data.db.password+"@"+data.db.host+":"+data.db.port+"/"+data.db.database+"";
 	let db = pgp(connect);
 
+	//------------------------------------
+	//------------------------------------
+
+	let bodyParser = require('body-parser');
+	app.use(bodyParser.urlencoded({extended: false}));
+	app.use(bodyParser.json());
+
+	//------------------------------------
+	//------------------------------------
+
 	let var_dump = require('var_dump');
+
+	//------------------------------------
+	//------------------------------------
 
 	function l(size){return size.length;};
 
 	//------------------------------------
 	//------------------------------------
 
-	///*
+	let CryptoJS = require("crypto-js");
+	let key = data.db.key;
 
-	db.one('INSERT INTO users(id_users, username, pass, email) VALUES(DEFAULT, $1, $2, $3) RETURNING id_users, username',
-
-	['P4R4N014', '123123', 'fcoverdugoa@gmail.com']
-
-)
-
-.then(data => {
-
-	data.username = (''+data.username).trim();
-	var_dump(data);
-
-})
-.catch(error => {
-
-	console.log('ERROR:', error); // print error;
-
-});
-
-//*/
-
-//------------------------------------
-//------------------------------------
-
-
-
-//'SELECT * FROM users WHERE username = $1;SELECT * FROM users', 'P4R4N014'
-//, row => row.id
-db.map('SELECT * FROM users WHERE username = $1', ['P4R4N014'], row => row)
-.then(data => {
-	// data = array of active user id-s
-	for(let i=0;  i<l(data); i++){
-
-		data[i].username = (''+data[i].username).trim();
-		data[i].email = (''+data[i].email).trim();
-		data[i].pass = (''+data[i].pass).trim();
-
+	function encr(content){
+		return CryptoJS.AES.encrypt(content, key).toString();
 	}
 
-	var_dump(data);
+	function decr(content){
+		let bytes  = CryptoJS.AES.decrypt(content, key);
+		return  bytes.toString(CryptoJS.enc.Utf8);
+	}
 
-})
-.catch(error => {
-	// error
-	var_dump(error);
-});
+	//------------------------------------
+	//------------------------------------
 
-//------------------------------------
-//------------------------------------
+	function viewall(){
 
-//$sql = 'TRUNCATE TABLE clientes RESTART IDENTITY;';
-//$result = pg_query($dbconn, $sql);
+		db.map('SELECT * FROM users', [], row => row)
+		.then(data => {
+			// data = array of active user id-s
 
-//$sql = "INSERT INTO clientes (id,nombre,email,pass) VALUES (DEFAULT,'".$nombre."','".$email."','".$encriptar($pass)."');";
-//$result = pg_query($dbconn, $sql);
+			console.log('\nPOSTGRES DB - USERS TABLE');
+			for(let i=0;  i<l(data); i++){
 
-//$sql = "SELECT * FROM clientes WHERE email='$email' ORDER BY id;";
-//$result = pg_query($dbconn, $sql);
+				data[i].username = decr((''+data[i].username).trim());
+				data[i].email = decr((''+data[i].email).trim());
+				data[i].pass = (''+data[i].pass).trim();
 
-//$sql = "DELETE FROM clientes WHERE id = 29;";
-//$result = pg_query($dbconn, $sql);
+			}
 
-//$sql = "UPDATE clientes SET sietechakras = '' WHERE id = 1;";
-//$result = pg_query($dbconn, $sql);
-
-//$sql = "UPDATE clientes SET controlpeso = 'true' WHERE id = 1;";
-//$result = pg_query($dbconn, $sql);
-
-
-//------------------------------------
-//------------------------------------
-
-/*
-
-db.one('TRUNCATE TABLE users RESTART IDENTITY')
-.then(data => {
-})
-.catch(error => {
-});
-
-
-
-db.tx(t => {
-	return t.map('SELECT id_users FROM users WHERE pass = $1', ['123123'], row => {
-		return t.none('UPDATE users SET email = $1 WHERE id_users = $2', ['pico', row.id_users]);
-	}).then(t.batch);
-})
-.then(data => {
-	// success
-	//var_dump(data);
-})
-.catch(error => {
-	// error
-	var_dump(error);
-});
-
-
-
-
-db.none('UPDATE users SET email = $1 WHERE username = $2', ['jaja', 'P4R4N014'])
-.then(data => {
-	// success
-	var_dump(data);
-})
-.catch(error => {
-	// error
-	var_dump(error);
-});
-
-
-db.result('DELETE FROM users WHERE username = $1', ['P4R4N014'], r => r.rowCount)
-  .then(data => {
-      // data = number of rows that were deleted
 			var_dump(data);
-  });
 
+		})
+		.catch(error => {
+			// error
+			var_dump(error);
+		});
 
-*/
+	};
 
+	function truncatedb(){
 
+		db.one('TRUNCATE TABLE users RESTART IDENTITY')
+		.then(data => {
+		})
+		.catch(error => {
+		});
 
+	};
+
+	//------------------------------------
+	/*/------------------------------------
+
+	db.one('INSERT INTO users(id_users, username, pass, email) VALUES(DEFAULT, $1, $2, $3) RETURNING id_users',
+
+	[encr('name_test'), encr('pass_test'), encr('mail@test.com')])
+
+	.then(data => {
+
+		var_dump(data);
+
+	})
+	.catch(error => {
+
+	});
+
+  *///------------------------------------
+	//------------------------------------
+
+	//truncatedb();
+	viewall();
+
+	//------------------------------------
+	//------------------------------------
+
+	app.post(('/check_input'), function(req, res) {
+
+		let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+		console.log('/check_input -> http request\nip:'+ip);
+		var_dump(req.body);
+		let res_obj = {adv:''};
+
+		//-----------------------------
+		//-----------------------------
+
+		if(req.body.name=='username'){
+
+			res_obj.adv = 'usuario ya existente';
+
+		}
+
+		//-----------------------------
+		//-----------------------------
+
+		res.send(JSON.stringify(res_obj));
+		res.end();
+
+	});
 
 
 };

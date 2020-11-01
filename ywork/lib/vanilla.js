@@ -175,7 +175,7 @@ function YoutubeUrl(url) {
 	 return false;
 }
 
-function getFecha(){
+function getDate(){
 
 	var f = new Date();
 
@@ -211,5 +211,24 @@ function getFecha(){
 	}
 
 	return [ date , month , year , hour , mins];
+
+}
+
+
+function ajax(type, url, obj, end){
+
+	let xhr = new XMLHttpRequest();
+	xhr.open(type, url, true);
+	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+	xhr.send(JSON.stringify(obj));
+
+	//----------------------------------
+	//----------------------------------
+
+	xhr.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			end(JSON.parse(this.responseText));
+		}
+	};
 
 }
