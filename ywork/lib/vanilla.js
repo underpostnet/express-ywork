@@ -232,3 +232,18 @@ function ajax(type, url, obj, end){
 	};
 
 }
+
+function testMail(email){
+
+  return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+
+}
+
+function regulartxt(txt){
+
+  var patt = new RegExp(/^[A-Za-z0-9\s]+$/g);
+  var res = patt.test(txt);
+
+  return res;
+
+}

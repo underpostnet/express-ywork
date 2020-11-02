@@ -24,6 +24,12 @@ module.exports = function(app, data, dir){
 
 	function l(size){return size.length;};
 
+	function testMail(email){
+
+	  return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+
+	}
+
 	//------------------------------------
 	//------------------------------------
 
@@ -42,7 +48,7 @@ module.exports = function(app, data, dir){
 	//------------------------------------
 	//------------------------------------
 
-	function viewall(){
+	function showDB(){
 
 		db.map('SELECT * FROM users', [], row => row)
 		.then(data => {
@@ -67,7 +73,7 @@ module.exports = function(app, data, dir){
 
 	};
 
-	function truncatedb(){
+	function truncateDB(){
 
 		db.one('TRUNCATE TABLE users RESTART IDENTITY')
 		.then(data => {
@@ -76,6 +82,30 @@ module.exports = function(app, data, dir){
 		});
 
 	};
+
+	function getDB(table, end){
+
+		db.map(('SELECT * FROM '+table), [], row => row)
+		.then(data => {
+
+			for(let i=0;  i<l(data); i++){
+
+				data[i].username = decr((''+data[i].username).trim());
+				data[i].email = decr((''+data[i].email).trim());
+				data[i].pass = decr((''+data[i].pass).trim());
+
+			}
+
+			end(data);
+
+		})
+		.catch(error => {
+
+			var_dump(error);
+
+		});
+
+	}
 
 	//------------------------------------
 	/*/------------------------------------
@@ -96,8 +126,8 @@ module.exports = function(app, data, dir){
   *///------------------------------------
 	//------------------------------------
 
-	//truncatedb();
-	viewall();
+	//truncateDB();
+  showDB();
 
 	//------------------------------------
 	//------------------------------------
@@ -114,15 +144,69 @@ module.exports = function(app, data, dir){
 
 		if(req.body.name=='username'){
 
-			res_obj.adv = 'usuario ya existente';
+			if(l(req.body.value)<5){
+
+				res_obj.adv = ['minimum 5 characters', 'minimo 5 caracteres'];
+				res.send(JSON.stringify(res_obj));
+				res.end();
+
+			}else{
+
+				getDB('users', function(data){
+
+					for(let i=0;i<l(data);i++){
+
+						if(data[i].username==req.body.value){
+
+							res_obj.adv = ['username already exist', 'usuario existente'];
+							res.send(JSON.stringify(res_obj));
+							res.end();
+
+						}
+
+					}
+
+				});
+
+			}
 
 		}
 
 		//-----------------------------
 		//-----------------------------
 
-		res.send(JSON.stringify(res_obj));
-		res.end();
+		if(req.body.name=='email'){
+
+			if(!testMail(req.body.value)){
+
+				res_obj.adv = ['invalid email', 'email invalido'];
+				res.send(JSON.stringify(res_obj));
+				res.end();
+
+			}else{
+
+				getDB('users', function(data){
+
+					for(let i=0;i<l(data);i++){
+
+						if(data[i].email==req.body.value){
+
+							res_obj.adv = ['email already exist', 'email existente'];
+							res.send(JSON.stringify(res_obj));
+							res.end();
+
+						}
+
+					}
+
+				});
+
+			}
+
+		}
+
+		//-----------------------------
+		//-----------------------------
 
 	});
 
