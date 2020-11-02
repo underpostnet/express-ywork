@@ -157,6 +157,8 @@ module.exports = function(app, data, dir){
 
         <script type='text/javascript' src='/vanilla.js'></script>
 
+        <script type='text/javascript' src='/ywork.js'></script>
+
         <script type='text/javascript' src='/pathfinding-browser.min.js'></script>
 
         <script type='text/javascript' src='/wsnode.js'></script>

@@ -1,24 +1,11 @@
 module.exports = function(app, dir, port){
 
+	let fs = require('fs');
+	eval(fs.readFileSync(dir.get('/../ywork/lib/ywork.js'), 'utf8'));
+
 	var WebSocketServer = require('ws').Server,
 	wss = new WebSocketServer({port: port}),
 	CLIENTS=[], USERDATA=[];
-
-	function isJSON(str) {
-		try {
-
-			JSON.parse(str);
-
-		} catch (e) {
-
-			//console.log(e);
-			console.log('error: the websocket message it´s not an object');
-
-			return false;
-
-		}
-		return true;
-	}
 
 	wss.on('connection', function(ws) {
 

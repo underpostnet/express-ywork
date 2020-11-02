@@ -22,6 +22,12 @@ module.exports = function(app, dir, port){
 
 	})
 
+	app.get(('/ywork.js'), function(req, res){
+
+		res.sendFile(dir.get('/../ywork/lib/ywork.js'));
+
+	})
+
 	app.get(('/wsnode.js'), function(req, res){
 
 		res.sendFile(dir.get('/../ywork/lib/wsnode.js'));

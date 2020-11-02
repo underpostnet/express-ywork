@@ -1,133 +1,18 @@
 module.exports = function(app, data, dir){
 
-	//------------------------------------
-	//------------------------------------
-
-	let pgp = require("pg-promise")(/*options*/);
-	let connect = "postgres://"+data.db.username+":"+data.db.password+"@"+data.db.host+":"+data.db.port+"/"+data.db.database+"";
-	let db = pgp(connect);
-
-	//------------------------------------
-	//------------------------------------
-
-	let bodyParser = require('body-parser');
-	app.use(bodyParser.urlencoded({extended: false}));
-	app.use(bodyParser.json());
-
-	//------------------------------------
-	//------------------------------------
-
+	let fs = require('fs');
 	let var_dump = require('var_dump');
+	eval(fs.readFileSync(dir.get('/../ywork/lib/crypto.js'), 'utf8'));
+	eval(fs.readFileSync(dir.get('/../ywork/lib/ywork.js'), 'utf8'));
+	eval(fs.readFileSync(dir.get('/../ywork/lib/postgresql.js'), 'utf8'));
 
 	//------------------------------------
-	//------------------------------------
-
-	function l(size){return size.length;};
-
-	function testMail(email){
-
-	  return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
-
-	}
-
-	//------------------------------------
-	//------------------------------------
-
-	let CryptoJS = require("crypto-js");
-	let key = data.db.key;
-
-	function encr(content){
-		return CryptoJS.AES.encrypt(content, key).toString();
-	}
-
-	function decr(content){
-		let bytes  = CryptoJS.AES.decrypt(content, key);
-		return  bytes.toString(CryptoJS.enc.Utf8);
-	}
-
-	//------------------------------------
-	//------------------------------------
-
-	function showDB(){
-
-		db.map('SELECT * FROM users', [], row => row)
-		.then(data => {
-			// data = array of active user id-s
-
-			console.log('\nPOSTGRES DB - USERS TABLE');
-			for(let i=0;  i<l(data); i++){
-
-				data[i].username = decr((''+data[i].username).trim());
-				data[i].email = decr((''+data[i].email).trim());
-				data[i].pass = (''+data[i].pass).trim();
-
-			}
-
-			var_dump(data);
-
-		})
-		.catch(error => {
-			// error
-			var_dump(error);
-		});
-
-	};
-
-	function truncateDB(){
-
-		db.one('TRUNCATE TABLE users RESTART IDENTITY')
-		.then(data => {
-		})
-		.catch(error => {
-		});
-
-	};
-
-	function getDB(table, end){
-
-		db.map(('SELECT * FROM '+table), [], row => row)
-		.then(data => {
-
-			for(let i=0;  i<l(data); i++){
-
-				data[i].username = decr((''+data[i].username).trim());
-				data[i].email = decr((''+data[i].email).trim());
-				data[i].pass = decr((''+data[i].pass).trim());
-
-			}
-
-			end(data);
-
-		})
-		.catch(error => {
-
-			var_dump(error);
-
-		});
-
-	}
-
-	//------------------------------------
-	/*/------------------------------------
-
-	db.one('INSERT INTO users(id_users, username, pass, email) VALUES(DEFAULT, $1, $2, $3) RETURNING id_users',
-
-	[encr('name_test'), encr('pass_test'), encr('mail@test.com')])
-
-	.then(data => {
-
-		var_dump(data);
-
-	})
-	.catch(error => {
-
-	});
-
-  *///------------------------------------
 	//------------------------------------
 
 	//truncateDB();
   showDB();
+	//insertDB({name: 'name_test', pass: '123123', email: 'test@test.cl'});
+	//getDB('users', function(data){var_dump(data)});
 
 	//------------------------------------
 	//------------------------------------
