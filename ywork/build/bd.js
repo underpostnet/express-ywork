@@ -93,6 +93,41 @@ module.exports = function(app, data, dir){
 		//-----------------------------
 		//-----------------------------
 
+		if(req.body.name=='pass1'){
+
+			//console.log(str_test.charLength(req.body.value));
+			//console.log(str_test.lowercase(req.body.value));
+			//console.log(str_test.uppercase(req.body.value));
+			//console.log(str_test.special(req.body.value));
+
+			/*
+
+			Must be at least 8 characters long.
+			Must contain a lowercase letter.
+			Must contain an uppercase letter.
+			Must contain a number or special character.
+
+			*/
+
+			if(!str_test.charLength(req.body.value)){
+
+				res_obj.adv = ['Must be at least 8 characters long', 'al menos 8 caracteres'];
+				res.send(JSON.stringify(res_obj));
+				res.end();
+
+			}else if(!str_test.special(req.body.value)){
+
+				res_obj.adv = ['Must contain a number or special character', 'al menos un numero o caracter especial'];
+				res.send(JSON.stringify(res_obj));
+				res.end();
+
+			}
+
+		}
+
+		//-----------------------------
+		//-----------------------------
+
 	});
 
 

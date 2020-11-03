@@ -15,3 +15,5 @@ npm install pg-promise
 npm install var_dump
 
 npm install crypto-js
+
+off npm install nodemailer

@@ -121,15 +121,42 @@ function lang(){
 
 }
 
-function ajax(type, url, obj, end){
+function fullScreenIn(){
+
+	let el = document.documentElement;
+	let rfs = // for newer Webkit and Firefox
+	el.requestFullScreen
+	|| el.webkitRequestFullScreen
+	|| el.mozRequestFullScreen
+	|| el.msRequestFullScreen
+	;
+	if(typeof rfs!="undefined" && rfs){
+		rfs.call(el);
+	} else if(typeof window.ActiveXObject!="undefined"){
+		// for Internet Explorer
+		let wscript = new ActiveXObject("WScript.Shell");
+		if (wscript!=null) {
+			wscript.SendKeys("{F11}");
+		}
+	}
+
+}
+
+function fullScreenOut(){
+	
+	document.exitFullscreen();
+
+}
+
+//----------------------------------
+//----------------------------------
+
+async function ajax(type, url, obj, end){
 
 	let xhr = new XMLHttpRequest();
 	xhr.open(type, url, true);
 	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 	xhr.send(JSON.stringify(obj));
-
-	//----------------------------------
-	//----------------------------------
 
 	xhr.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
@@ -138,3 +165,53 @@ function ajax(type, url, obj, end){
 	};
 
 }
+
+/*ajax('POST', '/check_input', {
+
+	name: name,
+	value: val
+
+}, function(res){
+
+	//console.log('ajax response');
+	//console.log(res);
+
+	if(res.adv!=''){
+
+		htmls(('.error-input-txt-'+name), res.adv[it]);
+		fadeIn(s('.error-input-'+name), 'block');
+
+	}
+
+});*/
+
+//----------------------------------
+//----------------------------------
+
+// Ejemplo implementando el metodo POST:
+async function postData(url = '', data = {}) {
+  // Opciones por defecto estan marcadas con un *
+  const response = await fetch(url, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(data) // body data type must match "Content-Type" header
+  });
+  return response.json(); // parses JSON response into native JavaScript objects
+}
+
+/*
+
+postData('https://example.com/answer', { answer: 42 })
+  .then(data => {
+    console.log(data); // JSON data parsed by `data.json()` call
+});
+
+*/

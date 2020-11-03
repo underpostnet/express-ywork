@@ -105,3 +105,46 @@ function regulartxt(txt){
   return res;
 
 }
+
+//https://codepen.io/JefMari/pen/PPKbQy?editors=1010
+var str_test = {
+  charLength: function(str) {
+      if( str.length >= 8 ) {
+          return true;
+      }else{
+				return false;
+			}
+  },
+  lowercase: function(str) {
+      var regex = /^(?=.*[a-z]).+$/; // Lowercase character pattern
+
+      if( regex.test(str) ) {
+          return true;
+      }else{
+				return false;
+			}
+  },
+  uppercase: function(str) {
+      var regex = /^(?=.*[A-Z]).+$/; // Uppercase character pattern
+
+      if( regex.test(str) ) {
+          return true;
+      }else{
+				return false;
+			}
+  },
+  special: function(str) {
+      var regex = /^(?=.*[0-9_\W]).+$/; // Special character or number pattern
+
+      if( regex.test(str) ) {
+          return true;
+      }else{
+				return false;
+			}
+  }
+};
+
+//Must be at least 8 characters long.
+//Must contain a lowercase letter.
+//Must contain an uppercase letter.
+//Must contain a number or special character.
