@@ -8,12 +8,30 @@ html, body {
 	margin: 0;
 	padding: 0;
 	cursor: default;
-	font-family: 'retro-font';
+	font-family: 'retro-font', arial;
 	color: white;
 	overflow: hidden;
 	font-size: 14px;
 
 }
+
+/*
+
+@font-face {
+	font-family: 'retro-font';
+	src: URL('/assets/fonts/PressStart2P.ttf') format('truetype');
+}
+
+html {
+
+cursor : url('/assets/smart.cur') 0 0, auto;
+
+text-shadow: X px Y px BLUR px #color;
+box-shadow: X px Y px BLUR px MARCO px #color;
+
+}
+
+*/
 
 a {
 

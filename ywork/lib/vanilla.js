@@ -143,7 +143,7 @@ function fullScreenIn(){
 }
 
 function fullScreenOut(){
-	
+
 	document.exitFullscreen();
 
 }
@@ -215,3 +215,11 @@ postData('https://example.com/answer', { answer: 42 })
 });
 
 */
+
+function notclick(div){
+
+	s(div).oncontextmenu = function(){ return false; }
+	s(div).ondragstart = function(){ return false; }
+	s(div).onselectstart = function(){ return false; }
+	
+}

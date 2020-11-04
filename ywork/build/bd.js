@@ -21,7 +21,7 @@ module.exports = function(app, data, dir){
 
 		let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 		console.log('/check_input -> http request\nip:'+ip);
-		var_dump(req.body);
+		//var_dump(req.body);
 		let res_obj = {adv:''};
 
 		//-----------------------------
