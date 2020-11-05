@@ -47,7 +47,7 @@ function truncateDB(){
 //------------------------------------
 //------------------------------------
 
-function getDB(table, end){
+function getDB(table, id, end){
 
 	db.map(('SELECT * FROM '+table), [], row => row)
 	.then(data => {
@@ -60,7 +60,7 @@ function getDB(table, end){
 
 		}
 
-		end(data);
+		end(data, id);
 
 	})
 	.catch(error => {

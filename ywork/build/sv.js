@@ -1,14 +1,19 @@
 module.exports = function(app, dir, port){
 
-	//app.use(function (req,res,next){
+	/*
 
-	//	console.log('test');
+	app.use(function (req,res,next){
 
-	//	next();
+		console.log('test');
 
-	//	res.status(400).json({ errors: errors.array() });
+		next();
 
-	//});
+		res.status(400).json({ errors: errors.array() });
+
+	});
+
+	*/
+	
 
 	app.get(('/pathfinding-browser.min.js'), function(req, res){
 

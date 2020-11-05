@@ -17,6 +17,8 @@
 //s().onevent = function(){}; sobree escritura de evento
 //parseFloat(Math.round( num * 100) / 100).toFixed(2);
 //&nbsp; &nbsp;
+//s('.chat-history').scrollTop = s('.chat-history').scrollHeight;
+//s('.'+name+'-input-focus').onmouseout 
 
 function s(div){
 
@@ -216,10 +218,18 @@ postData('https://example.com/answer', { answer: 42 })
 
 */
 
-function notclick(div){
+function notclick(div, id, state){
 
-	s(div).oncontextmenu = function(){ return false; }
-	s(div).ondragstart = function(){ return false; }
-	s(div).onselectstart = function(){ return false; }
-	
+	if(id==0){
+		s(div).oncontextmenu = function(){ return state; }
+	}
+
+	if(id==1){
+		s(div).ondragstart = function(){ return state; }
+	}
+
+	if(id==2){
+		s(div).onselectstart = function(){ return state; }
+	}
+
 }

@@ -28,6 +28,7 @@ cursor : url('/assets/smart.cur') 0 0, auto;
 
 text-shadow: X px Y px BLUR px #color;
 box-shadow: X px Y px BLUR px MARCO px #color;
+transition: .3s;
 
 }
 
