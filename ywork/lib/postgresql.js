@@ -9,19 +9,19 @@ let db = pgp(connect);
 function showDB(){
 
 	db.map('SELECT * FROM users', [], row => row)
-	.then(data => {
+	.then(db_data => {
 		// data = array of active user id-s
 
 		console.log('\nPOSTGRES DB - USERS TABLE');
-		for(let i=0;  i<l(data); i++){
+		for(let i=0;  i<l(db_data); i++){
 
-			data[i].username = decr((''+data[i].username).trim());
-			data[i].email = decr((''+data[i].email).trim());
-			data[i].pass = (''+data[i].pass).trim();
+			db_data[i].username = k.decr((''+db_data[i].username).trim());
+			db_data[i].email = k.decr((''+db_data[i].email).trim());
+			db_data[i].pass = (''+db_data[i].pass).trim();
 
 		}
 
-		var_dump(data);
+		var_dump(db_data);
 
 	})
 	.catch(error => {
@@ -47,20 +47,20 @@ function truncateDB(){
 //------------------------------------
 //------------------------------------
 
-function getDB(table, id, end){
+function getDB(table, hash, end){
 
 	db.map(('SELECT * FROM '+table), [], row => row)
 	.then(data => {
 
 		for(let i=0;  i<l(data); i++){
 
-			data[i].username = decr((''+data[i].username).trim());
-			data[i].email = decr((''+data[i].email).trim());
-			data[i].pass = decr((''+data[i].pass).trim());
+			data[i].username = k.decr((''+data[i].username).trim());
+			data[i].email = k.decr((''+data[i].email).trim());
+			data[i].pass = k.decr((''+data[i].pass).trim());
 
 		}
 
-		end(data, id);
+		end(data, hash);
 
 	})
 	.catch(error => {
@@ -78,7 +78,7 @@ function insertDB(obj){
 
 	db.one('INSERT INTO users(id_users, username, pass, email) VALUES(DEFAULT, $1, $2, $3) RETURNING id_users',
 
-	[encr(obj.name), encr(obj.pass), encr(obj.email)])
+	[k.encr(obj.name), k.encr(obj.pass), k.encr(obj.email)])
 
 	.then(data => {
 

@@ -1,21 +1,21 @@
-module.exports = function(app, data, dir){
+
 
   var strH1 = '';
-  for(var i=0;i<data.h1.length;i++){
+  for(var i=0;i<l(data.h1);i++){
 
     strH1 = strH1 + '<h1>'+data.h1[i]+'</h1>';
 
   }
 
   var strH2 = '';
-  for(var i=0;i<data.h2.length;i++){
+  for(var i=0;i<l(data.h2);i++){
 
     strH2 = strH2 + '<h2>'+data.h2[i]+'</h2>';
 
   }
 
   var meta_mod = '';
-  for(var i=0;i<data.modules.length;i++){
+  for(var i=0;i<l(data.modules);i++){
 
     meta_mod = meta_mod + `<link rel='stylesheet' type='text/css' href='/modules/`+data.modules[i]+`/style.css'>
 
@@ -43,7 +43,7 @@ module.exports = function(app, data, dir){
   }
 
   var microdata = '';
-  for(var i=0;i<data.microdata.length;i++){
+  for(var i=0;i<l(data.microdata);i++){
 
     microdata = microdata + `
 
@@ -237,4 +237,4 @@ module.exports = function(app, data, dir){
 
     });
 
-  };
+  

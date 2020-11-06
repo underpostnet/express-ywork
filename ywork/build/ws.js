@@ -1,21 +1,17 @@
-module.exports = function(app, dir, port, data){
-
-	//-----------------------------------------------
-	//-----------------------------------------------
-
-	let fs = require('fs');
-	let var_dump = require('var_dump');
-	eval(fs.readFileSync(dir.get('/../ywork/lib/crypto.js'), 'utf8'));
-	eval(fs.readFileSync(dir.get('/../ywork/lib/ywork.js'), 'utf8'));
-	eval(fs.readFileSync(dir.get('/../ywork/lib/postgresql.js'), 'utf8'));
 
 	showDB();
+
+	/*insertDB({
+		name: 'NAME_TEST',
+		pass: '123123',
+		email: 'test2@gmail.com'
+	})*/
 
 	//-----------------------------------------------
 	//-----------------------------------------------
 
 	var WebSocketServer = require('ws').Server,
-	wss = new WebSocketServer({port: port}),
+	wss = new WebSocketServer({port: data.ws_port}),
 	CLIENTS=[], USERDATA=[];
 
 	wss.on('connection', function(ws) {
@@ -24,10 +20,14 @@ module.exports = function(app, dir, port, data){
 
 		ws.on('message', function(message) {
 
+			let send_all = false;
+
 			if(isJSON(message)){
 
+				send_all = true;
+
 				var obj = JSON.parse(message);
-				let send_all = true;
+
 
 				for (var i=0; i<CLIENTS.length; i++) {
 
@@ -43,12 +43,6 @@ module.exports = function(app, dir, port, data){
 
 							send_all = false;
 
-							//console.log(obj.validator);
-
-							//------------------------------
-							// Check Input Request
-							//------------------------------
-
 							let res_obj = {
 								input_name: 'username',
 								adv: ''
@@ -62,17 +56,25 @@ module.exports = function(app, dir, port, data){
 								CLIENTS[i].send(JSON.stringify(USERDATA[i]));
 
 							}else{
-								
-								getDB('users', i, function(data, id){
+
+								getDB('users', USERDATA[i].users.var[0].hash, function(data, hash){
 
 									for(let ii=0;ii<l(data);ii++){
 
 										if(data[ii].username==obj.validator){
 
-											res_obj.adv = ['username already exist', 'usuario existente'];
-											USERDATA[id].state = 'checkinput';
-											USERDATA[id].validator = res_obj;
-											CLIENTS[id].send(JSON.stringify(USERDATA[id]));
+											for(let iii=0;iii<l(USERDATA);iii++){
+
+												if(USERDATA[iii].users.var[0].hash==hash){
+
+													res_obj.adv = ['username already exist', 'usuario existente'];
+													USERDATA[iii].state = 'checkinput';
+													USERDATA[iii].validator = res_obj;
+													CLIENTS[iii].send(JSON.stringify(USERDATA[iii]));
+
+												}
+
+											}
 
 										}
 
@@ -82,11 +84,18 @@ module.exports = function(app, dir, port, data){
 
 							}
 
-							//------------------------------
-							// . . .
-							//------------------------------
-
 						}
+
+						//-----------------------------------------------------------------
+						//-----------------------------------------------------------------
+
+
+
+
+
+
+
+
 
 						//-----------------------------------------------------------------
 						//-----------------------------------------------------------------
@@ -130,6 +139,4 @@ module.exports = function(app, dir, port, data){
 		}
 	}
 
-	console.log('WS SERVER ONLINE -> PORT:'+port);
-
-};
+	console.log('WS SERVER ONLINE -> PORT:'+data.ws_port);

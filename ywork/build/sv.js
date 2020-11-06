@@ -1,4 +1,4 @@
-module.exports = function(app, dir, port){
+
 
 	/*
 
@@ -13,7 +13,7 @@ module.exports = function(app, dir, port){
 	});
 
 	*/
-	
+
 
 	app.get(('/pathfinding-browser.min.js'), function(req, res){
 
@@ -207,10 +207,8 @@ module.exports = function(app, dir, port){
 
 	});
 
-	app.listen(port, function () {
+	app.listen(data.http_port, function () {
 
-		console.log('HTTP SERVER ONLINE -> PORT:'+port);
+		console.log('HTTP SERVER ONLINE -> PORT:'+data.http_port);
 
 	});
-
-};

@@ -1,3 +1,6 @@
+//toLowerCase()
+//toUpperCase() 
+
 function aprox(num, dec){
 
 	return parseFloat(Math.round( num * 100) / 100).toFixed(dec);
