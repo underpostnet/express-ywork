@@ -17,31 +17,31 @@
 
 	app.get(('/pathfinding-browser.min.js'), function(req, res){
 
-		res.sendFile(dir.get('/../ywork/lib/pathfinding-browser.min.js'));
+		res.sendFile(dir.get('/../ywork/build/client/pathfinding-browser.min.js'));
 
 	})
 
 	app.get(('/vanilla.js'), function(req, res){
 
-		res.sendFile(dir.get('/../ywork/lib/vanilla.js'));
+		res.sendFile(dir.get('/../ywork/build/client/vanilla.js'));
 
 	})
 
-	app.get(('/ywork.js'), function(req, res){
+	app.get(('/util.js'), function(req, res){
 
-		res.sendFile(dir.get('/../ywork/lib/ywork.js'));
-
-	})
-
-	app.get(('/wsnode.js'), function(req, res){
-
-		res.sendFile(dir.get('/../ywork/lib/wsnode.js'));
+		res.sendFile(dir.get('/../ywork/build/client/util.js'));
 
 	})
 
-	app.get(('/style.css'), function(req, res){
+	app.get(('/websocket.js'), function(req, res){
 
-		res.sendFile(dir.get('/../ywork/style/main.css'));
+		res.sendFile(dir.get('/../ywork/build/client/websocket.js'));
+
+	})
+
+	app.get(('/underpost.css'), function(req, res){
+
+		res.sendFile(dir.get('/../ywork/style/underpost.css'));
 
 	})
 

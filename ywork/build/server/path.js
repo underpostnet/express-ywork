@@ -138,7 +138,7 @@
         <meta property='og:url' content='`+data.url+`' />
         <meta name='twitter:card' content='summary_large_image' />
 
-        <link rel='stylesheet' type='text/css' href='/style.css'>
+        <link rel='stylesheet' type='text/css' href='/underpost.css'>
 
         <meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
 
@@ -157,11 +157,11 @@
 
         <script type='text/javascript' src='/vanilla.js'></script>
 
-        <script type='text/javascript' src='/ywork.js'></script>
+        <script type='text/javascript' src='/util.js'></script>
 
         <script type='text/javascript' src='/pathfinding-browser.min.js'></script>
 
-        <script type='text/javascript' src='/wsnode.js'></script>
+        <script type='text/javascript' src='/websocket.js'></script>
 
         <!-- <link href='https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap' rel='stylesheet'> -->
 
@@ -236,5 +236,3 @@
       res.sendFile(dir.get('/path/'+data.pathname+'.js'));
 
     });
-
-  
