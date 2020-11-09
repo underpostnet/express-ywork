@@ -138,5 +138,3 @@
 			CLIENTS[i].send(message);
 		}
 	}
-
-	console.log('WS SERVER ONLINE -> PORT:'+data.ws_port);

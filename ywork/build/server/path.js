@@ -1,238 +1,312 @@
 
 
-  var strH1 = '';
-  for(var i=0;i<l(data.h1);i++){
 
-    strH1 = strH1 + '<h1>'+data.h1[i]+'</h1>';
 
-  }
 
-  var strH2 = '';
-  for(var i=0;i<l(data.h2);i++){
 
-    strH2 = strH2 + '<h2>'+data.h2[i]+'</h2>';
 
-  }
+for(let i=0; i<l(data.path);i++){
 
-  var meta_mod = '';
-  for(var i=0;i<l(data.modules);i++){
+	const suburl = data.path[i].url;
 
-    meta_mod = meta_mod + `<link rel='stylesheet' type='text/css' href='/modules/`+data.modules[i]+`/style.css'>
+	  app.get(suburl, function(req, res) {
 
-    `;
-    meta_mod = meta_mod + `<script type='text/javascript' src='/modules/`+data.modules[i]+`/main.js'></script>
+			//-----------------------------------------------------
+			//-----------------------------------------------------
 
-    `;
+			let header = logHeader(req, res);
+			let lang = header.lang;
+			let lang_id = header.id;
 
-    //``
+			//-----------------------------------------------------
+			//-----------------------------------------------------
 
-    const path_mod = data.modules[i];
+			app.get(('/'+data.favicon), function(req, res) {
 
-    app.get(("/modules/"+path_mod+"/style.css"), function(req, res) {
+	      res.sendFile(dir.get('/assets/'+data.favicon));
 
-      res.sendFile(dir.get("/modules/"+path_mod+"/style.css"));
+	    });
 
-    });
+	    app.get(('/'+data.path[i].image), function(req, res) {
 
-    app.get(("/modules/"+path_mod+"/main.js"), function(req, res) {
+	      res.sendFile(dir.get('/assets/'+data.path[i].image));
 
-      res.sendFile(dir.get("/modules/"+path_mod+"/main.js"));
+	    });
 
-    });
+			//-----------------------------------------------------
+			//-----------------------------------------------------
 
-  }
+			let microdata = '';
 
-  var microdata = '';
-  for(var i=0;i<l(data.microdata);i++){
+			for(let ii=0;ii<l(data.path[i].microdata);ii++){
 
-    microdata = microdata + `
+				microdata = microdata + `
 
-    <script type="application/ld+json">
+				<script type="application/ld+json">
 
-    `+data.microdata[i]+`
+				`+data.path[i].microdata[ii]+`
 
-    </script>
+				</script>
 
-    `;
+				`;
 
-  }
+			}
 
-  app.get(data.suburl, function(req, res) {
+			//-----------------------------------------------------
+			//-----------------------------------------------------
 
-    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+			let h1 = '';
 
-    console.log(
+			for(let ii=0;ii<l(data.path[i].h1);ii++){
 
-      `
-      http connection
-      ip: `+ip+`
-      time: `+new Date()+`
-      host: `+req.headers.host+`
-      lang: `+req.acceptsLanguages()+`
+				h1 = h1 + `
 
-      `
+					<h1>
 
-    );
+					`+data.path[i].h1[ii][lang_id]+`
 
-    let lang = ''+req.acceptsLanguages();
-    lang = lang.split('-')[0];
-    if(!(lang=='es')){ lang = 'en'; }
+					</h1>
 
-    res.writeHead(200, {
+				`;
 
-      'Content-Type': 'text/html; charset=utf-8',
-      'Content-Language': (''+lang)
+			}
 
-    });
+			//-----------------------------------------------------
+			//-----------------------------------------------------
 
-    res.write(
+			let h2 = '';
 
-      (`
-        <!DOCTYPE html>
+			for(let ii=0;ii<l(data.path[i].h2);ii++){
+
+					h2 = h2 + `
+
+					<h2>
+
+					`+data.path[i].h2[ii][lang_id]+`
+
+					</h2>
+
+				`;
+
+			}
+
+			//-----------------------------------------------------
+			//-----------------------------------------------------
+
+			let fonts = '';
+
+			for(let ii=0;ii<l(data.fonts);ii++){
+
+				fonts = fonts + 	`
+
+				<style>
+
+				@font-face {
+
+					font-family: '`+data.fonts[ii].name+`';
+					src: URL('`+data.fonts[ii].url+`') format('truetype');
+
+				}
+
+				</style>
+
+				`;
+
+			}
+
+			//-----------------------------------------------------
+			//-----------------------------------------------------
+
+			let mod = '';
+
+			for(let ii=0;ii<l(data.path[i].modules);ii++){
+
+				mod = mod + 	`
+
+				<script>
+
+				`+fs.readFileSync(
+
+					(data.path_file+'modules/'+data.path[i].modules[ii]+'/main.js')
+
+				)+`
+
+				</script>
+
+				<style>
+
+				`+fs.readFileSync(
+
+					(data.path_file+'modules/'+data.path[i].modules[ii]+'/style.css')
+
+				)+`
+
+				</style>
+
+				`;
+
+			}
+
+			//-----------------------------------------------------
+			//-----------------------------------------------------
+
+			res.write(reduce(`
+
+				<!DOCTYPE html>
 
         <html dir='`+data.dir+`' lang='`+lang+`'>
 
         <head>
 
-        <title>`+data.title+`</title>
+        <title>`+data.path[i].title[lang_id]+`</title>
 
-        `+microdata+`
+				`+microdata+`
 
-        <meta name ='title' content='`+data.title+`' />
-        <meta name ='description' content='`+data.description+`' />
-        <meta name ='theme-color' content = '`+data.color+`' />
+				<meta name ='title' content='`+data.path[i].title[lang_id]+`' />
+				<meta name ='description' content='`+data.path[i].description[lang_id]+`' />
+				<meta name ='theme-color' content = '`+data.color+`' />
 
-        <link rel='canonical' href='`+data.url+`' />
-
-
-        <link rel='icon' type='image/png' href='/`+data.favicon+`' />
+				<link rel='canonical' href='`+data.url+data.path[i].url+`' />
 
 
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="194x194" href="/favicon-194x194.png">
-
-        <link rel="icon" type="image/png" sizes="36x36" href="/android-chrome-36x36.png">
-        <link rel="icon" type="image/png" sizes="48x48" href="/android-chrome-48x48.png">
-        <link rel="icon" type="image/png" sizes="72x72" href="/android-chrome-72x72.png">
-        <link rel="icon" type="image/png" sizes="96x96" href="/android-chrome-96x96.png">
-        <link rel="icon" type="image/png" sizes="144x144" href="/android-chrome-144x144.png">
-        <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
-        <link rel="icon" type="image/png" sizes="256x256" href="/android-chrome-256x256.png">
-        <link rel="icon" type="image/png" sizes="384x384" href="/android-chrome-384x384.png">
-
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-        <link rel="manifest" href="/site.webmanifest">
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="`+data.color+`">
-        <meta name="apple-mobile-web-app-title" content="`+data.title+`">
-        <meta name="application-name" content="`+data.title+`">
-        <meta name="msapplication-config" content="/browserconfig.xml" />
-        <meta name="msapplication-TileColor" content="`+data.color+`">
-        <meta name="msapplication-TileImage" content="/mstile-144x144.png">
-        <meta name="theme-color" content="`+data.color+`">
+				<link rel='icon' type='image/png' href='/`+data.favicon+`' />
 
 
-        <meta property='og:title' content='`+data.title+`' />
-        <meta property='og:description' content='`+data.description+`' />
-        <meta property='og:image' content='`+data.url+`/`+data.image+`' />
-        <meta property='og:url' content='`+data.url+`' />
-        <meta name='twitter:card' content='summary_large_image' />
+				<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+				<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+				<link rel="icon" type="image/png" sizes="194x194" href="/favicon-194x194.png">
 
-        <link rel='stylesheet' type='text/css' href='/underpost.css'>
+				<link rel="icon" type="image/png" sizes="36x36" href="/android-chrome-36x36.png">
+				<link rel="icon" type="image/png" sizes="48x48" href="/android-chrome-48x48.png">
+				<link rel="icon" type="image/png" sizes="72x72" href="/android-chrome-72x72.png">
+				<link rel="icon" type="image/png" sizes="96x96" href="/android-chrome-96x96.png">
+				<link rel="icon" type="image/png" sizes="144x144" href="/android-chrome-144x144.png">
+				<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+				<link rel="icon" type="image/png" sizes="256x256" href="/android-chrome-256x256.png">
+				<link rel="icon" type="image/png" sizes="384x384" href="/android-chrome-384x384.png">
 
-        <meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
+				<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+				<link rel="manifest" href="/site.webmanifest">
+				<link rel="mask-icon" href="/safari-pinned-tab.svg" color="`+data.color+`">
+				<meta name="apple-mobile-web-app-title" content="`+data.path[i].title[lang_id]+`">
+				<meta name="application-name" content="`+data.path[i].title[lang_id]+`">
+				<meta name="msapplication-config" content="/browserconfig.xml" />
+				<meta name="msapplication-TileColor" content="`+data.color+`">
+				<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+				<meta name="theme-color" content="`+data.color+`">
 
-        <meta name='viewport' content='width=device-width, user-scalable=no' />
 
-        <script async src='https://www.googletagmanager.com/gtag/js?id=`+data.googletag+`'></script>
+				<meta property='og:title' content='`+data.path[i].title[lang_id]+`' />
+				<meta property='og:description' content='`+data.path[i].description[lang_id]+`' />
+				<meta property='og:image' content='`+data.url+`/`+data.path[i].image+`' />
+				<meta property='og:url' content='`+data.url+data.path[i].url+`' />
+				<meta name='twitter:card' content='summary_large_image' />
 
-        <script>
 
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '`+data.googletag+`');
+				<meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
 
-        </script>
+				<meta name='viewport' content='width=device-width, user-scalable=no' />
 
-        <script type='text/javascript' src='/vanilla.js'></script>
+				<script async src='https://www.googletagmanager.com/gtag/js?id=`+data.googletag+`'></script>
 
-        <script type='text/javascript' src='/util.js'></script>
+				<script>
 
-        <script type='text/javascript' src='/pathfinding-browser.min.js'></script>
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
+				gtag('config', '`+data.googletag+`');
 
-        <script type='text/javascript' src='/websocket.js'></script>
+				</script>
 
-        <!-- <link href='https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap' rel='stylesheet'> -->
+				<script>
 
-        <style>
+					var grecaptchaTest;
+					var onloadCallback = function() {
+						grecaptcha.render('test-recaptcha', {
+							'sitekey' : '`+data.gcap+`'
+						});
+						grecaptchaTest = grecaptcha;
+					};
 
-        @font-face {
+					function isCaptchaChecked() {
+						return grecaptchaTest && grecaptchaTest.getResponse().length !== 0;
+					}
 
-          font-family: 'retro-font';
-          src: URL('/assets/fonts/PressStart2P.ttf') format('truetype');
+				</script>
 
-        }
-
-        </style>
-
-        <script>
-
-          var grecaptchaTest;
-      		var onloadCallback = function() {
-      		  grecaptcha.render('test-recaptcha', {
-      		    'sitekey' : '`+data.gcap+`'
-      		  });
-      		  grecaptchaTest = grecaptcha;
-      		};
-
-      		function isCaptchaChecked() {
-      		  return grecaptchaTest && grecaptchaTest.getResponse().length !== 0;
-      		}
-
-        </script>
-
-        `+meta_mod+`
-
-        </head>
-
-        <body>
-
-        <script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=`+lang+`'
+				<script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=`+lang+`'
   			async defer></script>
 
-        `+strH1+`
+				<!--///////////////////////////////////////////////////////////-->
+				<!--///////////////////////////////////////////////////////////-->
 
-        `+strH2+`
+				`+fonts+`
 
-        <script type='text/javascript' src='/path/`+data.pathname+`.js' async defer></script>
+				<style>
 
-        </body>
+					`+fs.readFileSync(
 
-        </html>
+						(data.ywork_file+'style/'+data.path[i].main_css)
 
-        `).replace(/\n|\t/g, ' ')
+					)+`
 
-      );
+				</style>
 
-      res.end();
+				<script>
 
-    });
+					`+fs.readFileSync(
 
-    app.get(('/'+data.favicon), function(req, res) {
+						(data.ywork_file+'build/client/pathfinding-browser.min.js')
 
-      res.sendFile(dir.get('/assets/'+data.favicon));
+					)+`
 
-    });
+					`+fs.readFileSync(
 
-    app.get(('/'+data.image), function(req, res) {
+						(data.ywork_file+'build/client/util.js')
 
-      res.sendFile(dir.get('/assets/'+data.image));
+					)+`
 
-    });
+					`+fs.readFileSync(
 
-    app.get(('/path/'+data.pathname+'.js'), function(req, res) {
+						(data.ywork_file+'build/client/vanilla.js')
 
-      res.sendFile(dir.get('/path/'+data.pathname+'.js'));
+					)+`
 
-    });
+					`+fs.readFileSync(
+
+						(data.ywork_file+'build/client/websocket.js')
+
+					)+`
+
+				</script>
+
+				`+mod+`
+
+				</head>
+
+				<body>
+
+				`+h1+h2+`
+
+				<script async defer>
+
+					`+fs.readFileSync(
+
+						(data.path_file+'path/'+data.path[i].main_js)
+
+					)+`
+
+				</script>
+
+				</body>
+
+				</html>
+
+				`));
+
+			res.end();
+
+
+		});
+
+}

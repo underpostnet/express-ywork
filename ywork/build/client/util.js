@@ -1,5 +1,5 @@
 //toLowerCase()
-//toUpperCase() 
+//toUpperCase()
 
 function aprox(num, dec){
 
@@ -146,6 +146,12 @@ var str_test = {
 			}
   }
 };
+
+function reduce(str){
+
+	return str.replace(/\n|\t/g, ' ');
+	
+}
 
 //Must be at least 8 characters long.
 //Must contain a lowercase letter.

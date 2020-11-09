@@ -56,6 +56,8 @@ function setStatic(list){
 
 }
 
+setStatic(data.static);
+
 //--------------------------------------------
 //--------------------------------------------
 
@@ -89,3 +91,42 @@ var k = new NodeCrypto(data.db.key);
 
 //--------------------------------------------
 //--------------------------------------------
+
+
+function logHeader(req, res){
+
+	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+	console.log(
+
+		`
+		http connection
+		ip: `+ip+`
+		time: `+new Date()+`
+		host: `+req.headers.host+`
+		lang: `+req.acceptsLanguages()+`
+
+		`
+
+	);
+
+	let lang = ''+req.acceptsLanguages();
+	let id = 1;
+	lang = lang.split('-')[0];
+	if(!(lang=='es')){
+
+		lang = 'en';
+		id = 0;
+
+	}
+
+	res.writeHead(200, {
+
+		'Content-Type': 'text/html; charset=utf-8',
+		'Content-Language': (''+lang)
+
+	});
+
+	return {lang: lang, id: id};
+
+}
