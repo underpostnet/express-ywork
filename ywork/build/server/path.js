@@ -44,7 +44,7 @@ for(let i=0; i<l(data.path);i++){
 
 				<script type="application/ld+json">
 
-				`+data.path[i].microdata[ii]+`
+				`+main_microdata[ii]+`
 
 				</script>
 

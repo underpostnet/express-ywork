@@ -1,0 +1,4 @@
+\t indentado
+\n salto de linea
+
+https://www.w3schools.com/nodejs
