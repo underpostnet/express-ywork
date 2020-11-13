@@ -1,4 +1,24 @@
-
+//<input type='text' class='subInputChat' spellcheck='false' autocomplete='new-password' onfocusout="mod_session.outUserNameInput();" placeholder=' . . .' value='' />
+//.split() .join()
+// replace(/reemplazar todos los lugares en que este esto/g, 'por esto');
+// location.reload();
+// location.href = "https://www.w3schools.com";
+//obtener contenido  .value
+//incitar focus  .focus() fuera focus .blur()
+// .attr = ''
+//.includes('php') detectar string en string
+//async function load_foro_sietechakras() {
+//	const foro_sietechakras = await import('https://www.somosindia.cl/sv/gestor/foro_sietechakras.js');
+//}
+//load_foro_sietechakras(data);
+//JSON.parse() JSON.stringify()
+//str.trim() limpiar string
+//this.className.split('_')
+//s().onevent = function(){}; sobree escritura de evento
+//parseFloat(Math.round( num * 100) / 100).toFixed(2);
+//&nbsp; &nbsp;
+//s('.chat-history').scrollTop = s('.chat-history').scrollHeight;
+//s('.'+name+'-input-focus').onmouseout
 
 function s(div){
 
@@ -106,7 +126,7 @@ function lang(){
 function fullScreenIn(){
 
 	let el = document.documentElement;
-	let rfs =
+	let rfs = // for newer Webkit and Firefox
 	el.requestFullScreen
 	|| el.webkitRequestFullScreen
 	|| el.mozRequestFullScreen
@@ -115,7 +135,7 @@ function fullScreenIn(){
 	if(typeof rfs!="undefined" && rfs){
 		rfs.call(el);
 	} else if(typeof window.ActiveXObject!="undefined"){
-
+		// for Internet Explorer
 		let wscript = new ActiveXObject("WScript.Shell");
 		if (wscript!=null) {
 			wscript.SendKeys("{F11}");
@@ -130,7 +150,8 @@ function fullScreenOut(){
 
 }
 
-
+//----------------------------------
+//----------------------------------
 
 async function ajax(type, url, obj, end){
 
@@ -166,25 +187,26 @@ async function ajax(type, url, obj, end){
 
 });*/
 
+//----------------------------------
+//----------------------------------
 
-
-
+// Ejemplo implementando el metodo POST:
 async function postData(url = '', data = {}) {
-
+  // Opciones por defecto estan marcadas con un *
   const response = await fetch(url, {
-    method: 'POST',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
     headers: {
       'Content-Type': 'application/json'
-
+      // 'Content-Type': 'application/x-www-form-urlencoded',
     },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer',
-    body: JSON.stringify(data)
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(data) // body data type must match "Content-Type" header
   });
-  return response.json(); 
+  return response.json(); // parses JSON response into native JavaScript objects
 }
 
 /*

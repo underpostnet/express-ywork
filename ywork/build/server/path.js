@@ -117,35 +117,32 @@ for(let i=0; i<l(data.path);i++){
 			//-----------------------------------------------------
 			//-----------------------------------------------------
 
-			let mod = '';
-
+			let mod_js = '<script type="text/javascript">';
 			for(let ii=0;ii<l(data.path[i].modules);ii++){
 
-				mod = mod + 	`
-
-				<script>
-
-				`+fs.readFileSync(
+				mod_js = mod_js + fs.readFileSync(
 
 					(data.path_file+'modules/'+data.path[i].modules[ii]+'/main.js')
 
-				)+`
+				);
 
-				</script>
+			}
+			mod_js = mod_js + '</script>';
 
-				<style>
+			//-----------------------------------------------------
+			//-----------------------------------------------------
 
-				`+fs.readFileSync(
+			let mod_css = '<style>';
+			for(let ii=0;ii<l(data.path[i].modules);ii++){
+
+				mod_css = mod_css + fs.readFileSync(
 
 					(data.path_file+'modules/'+data.path[i].modules[ii]+'/style.css')
 
-				)+`
-
-				</style>
-
-				`;
+				);
 
 			}
+			mod_css = mod_css + '</style>';
 
 			//-----------------------------------------------------
 			//-----------------------------------------------------
@@ -209,7 +206,7 @@ for(let i=0; i<l(data.path);i++){
 
 				<script async src='https://www.googletagmanager.com/gtag/js?id=`+data.googletag+`'></script>
 
-				<script>
+				<script type='text/javascript'>
 
 				window.dataLayer = window.dataLayer || [];
 				function gtag(){dataLayer.push(arguments);}
@@ -218,7 +215,7 @@ for(let i=0; i<l(data.path);i++){
 
 				</script>
 
-				<script>
+				<script type='text/javascript'>
 
 					var grecaptchaTest;
 					var onloadCallback = function() {
@@ -234,11 +231,8 @@ for(let i=0; i<l(data.path);i++){
 
 				</script>
 
-				<script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=`+lang+`'
+				<script type='text/javascript' src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=`+lang+`'
   			async defer></script>
-
-				<!--///////////////////////////////////////////////////////////-->
-				<!--///////////////////////////////////////////////////////////-->
 
 				`+fonts+`
 
@@ -252,7 +246,7 @@ for(let i=0; i<l(data.path);i++){
 
 				</style>
 
-				<script>
+				<script type='text/javascript'>
 
 					`+fs.readFileSync(
 
@@ -280,7 +274,7 @@ for(let i=0; i<l(data.path);i++){
 
 				</script>
 
-				`+mod+`
+				`+mod_js+mod_css+`
 
 				</head>
 
@@ -288,7 +282,7 @@ for(let i=0; i<l(data.path);i++){
 
 				`+h1+h2+`
 
-				<script async defer>
+				<script type='text/javascript' async defer>
 
 					`+fs.readFileSync(
 

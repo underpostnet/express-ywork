@@ -1,3 +1,5 @@
+//toLowerCase()
+//toUpperCase()
 
 function aprox(num, dec){
 
@@ -31,7 +33,7 @@ function getHash(){
 function isJSON(str) {
 	try {
 
-
+		//if(x < 5) throw "is too low"; crear errores
 
 		JSON.parse(str);
 
@@ -107,7 +109,7 @@ function regulartxt(txt){
 
 }
 
-
+//https://codepen.io/JefMari/pen/PPKbQy?editors=1010
 var str_test = {
   charLength: function(str) {
       if( str.length >= 8 ) {
@@ -117,7 +119,7 @@ var str_test = {
 			}
   },
   lowercase: function(str) {
-      var regex = /^(?=.*[a-z]).+$/;
+      var regex = /^(?=.*[a-z]).+$/; // Lowercase character pattern
 
       if( regex.test(str) ) {
           return true;
@@ -126,7 +128,7 @@ var str_test = {
 			}
   },
   uppercase: function(str) {
-      var regex = /^(?=.*[A-Z]).+$/;
+      var regex = /^(?=.*[A-Z]).+$/; // Uppercase character pattern
 
       if( regex.test(str) ) {
           return true;
@@ -135,7 +137,7 @@ var str_test = {
 			}
   },
   special: function(str) {
-      var regex = /^(?=.*[0-9_\W]).+$/;
+      var regex = /^(?=.*[0-9_\W]).+$/; // Special character or number pattern
 
       if( regex.test(str) ) {
           return true;
@@ -148,5 +150,10 @@ var str_test = {
 function reduce(str){
 
 	return str.replace(/\n|\t/g, ' ');
-
+	
 }
+
+//Must be at least 8 characters long.
+//Must contain a lowercase letter.
+//Must contain an uppercase letter.
+//Must contain a number or special character.
