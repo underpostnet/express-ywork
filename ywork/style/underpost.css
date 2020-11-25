@@ -42,6 +42,25 @@ a {
 
 }
 
+.fl {
+
+	position: relative;
+	display: flow-root;
+
+}
+
+.fll {
+
+	float: left;
+
+}
+
+.flr {
+
+	float: right;
+
+}
+
 .abs {
 
 	position: absolute;
