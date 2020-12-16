@@ -1,6 +1,0 @@
-https://developer.paypal.com/developer/applications/ -> crear app
-https://developer.paypal.com/docs/api/get-an-access-token-curl/ -> obtener token
-https://developer.paypal.com/docs/api/orders/v2/#orders_create -> crear orden
-https://developer.paypal.com/docs/api/orders/v2/#orders_get -> estado orden
-
-https://stackoverflow.com/questions/37262192/paypal-get-access-token-with-php-curl -> token

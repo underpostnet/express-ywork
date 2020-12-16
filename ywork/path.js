@@ -240,7 +240,7 @@ for(let i=0; i<l(data.path);i++){
 
 					`+fs.readFileSync(
 
-						(data.ywork_file+'style/'+data.path[i].main_css)
+						'c:/xampp/htdocs/client/style/'+data.path[i].main_css
 
 					)+`
 
@@ -250,25 +250,25 @@ for(let i=0; i<l(data.path);i++){
 
 					`+fs.readFileSync(
 
-						(data.ywork_file+'build/client/pathfinding-browser.min.js')
+						('c:/xampp/htdocs/client/pathfinding-browser.min.js')
 
 					)+`
 
 					`+fs.readFileSync(
 
-						(data.ywork_file+'build/client/util.js')
+						('c:/xampp/htdocs/client/util.js')
 
 					)+`
 
 					`+fs.readFileSync(
 
-						(data.ywork_file+'build/client/vanilla.js')
+						('c:/xampp/htdocs/client/vanilla.js')
 
 					)+`
 
 					`+fs.readFileSync(
 
-						(data.ywork_file+'build/client/websocket.js')
+						('c:/xampp/htdocs/client/websocket.js')
 
 					)+`
 
