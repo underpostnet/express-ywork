@@ -147,6 +147,53 @@ for(let i=0; i<l(data.path);i++){
 			//-----------------------------------------------------
 			//-----------------------------------------------------
 
+			let mod_gcap = '';
+
+			if(data.path[i].g_cap){
+
+				mod_gcap = `
+
+				<script type='text/javascript'>
+
+					var grecaptchaTest;
+					var onloadCallback = function() {
+						grecaptcha.render('test-recaptcha', {
+							'sitekey' : '`+data.gcap+`'
+						});
+						grecaptchaTest = grecaptcha;
+					};
+
+					function isCaptchaChecked() {
+						return grecaptchaTest && grecaptchaTest.getResponse().length !== 0;
+					}
+
+				</script>
+
+				<script type='text/javascript' src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=`+lang+`'
+				async defer></script>
+
+				`;
+
+			}
+
+			//-----------------------------------------------------
+			//-----------------------------------------------------
+
+			let mod_streamer = '';
+
+			if(data.path[i].streamer){
+				mod_streamer = `
+
+				<script defer src="/peer.js"></script>
+		    <script src="/socket.io/socket.io.js" defer></script>
+
+
+				`;
+			}
+
+			//-----------------------------------------------------
+			//-----------------------------------------------------
+
 			res.write(reduce(`
 
 				<!DOCTYPE html>
@@ -215,24 +262,9 @@ for(let i=0; i<l(data.path);i++){
 
 				</script>
 
-				<script type='text/javascript'>
+				`+mod_streamer+`
 
-					var grecaptchaTest;
-					var onloadCallback = function() {
-						grecaptcha.render('test-recaptcha', {
-							'sitekey' : '`+data.gcap+`'
-						});
-						grecaptchaTest = grecaptcha;
-					};
-
-					function isCaptchaChecked() {
-						return grecaptchaTest && grecaptchaTest.getResponse().length !== 0;
-					}
-
-				</script>
-
-				<script type='text/javascript' src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=`+lang+`'
-  			async defer></script>
+				`+mod_gcap+`
 
 				`+fonts+`
 
