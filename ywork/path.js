@@ -185,7 +185,7 @@ for(let i=0; i<l(data.path);i++){
 				mod_streamer = `
 
 				<script defer src="/peer.js"></script>
-		    <script src="/socket.io/socket.io.js" defer></script>
+		    <script defer src="/socket.io/socket.io.js"></script>
 
 
 				`;
