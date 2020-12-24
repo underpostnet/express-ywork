@@ -26,7 +26,7 @@ var var_dump = require('var_dump');
 //--------------------------------------------
 //--------------------------------------------
 
-let path = require('path');
+var path = require('path');
 var dir = {
 	get: function(dir){
 
