@@ -1,14 +1,5 @@
 
-	showDB();
 
-	/*insertDB({
-		name: 'NAME_TEST',
-		pass: '123123',
-		email: 'test2@gmail.com'
-	})*/
-
-	//-----------------------------------------------
-	//-----------------------------------------------
 
 	var WebSocketServer = require('ws').Server,
 	wss = new WebSocketServer({port: data.ws_port}),
