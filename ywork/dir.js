@@ -1,13 +1,9 @@
-//------------------------------------------------------------------------------
-//------------------------------------------------------------------------------
 
 
 var mp3Duration = require('mp3-duration');
 
-
-//------------------------------------------------------------------------------
-//------------------------------------------------------------------------------
-
+//--------------------------------------------------------------------
+//--------------------------------------------------------------------
 
 function getSizeMB(path, name_file){
 
@@ -19,103 +15,119 @@ function getSizeMB(path, name_file){
 
 };
 
-let path_file_radio = 'c:/xampp/htdocs/cloud/radio/';
 
-let data_dir = [];
 
-fs.readdir(path_file_radio, function (err, files) {
-    //handling error
-    if (err) {
-        return console.log('Unable to scan directory: ' + err);
-    }
-    //listing all files using forEach
+function getRadio(dir, end){
 
-    files.forEach(function (file) {
+  let path_file_radio = 'c:/xampp/htdocs/cloud/radio/music/'+dir+'/';
+  //id duracion nombre
 
-        // Do whatever you want to do with the file
+  let data_dir = [];
 
-        mp3Duration((path_file_radio+file), function (err, duration) {
+  fs.readdir(path_file_radio, function (err, files) {
 
-          //--------------------------------------------------------------------
-          //--------------------------------------------------------------------
+      if (err) {
+          return console.log('Unable to scan directory: ' + err);
+      }
 
-          let file_dir = (path_file_radio+file);
-          let file_name = file;
-          let file_size = getSizeMB(path_file_radio, file);
-          let file_ext = path.extname(file);
-          if(file_ext==''){
-            file_ext = 'folder';
-          }else{
-            file_ext = file_ext.split('.')[1];
-          }
+      let cont = 0;
 
-          //--------------------------------------------------------------------
-          //--------------------------------------------------------------------
+      files.forEach(function (file) {
 
-          let file_time;
+          cont++;
 
-          if (!err) {
+          mp3Duration((path_file_radio+file), function (err, duration) {
 
-            let hour = parseInt(duration/3600);
+            let file_dir = (path_file_radio+file);
+            let file_name = file;
+            let file_size = getSizeMB(path_file_radio, file);
+            let file_ext = path.extname(file);
+            if(file_ext==''){
+              file_ext = 'folder';
+            }else{
+              file_ext = file_ext.split('.')[1];
+            }
 
-            let min = parseInt(((duration/3600)-hour)*60);
+            //--------------------------------------------------------------------
+            //--------------------------------------------------------------------
 
-            let sec = aprox((duration - (min*60)) ,0);
+            let file_time;
 
-            if(l((''+min))==1){
+            if (!err) {
 
-              min = '0'+min;
+              let hour = parseInt(duration/3600);
+
+              let min = parseInt(((duration/3600)-hour)*60);
+
+              let sec = aprox((duration - (min*60)) ,0);
+
+              if(l((''+min))==1){
+
+                min = '0'+min;
+
+              }
+
+              if(l((''+sec))==1){
+
+                sec = '0'+sec;
+
+              }
+
+
+
+              app.get(('/'+file), function(req, res){
+
+                res.sendFile((path_file_radio+file));
+
+              });
+
+
+              file_time = (hour+':'+min+':'+sec);
+
+            }else{
+
+              file_time = '0:00:00';
 
             }
 
-            if(l((''+sec))==1){
+            let s_push = [file_dir,file_name,file_ext,file_time,file_size];
+            // var_dump(s_push);
+            data_dir.push(s_push);
 
-              sec = '0'+sec;
+            if(cont>=l(files)){
+
+              end(data_dir);
 
             }
 
+          });
 
+      });
 
-            app.get(('/'+file), function(req, res){
+  });
 
-            	res.sendFile((path_file_radio+file));
-
-            });
-
-
-            file_time = (hour+':'+min+':'+sec);
-
-          }else{
-
-            file_time = '0:00:00';
-
-          }
-
-          let s_push = [file_dir,file_name,file_ext,file_time,file_size];
-          var_dump(s_push);
-          data_dir.push(s_push);
-
-        });
-
-
-        //---------------------------------
-        //---------------------------------
-
-    });
-
-});
-
-
+};
 
 
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
 
+app.post('/stream/:id', function(req, res){
 
-app.post(('/dir'), function(req, res){
+  let radio_data = '{}';
 
-  res.send(JSON.stringify(data_dir));
+  getRadio(req.params.id, function(data_dir){
+
+    radio_data = JSON.stringify(data_dir);
+
+  });
+
+  setTimeout(function(){
+
+    res.send(radio_data);
+
+  }, 1000);
 
 });
 
