@@ -16,6 +16,7 @@
 			if(isJSON(message)){
 
 				send_all = true;
+				not_auto_send = null;
 
 				var obj = JSON.parse(message);
 
@@ -25,6 +26,20 @@
 					if(CLIENTS[i]==ws){
 
 						USERDATA[i]=obj;
+
+						if((!obj.bots.activeServer)&&(obj.state!='checkinput')){
+
+							not_auto_send = i;
+
+						}
+
+						if(obj.state=='sv_id'){
+
+							send_all = false;
+							USERDATA[i].sv_id = i;
+							ws.send(JSON.stringify(USERDATA[i]));
+
+						}
 
 						//------------------------------------------------------------------
 						// Individual Request Response
@@ -56,12 +71,16 @@
 
 											for(let iii=0;iii<l(USERDATA);iii++){
 
-												if(USERDATA[iii].users.var[0].hash==hash){
+												if(USERDATA[iii]!=null){
 
-													res_obj.adv = ['username already exist', 'usuario existente'];
-													USERDATA[iii].state = 'checkinput';
-													USERDATA[iii].validator = res_obj;
-													CLIENTS[iii].send(JSON.stringify(USERDATA[iii]));
+													if(USERDATA[iii].users.var[0].hash==hash){
+
+														res_obj.adv = ['username already exist', 'usuario existente'];
+														USERDATA[iii].state = 'checkinput';
+														USERDATA[iii].validator = res_obj;
+														CLIENTS[iii].send(JSON.stringify(USERDATA[iii]));
+
+													}
 
 												}
 
@@ -95,7 +114,7 @@
 
 				}
 
-				if(send_all){sendAll(message);}
+				if(send_all){sendAll(message, not_auto_send);}
 
 			}
 
@@ -109,10 +128,14 @@
 
 					if(USERDATA[i]!=null){
 
+						/* condicional para evitar colgar el sistema por conexiones ws externas sin user data */
+
 						USERDATA[i].state = 'del';
-						sendAll(JSON.stringify(USERDATA[i]));
-						CLIENTS.splice(i, 1);
-						USERDATA.splice(i, 1);
+						sendAll(JSON.stringify(USERDATA[i]), null);
+						// CLIENTS.splice(i, 1);
+						// USERDATA.splice(i, 1);
+						USERDATA[i] = null;
+						CLIENTS[i] = null;
 
 					}
 
@@ -124,8 +147,14 @@
 
 	});
 
-	function sendAll (message) {
+	function sendAll (message, not_auto_send) {
 		for (var i=0; i<CLIENTS.length; i++) {
-			CLIENTS[i].send(message);
+
+			if((USERDATA[i]!=null) && (i!=not_auto_send)){
+
+				CLIENTS[i].send(message);
+
+			}
+
 		}
 	}
