@@ -54,33 +54,22 @@
 								adv: ''
 							};
 
-							if(l(obj.validator)<3){
+							getDB('users', USERDATA[i].users.var[0].hash, function(data, hash){
 
-								res_obj.adv = ['minimum 3 characters', 'minimo 3 caracteres'];
-								USERDATA[i].state = 'checkinput';
-								USERDATA[i].validator = res_obj;
-								CLIENTS[i].send(JSON.stringify(USERDATA[i]));
+								for(let ii=0;ii<l(data);ii++){
 
-							}else{
+									if(data[ii].username==obj.validator){
 
-								getDB('users', USERDATA[i].users.var[0].hash, function(data, hash){
+										for(let iii=0;iii<l(USERDATA);iii++){
 
-									for(let ii=0;ii<l(data);ii++){
+											if(USERDATA[iii]!=null){
 
-										if(data[ii].username==obj.validator){
+												if(USERDATA[iii].users.var[0].hash==hash){
 
-											for(let iii=0;iii<l(USERDATA);iii++){
-
-												if(USERDATA[iii]!=null){
-
-													if(USERDATA[iii].users.var[0].hash==hash){
-
-														res_obj.adv = ['username already exist', 'usuario existente'];
-														USERDATA[iii].state = 'checkinput';
-														USERDATA[iii].validator = res_obj;
-														CLIENTS[iii].send(JSON.stringify(USERDATA[iii]));
-
-													}
+													res_obj.adv = ['username already exist', 'usuario existente'];
+													USERDATA[iii].state = 'checkinput';
+													USERDATA[iii].validator = res_obj;
+													CLIENTS[iii].send(JSON.stringify(USERDATA[iii]));
 
 												}
 
@@ -90,9 +79,9 @@
 
 									}
 
-								});
+								}
 
-							}
+							});							
 
 						}
 
