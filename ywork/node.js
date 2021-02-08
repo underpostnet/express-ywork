@@ -97,6 +97,15 @@ function logHeader(req, res){
 
 	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
+	let session_state = 'session: off';
+	if(req.session.name && req.session.email){
+
+		session_state = `session: on
+		name: `+req.session.name+`
+		email: `+req.session.email;
+
+	}
+
 	console.log(
 
 		`
@@ -105,6 +114,7 @@ function logHeader(req, res){
 		time: `+new Date()+`
 		host: `+req.headers.host+`
 		lang: `+req.acceptsLanguages()+`
+		`+session_state+`
 
 		`
 

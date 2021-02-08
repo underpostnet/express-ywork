@@ -137,6 +137,30 @@
 
 							console.log('register -> ');
 							var_dump(obj.validator);
+							const id_register = i;
+							insert_USERS(id_register, {
+
+								name: obj.validator[0][1],
+								email: obj.validator[1][1],
+								pass: obj.validator[2][1]
+
+							}, function(id_register, result){
+
+								// showDB();
+
+								let res_obj = {
+									success: result,
+									name: obj.validator[0][1],
+									email: obj.validator[1][1],
+									pass: obj.validator[2][1],
+									adv: ['', '']
+								};
+								
+								USERDATA[id_register].state = 'register';
+								USERDATA[id_register].validator = res_obj;
+								CLIENTS[id_register].send(JSON.stringify(USERDATA[id_register]));
+
+							});
 
 						}
 

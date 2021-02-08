@@ -9,7 +9,7 @@ for(let i=0; i<l(data.path);i++){
 
 	const suburl = data.path[i].url;
 
-	  app.get(suburl, function(req, res) {
+	  app.get(suburl, auth, function(req, res) {
 
 			//-----------------------------------------------------
 			//-----------------------------------------------------
@@ -194,6 +194,36 @@ for(let i=0; i<l(data.path);i++){
 			//-----------------------------------------------------
 			//-----------------------------------------------------
 
+			let session_state = `
+			
+			console.log('session off');
+			function session(data){}
+
+			`;
+			if(req.session.name && req.session.email){
+
+				session_state = `
+
+				console.log('session on');
+				console.log('name -> `+req.session.name+`');
+				console.log('email -> `+req.session.email+`');
+
+				function session(data){
+
+					 data.users.var[0].name = '`+req.session.name+`';
+					 data.users.var[0].email = '`+req.session.email+`';
+					 data.session.state = true;
+
+				}
+
+				`
+
+			}
+
+
+			//-----------------------------------------------------
+			//-----------------------------------------------------
+
 			res.write((`
 
 				<!DOCTYPE html>
@@ -316,11 +346,17 @@ for(let i=0; i<l(data.path);i++){
 
 				<script type='text/javascript' async defer>
 
+					((()=> {
+
+					`+session_state+`
+
 					`+fs.readFileSync(
 
 						(data.path_file+'path/'+data.path[i].main_js)
 
 					)+`
+
+					})())
 
 				</script>
 

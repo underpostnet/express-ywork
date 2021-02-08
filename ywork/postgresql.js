@@ -74,7 +74,7 @@ function getDB(table, hash, end){
 //------------------------------------
 //------------------------------------
 
-function insertDB(obj){
+function insert_USERS(id_register, obj, end){
 
 	db.one('INSERT INTO users(id_users, username, pass, email) VALUES(DEFAULT, $1, $2, $3) RETURNING id_users',
 
@@ -82,10 +82,16 @@ function insertDB(obj){
 
 	.then(data => {
 
+		console.log('success register:');
 		var_dump(data);
+		end(id_register, true);
 
 	})
 	.catch(error => {
+
+		console.log('fail register:');
+		var_dump(error);
+		end(id_register, false);
 
 	});
 
