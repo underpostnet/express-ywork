@@ -78,17 +78,17 @@ app.post('/destroy_session', function (req, res) {
 
   if(req.session){
 
+    console.log('session destroy success -> '+req.session.email);
+
     req.session.destroy();
 
     res.send(JSON.stringify(true));
 
-    console.log('session destroy success');
-
   }else{
 
-    res.send(JSON.stringify(false));
+    console.log('session destroy failed -> '+req.session.email);
 
-    console.log('session destroy failed');
+    res.send(JSON.stringify(false));
 
   }
 
@@ -99,9 +99,45 @@ app.post('/destroy_session', function (req, res) {
 
 
 
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 
+app.post('/check_duplicate', function (req, res) {
 
+  console.log('post -> check_duplicate');
+  var_dump(req.body);
+
+  let response;
+
+  if(req.body){
+
+    for(val of USERDATA){
+
+      if(val!=null){
+
+        if(val.users.var[0].email==req.body.email){
+
+          response = true;
+
+          console.log('session duplicate -> '+req.session.email);
+
+        }
+
+      }
+
+    }
+
+  }else{
+
+    response = false;
+
+  }
+
+  res.send(JSON.stringify(response));
+  res.end();
+
+});
 
 
 
