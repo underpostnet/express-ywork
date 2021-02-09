@@ -137,30 +137,73 @@
 
 							console.log('register -> ');
 							var_dump(obj.validator);
+
+							let name_test = obj.validator[0][1];
+							let email_test = obj.validator[1][1];
+							let success_register = true;
 							const id_register = i;
-							insert_USERS(id_register, {
 
-								name: obj.validator[0][1],
-								email: obj.validator[1][1],
-								pass: obj.validator[2][1]
+							//----------------------------------------------------------------
+							//----------------------------------------------------------------
 
-							}, function(id_register, result){
+							getDB('users', USERDATA[i].users.var[0].hash, function(data, hash){
 
-								// showDB();
+								for(let ii=0;ii<l(data);ii++){
 
-								let res_obj = {
-									success: result,
-									name: obj.validator[0][1],
-									email: obj.validator[1][1],
-									pass: obj.validator[2][1],
-									adv: ['', '']
-								};
-								
-								USERDATA[id_register].state = 'register';
-								USERDATA[id_register].validator = res_obj;
-								CLIENTS[id_register].send(JSON.stringify(USERDATA[id_register]));
+									if(data[ii].username==name_test){
+
+										console.log('username exist failed -> '+name_test);
+										success_register = false;
+
+									}
+
+									if(data[ii].email==email_test){
+
+										console.log('email exist failed -> '+email_test);
+										success_register = false;
+
+									}
+
+								}
+
+								//----------------------------------------------------------------
+								//----------------------------------------------------------------
+
+								if(success_register){
+
+									insert_USERS(id_register, {
+
+										name: obj.validator[0][1],
+										email: obj.validator[1][1],
+										pass: obj.validator[2][1]
+
+									}, function(id_register, result){
+
+										// showDB();
+
+										let res_obj = {
+											success: result,
+											name: obj.validator[0][1],
+											email: obj.validator[1][1],
+											pass: obj.validator[2][1],
+											adv: ['', '']
+										};
+
+										USERDATA[id_register].state = 'register';
+										USERDATA[id_register].validator = res_obj;
+										CLIENTS[id_register].send(JSON.stringify(USERDATA[id_register]));
+
+									});
+
+								}
+
+								//----------------------------------------------------------------
+								//----------------------------------------------------------------
 
 							});
+
+							//----------------------------------------------------------------
+							//----------------------------------------------------------------
 
 						}
 
