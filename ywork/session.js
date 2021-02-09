@@ -108,7 +108,7 @@ app.post('/check_duplicate', function (req, res) {
   console.log('post -> check_duplicate');
   var_dump(req.body);
 
-  let response;
+  let response = false;
 
   if(req.body){
 
@@ -127,10 +127,6 @@ app.post('/check_duplicate', function (req, res) {
       }
 
     }
-
-  }else{
-
-    response = false;
 
   }
 
