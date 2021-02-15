@@ -1,6 +1,5 @@
 ###  UNDERpost.net
-# c Y B E R I A
-### o n l i n e
+# C Y B E R I A o n l i n e
 
 
 ![CYBERIAONLINE](https://www.cyberiaonline.com/CYBERIA.jpg)
