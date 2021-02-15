@@ -11,7 +11,7 @@ var session = require('express-session');
 //session init
 
 app.use(session({
-  secret: 'express-session-cyberia',
+  secret: data.secret_session,
   resave: true,
   saveUninitialized: true
 }));
