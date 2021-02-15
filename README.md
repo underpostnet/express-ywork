@@ -1,19 +1,9 @@
-npm install express
+###  UNDERpost.net
+# c Y B E R I A
+### o n l i n e
 
-npm install nodemon
 
-npm install path
+![CYBERIAONLINE](https://www.cyberiaonline.com/CYBERIA.jpg)
 
-npm install ws
 
-off npm install image-to-slices
-
-off npm install canvas
-
-npm install pg-promise
-
-npm install var_dump
-
-npm install crypto-js
-
-off npm install nodemailer
+https://www.cyberiaonline.com/

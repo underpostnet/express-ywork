@@ -1,0 +1,36 @@
+{
+  "name": "CYBERIA",
+  "description": "massively multiplayer online role-playing game",
+  "version": "2.0.0",
+  "main": "./cyberia/init.js",
+  "scripts": {
+    "start": "node cyberia/init.js",
+    "dev": "nodemon cyberia/init.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/underpostnet/express-ywork"
+  },
+  "keywords": [
+    "cyberia",
+    "online",
+    "mmorpg",
+    "game"
+  ],
+  "author": "Francisco Verdugo <fcoverdugoa@underpost.net> (https://underpost.net/)",
+  "license": "MIT",
+  "homepage": "https://www.cyberiaonline.com/",
+  "dependencies": {
+    "crypto-js": "^4.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "mp3-duration": "^1.1.0",
+    "nodemailer": "^6.4.18",
+    "nodemon": "^2.0.7",
+    "peer": "^0.6.1",
+    "pg-promise": "^10.9.2",
+    "socket.io": "^3.1.1",
+    "var_dump": "^1.0.5",
+    "ws": "^7.4.3"
+  }
+}
