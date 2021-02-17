@@ -78,7 +78,7 @@ app.post('/confirm_email', function (req, res) {
       //---------------------------------
       //---------------------------------
 
-      sendEmail({
+      /* sendEmail({
 
         to: req.body.email,
         subject: subject,
@@ -100,7 +100,7 @@ app.post('/confirm_email', function (req, res) {
         res.send(JSON.stringify(response));
         res.end();
 
-      });
+      }); */ res.send('true'); res.end();
 
   }
 
