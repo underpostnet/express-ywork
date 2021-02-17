@@ -42,8 +42,11 @@ async function sendEmail(obj, fn) {
   // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
 
-// main().catch(console.error);
 
+
+
+eval(fs.readFileSync('C:/dd/global_data/json/cyberia/mailer/confirm_email.js', 'utf8'));
+// renderConfirmEmail(lang, email, name, hash)
 
 app.post('/confirm_email', function (req, res) {
 
@@ -54,14 +57,33 @@ app.post('/confirm_email', function (req, res) {
   //------------------------------------------
   //------------------------------------------
 
-  if(req.body.email){
+  if(req.body.email && req.body.name && req.body.lang && req.session){
 
-      /* sendEmail({
+      //---------------------------------
+      //---------------------------------
+
+      let hash = getHash().split('-')[0];
+
+      let lang = req.body.lang=='es' ? 1 : 0;
+
+      let subject = [
+        'Confirm Email',
+        'Confirmar Email']
+      [lang];
+
+      let html_email = renderConfirmEmail(lang, req.body.email, req.body.name, hash);
+
+      req.session.email_hash = hash;
+
+      //---------------------------------
+      //---------------------------------
+
+      sendEmail({
 
         to: req.body.email,
-        subject: 'test',
-        text: 'txt 1',
-        html: '<b>txt 2</b>'
+        subject: subject,
+        text: subject,
+        html: html_email
 
       }, function(){
 
@@ -71,7 +93,6 @@ app.post('/confirm_email', function (req, res) {
         res.send(JSON.stringify(response));
         res.end();
 
-
       }).catch(function(err) {
 
         console.log('error mailer: <'+req.body.email+'> ', err);
@@ -79,7 +100,7 @@ app.post('/confirm_email', function (req, res) {
         res.send(JSON.stringify(response));
         res.end();
 
-      }); */
+      });
 
   }
 
@@ -88,16 +109,31 @@ app.post('/confirm_email', function (req, res) {
 
 });
 
+app.get('/validate/email/:hash', function (req, res) {
 
+  console.log('get -> confirm_email');
+  var_dump(req.params);
+  var_dump(req.session);
 
+  let response = false;
 
+  if(req.session && req.params.hash){
 
+    if(req.params.hash==req.session.email_hash){
 
+      response = true;
 
+    }
 
+  }
 
+  console.log('response confirm_email ->');
+  console.log(response);
 
+  res.send(JSON.stringify(response));
+  res.end();
 
+});
 
 
 

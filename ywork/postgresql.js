@@ -17,6 +17,7 @@ function showDB(){
 
 			db_data[i].username = k.decr((''+db_data[i].username).trim());
 			db_data[i].email = k.decr((''+db_data[i].email).trim());
+			db_data[i].confirm_email = k.decr((''+db_data[i].confirm_email).trim());
 			db_data[i].pass = (''+db_data[i].pass).trim();
 
 		}

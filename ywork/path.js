@@ -195,7 +195,7 @@ for(let i=0; i<l(data.path);i++){
 			//-----------------------------------------------------
 
 			let session_state = `
-			
+
 			console.log('session off');
 			function session(data){}
 
@@ -355,6 +355,8 @@ for(let i=0; i<l(data.path);i++){
 						(data.path_file+'path/'+data.path[i].main_js)
 
 					)+`
+
+					data.users.var[0].lang = '`+lang+`';
 
 					})())
 
