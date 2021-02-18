@@ -207,12 +207,15 @@ for(let i=0; i<l(data.path);i++){
 				console.log('session on');
 				console.log('name -> `+req.session.name+`');
 				console.log('email -> `+req.session.email+`');
+				console.log('confirm_email -> `+req.session.confirm_email+`');
 
 				function session(data){
 
 					 data.users.var[0].name = '`+req.session.name+`';
 					 data.users.var[0].email = '`+req.session.email+`';
 					 data.session.state = true;
+					 data.users.var[0].lang = '`+lang+`';
+					 data.users.var[0].confirm_email = `+req.session.confirm_email+`;
 
 				}
 
@@ -355,8 +358,6 @@ for(let i=0; i<l(data.path);i++){
 						(data.path_file+'path/'+data.path[i].main_js)
 
 					)+`
-
-					data.users.var[0].lang = '`+lang+`';
 
 					})())
 
