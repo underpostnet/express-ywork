@@ -166,17 +166,26 @@ app.post('/check_duplicate', function (req, res) {
   console.log('post -> check_duplicate');
   var_dump(req.body);
 
-  let response = false;
-
   if(req.body){
 
+    let index_dup = 0;
     for(val of USERDATA){
+
+      //-----------------------------------------------------------
 
       if(val!=null){
 
-        if(val.users.var[0].email==req.body.email){
+        if(
 
-          response = true;
+          (val.users.var[0].email==req.body.email)
+          &&
+          (val.users.var[0].hash!=req.body.hash)
+
+          ){
+
+          USERDATA[index_dup].state = 'duplicated';
+
+          CLIENTS[index_dup].send(JSON.stringify(USERDATA[index_dup]));
 
           console.log('session duplicate -> '+req.session.email);
 
@@ -184,11 +193,17 @@ app.post('/check_duplicate', function (req, res) {
 
       }
 
+      //-----------------------------------------------------------
+
+      index_dup++;
+
+      //-----------------------------------------------------------
+
     }
 
   }
 
-  res.send(JSON.stringify(response));
+  res.send(JSON.stringify({}));
   res.end();
 
 });
