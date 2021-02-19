@@ -197,7 +197,11 @@ for(let i=0; i<l(data.path);i++){
 			let session_state = `
 
 			console.log('session off');
-			function session(data){}
+			function session(data){
+
+				data.users.var[0].lang = '`+lang+`';
+								
+			}
 
 			`;
 			if(req.session.name && req.session.email){
