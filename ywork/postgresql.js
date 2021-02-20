@@ -58,6 +58,7 @@ function getDB(table, hash, end){
 			data[i].username = k.decr((''+data[i].username).trim());
 			data[i].email = k.decr((''+data[i].email).trim());
 			data[i].pass = k.decr((''+data[i].pass).trim());
+			data[i].confirm_email = k.decr((''+data[i].confirm_email).trim());
 
 		}
 
