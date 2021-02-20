@@ -51,6 +51,7 @@ app.post('/set_session', function (req, res) {
     req.session.name = req.body.username;
     req.session.email = req.body.email;
     req.session.confirm_email = req.body.confirm_email==null ? false : true;
+    req.session.lang = req.body.lang;
 
     response = true;
 
