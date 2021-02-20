@@ -200,7 +200,13 @@ for(let i=0; i<l(data.path);i++){
 			function session(data){
 
 				data.users.var[0].lang = '`+lang+`';
-								
+
+				setTimeout(()=>{
+
+						fadeIn(s('.home-log-content'));
+
+				}, 2800);
+
 			}
 
 			`;
