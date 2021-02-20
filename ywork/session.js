@@ -52,6 +52,7 @@ app.post('/set_session', function (req, res) {
     req.session.email = req.body.email;
     req.session.confirm_email = req.body.confirm_email==null ? false : true;
     req.session.lang = req.body.lang;
+    req.session.id_users = req.body.id_users;
 
     response = true;
 
@@ -88,6 +89,8 @@ app.post('/log_in', function (req, res) {
       for(let i_log=0;i_log<l(data);i_log++){
 
         if( (data[i_log].email==req.body.email) && (data[i_log].pass==req.body.pass) ){
+
+          data[i_log].id_users = i_log+1;
 
           response = [true, data[i_log]];
 

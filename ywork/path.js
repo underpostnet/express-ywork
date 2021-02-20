@@ -194,6 +194,8 @@ for(let i=0; i<l(data.path);i++){
 			//-----------------------------------------------------
 			//-----------------------------------------------------
 
+			let time_in_home = 2800;
+
 			let session_state = `
 
 			console.log('session off');
@@ -205,12 +207,61 @@ for(let i=0; i<l(data.path);i++){
 
 						fadeIn(s('.home-log-content'));
 
-				}, 2800);
+				}, `+time_in_home+`);
 
 			}
 
 			`;
 			if(req.session.name && req.session.email){
+
+
+				//---------------------------------------------
+				//---------------------------------------------
+
+				let confirm_email_js = '';
+
+				if(req.session.email_hash_confirm){
+
+					if(req.session.email_hash_confirm=='-> true'){
+
+						confirm_email_js = `
+
+							setTimeout(()=>{
+
+									s('.mail-confirm-true').style.display = 'block';
+									fadeIn(s('.home-alert'));
+
+							}, `+time_in_home+`);
+
+						`;
+
+					}
+
+					if(req.session.email_hash_confirm=='-> false'){
+
+						confirm_email_js = `
+
+							setTimeout(()=>{
+
+									s('.mail-confirm-false').style.display = 'block';
+									fadeIn(s('.home-alert'));
+
+							}, `+time_in_home+`);
+
+						`;
+
+					}
+
+					req.session.email_hash_confirm = '';
+
+				}
+
+
+
+
+
+				//---------------------------------------------
+				//---------------------------------------------
 
 				session_state = `
 
@@ -226,6 +277,8 @@ for(let i=0; i<l(data.path);i++){
 					 data.session.state = true;
 					 data.users.var[0].lang = '`+lang+`';
 					 data.users.var[0].confirm_email = `+req.session.confirm_email+`;
+
+					 `+confirm_email_js+`
 
 				}
 

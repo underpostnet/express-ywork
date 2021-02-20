@@ -78,7 +78,7 @@ app.post('/confirm_email', function (req, res) {
       //---------------------------------
       //---------------------------------
 
-      /* sendEmail({
+      sendEmail({
 
         to: req.body.email,
         subject: subject,
@@ -100,7 +100,9 @@ app.post('/confirm_email', function (req, res) {
         res.send(JSON.stringify(response));
         res.end();
 
-      }); */ res.send('true'); res.end();
+      });
+
+      //res.send('true'); res.end();
 
   }
 
@@ -115,22 +117,28 @@ app.get('/validate/email/:hash', function (req, res) {
   var_dump(req.params);
   var_dump(req.session);
 
-  let response = false;
+  req.session.email_hash_confirm = '-> false';
 
   if(req.session && req.params.hash){
 
     if(req.params.hash==req.session.email_hash){
 
-      response = true;
+      req.session.email_hash_confirm = '-> true';
+
+      req.session.confirm_email = true;
+
+      update_CONFIRM_EMAIL(req.session.email, req.session.id_users)
 
     }
 
   }
 
   console.log('response confirm_email ->');
-  console.log(response);
+  console.log(req.session.email_hash_confirm);
 
-  res.send(JSON.stringify(response));
+  res.writeHead(301,
+    {Location: 'https://www.cyberiaonline.com/'}
+  );
   res.end();
 
 });

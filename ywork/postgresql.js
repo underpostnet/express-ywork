@@ -1,7 +1,7 @@
 
-let pgp = require("pg-promise")(/*options*/);
-let connect = "postgres://"+data.db.username+":"+data.db.password+"@"+data.db.host+":"+data.db.port+"/"+data.db.database+"";
-let db = pgp(connect);
+var pgp = require("pg-promise")(/*options*/);
+var connect = "postgres://"+data.db.username+":"+data.db.password+"@"+data.db.host+":"+data.db.port+"/"+data.db.database+"";
+var db = pgp(connect);
 
 //------------------------------------
 //------------------------------------
@@ -68,6 +68,26 @@ function getDB(table, hash, end){
 
 		var_dump(error);
 
+	});
+
+}
+
+//------------------------------------
+//------------------------------------
+
+function update_CONFIRM_EMAIL(email, id){
+
+	db.tx(t => {
+		return t.none('UPDATE users SET confirm_email = $1 WHERE id_users = $2',
+		[k.encr('true'), id]);
+	})
+	.then(data => {
+		console.log('success update email_confirm -> '+email);
+		var_dump(data);
+	})
+	.catch(error => {
+		console.log('error update email_confirm -> '+email);
+		var_dump(error);
 	});
 
 }

@@ -183,7 +183,7 @@
 
 										let res_obj = {
 											success: result,
-											name: obj.validator[0][1],
+											username: obj.validator[0][1],
 											email: obj.validator[1][1],
 											pass: obj.validator[2][1],
 											adv: ['', '']
