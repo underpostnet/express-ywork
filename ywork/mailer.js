@@ -144,6 +144,82 @@ app.get('/validate/email/:hash', function (req, res) {
 });
 
 
+//------------------------------------------
+//------------------------------------------
+
+
+app.post('/check_email', function (req, res) {
+
+  console.log('post -> check_email');
+  var_dump(req.body);
+
+  let cont_email = 0;
+
+  if(req.body && req.body.email){
+
+    //----------------------------------------------------------
+    //----------------------------------------------------------
+
+    getDB('users', null, function(data, hash){
+
+      for(let i_log=0;i_log<l(data);i_log++){
+
+        if( (data[i_log].email==req.body.email) && (data[i_log].username!=req.body.username) ){
+
+          cont_email++;
+
+        }
+
+      }
+
+      if(cont_email<1){
+
+        res.send('true');
+        res.end();
+
+      }else{
+
+        res.send('false');
+        res.end();
+
+      }
+
+    });
+
+  }else{
+
+    res.send('false');
+    res.end();
+
+  }
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//------------------------------------------
+//------------------------------------------
+
+
+
+
+
+
+
+
+
 
 
 //------------------------------------------
