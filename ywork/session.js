@@ -182,7 +182,7 @@ app.post('/check_duplicate', function (req, res) {
 
         if(
 
-          (val.users.var[0].email==req.body.email)
+          (val.users.var[0].name==req.body.name)
           &&
           (val.users.var[0].hash!=req.body.hash)
 
