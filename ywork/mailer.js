@@ -89,6 +89,8 @@ app.post('/confirm_email', function (req, res) {
 
         console.log(('success mailer: <'+req.body.email+'> '));
 
+        req.session.email = req.body.email;
+
         response = true;
         res.send(JSON.stringify(response));
         res.end();
@@ -127,7 +129,8 @@ app.get('/validate/email/:hash', function (req, res) {
 
       req.session.confirm_email = true;
 
-      update_CONFIRM_EMAIL(req.session.email, req.session.id_users)
+      update_CONFIRM_EMAIL(req.session.email, req.session.id_users);
+      update_CHANGE_EMAIL(req.session.email, req.session.id_users);
 
     }
 

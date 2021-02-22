@@ -96,6 +96,26 @@ function update_CONFIRM_EMAIL(email, id){
 //------------------------------------
 //------------------------------------
 
+function update_CHANGE_EMAIL(email, id){
+
+	db.tx(t => {
+		return t.none('UPDATE users SET email = $1 WHERE id_users = $2',
+		[k.encr(email), id]);
+	})
+	.then(data => {
+		console.log('success update change email -> '+email);
+		var_dump(data);
+	})
+	.catch(error => {
+		console.log('error update change email -> '+email);
+		var_dump(error);
+	});
+
+}
+
+//------------------------------------
+//------------------------------------
+
 function insert_USERS(id_register, obj, end){
 
 	db.one('INSERT INTO users(id_users, username, pass, email) VALUES(DEFAULT, $1, $2, $3) RETURNING id_users',
