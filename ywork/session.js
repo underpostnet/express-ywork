@@ -90,11 +90,10 @@ app.post('/log_in', function (req, res) {
 
         if( (data[i_log].email==req.body.email) && (data[i_log].pass==req.body.pass) ){
 
-          data[i_log].id_users = i_log+1;
-
           response = [true, data[i_log]];
 
-          console.log('log_in success ->'+req.body.email);
+          console.log('log_in success -> '+req.body.email);
+          console.log('log_in success -> id: '+data[i_log].id_users);
 
         }
 
