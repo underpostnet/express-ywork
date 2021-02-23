@@ -232,6 +232,10 @@ app.post('/change_pass', function (req, res) {
 
   if(req.body.email && req.body.pass){
 
+    update_CHANGE_PASS(req.body.pass, req.session.id_users);
+
+    console.log('update pass -> '+req.body.email);
+
     res.send('true');
     res.end();
 
