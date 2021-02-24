@@ -164,6 +164,7 @@ app.post('/search_email', function (req, res) {
       if(data[i_log].email==req.body.email){
 
         cont_email++;
+        req.session.id_users = data[i_log].id_users;
 
       }
 
@@ -262,24 +263,24 @@ app.get('/validate/pass/:hash', function (req, res) {
   var_dump(req.params);
   var_dump(req.session);
 
-  let response = false;
   if(req.session.pass_hash && req.params.hash){
 
     if(req.session.pass_hash == req.params.hash){
 
-      response = true;
+      req.session.pass_hash = '-> true';
+
+    }else{
+
+      req.session.pass_hash = '-> false';
 
     }
 
   }
 
-  res.send(response);
-  res.end();
-
-  /*res.writeHead(301,
+  res.writeHead(301,
     {Location: 'https://www.cyberiaonline.com/'}
   );
-  res.end();*/
+  res.end();
 
 });
 

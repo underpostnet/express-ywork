@@ -229,21 +229,27 @@ app.post('/change_pass', function (req, res) {
   console.log('post -> change_pass');
   var_dump(req.body);
 
-  if(req.body.email && req.body.pass){
+  let response = false;
 
-    update_CHANGE_PASS(req.body.pass, req.session.id_users);
+  if(req.session.pass_hash && req.session.pass_email_reset){
 
-    console.log('update pass -> '+req.body.email);
+    if(req.body.email && req.body.pass && (req.session.pass_hash=='-> change_pass') && (req.session.pass_email_reset!='')){
 
-    res.send('true');
-    res.end();
+      update_CHANGE_PASS(req.body.pass, req.session.id_users);
 
-  }else{
+      console.log('update pass -> '+req.body.email);
 
-    res.send('false');
-    res.end();
+      req.session.pass_hash = '';
+      req.session.pass_email_reset = '';
+
+      response = true;
+
+    }
 
   }
+
+  res.send(response);
+  res.end();
 
 });
 

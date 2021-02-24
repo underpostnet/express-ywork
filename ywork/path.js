@@ -286,6 +286,59 @@ for(let i=0; i<l(data.path);i++){
 
 			}
 
+			//-----------------------------------------------------
+			//-----------------------------------------------------
+
+			if(req.session.pass_hash){
+
+				if(req.session.pass_hash == '-> true'){
+
+					session_state = `
+
+					console.log('reset pass');
+					function session(data){
+
+						data.users.var[0].lang = '`+lang+`';
+						data.users.var[0].email = '`+req.session.pass_email_reset+`';
+
+						setTimeout(()=>{
+
+								fadeIn(s('.change-pass-content'));
+
+						}, `+time_in_home+`);
+
+					}
+
+					`;
+
+					req.session.pass_hash = '-> change_pass';
+
+				}
+
+				if(req.session.pass_hash == '-> false'){
+
+					session_state = `
+
+					console.log('reset pass');
+					function session(data){
+
+						setTimeout(()=>{
+
+								s('.mail-pass-notsend').style.display = 'block';
+								fadeIn(s('.home-alert'));
+
+						}, `+time_in_home+`);
+
+					}
+
+					`;
+
+					req.session.pass_hash = '';
+					req.session.pass_email_reset = '';
+
+				}
+
+			}
 
 			//-----------------------------------------------------
 			//-----------------------------------------------------
