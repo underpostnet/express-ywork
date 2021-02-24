@@ -231,9 +231,9 @@ app.post('/change_pass', function (req, res) {
 
   let response = false;
 
-  if(req.session.pass_hash && req.session.pass_email_reset){
+  if(req.session.pass_hash){
 
-    if(req.body.email && req.body.pass && (req.session.pass_hash=='-> change_pass') && (req.session.pass_email_reset!='')){
+    if(req.body.email && req.body.pass && (req.session.pass_hash=='-> change_pass')){
 
       update_CHANGE_PASS(req.body.pass, req.session.id_users);
 

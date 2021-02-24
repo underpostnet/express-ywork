@@ -196,22 +196,99 @@ for(let i=0; i<l(data.path);i++){
 
 			let time_in_home = 2800;
 
-			let session_state = `
+			//-----------------------------------------------------
+			//-----------------------------------------------------
 
-			console.log('session off');
-			function session(data){
+			let session_pass_reset = '';
 
-				data.users.var[0].lang = '`+lang+`';
+			if(req.session.pass_hash){
 
-				setTimeout(()=>{
+				if(req.session.pass_hash == '-> true'){
 
-						fadeIn(s('.home-log-content'));
+					session_pass_reset = `
 
-				}, `+time_in_home+`);
+					console.log('reset pass success');
+
+					data.users.var[0].lang = '`+lang+`';
+					data.users.var[0].email = '`+req.session.pass_email_reset+`';
+
+					setTimeout(()=>{
+
+							fadeIn(s('.change-pass-content'));
+
+					}, `+time_in_home+`);
+
+					`;
+
+					req.session.pass_hash = '-> change_pass';
+
+				}
+
+				if(req.session.pass_hash == '-> false'){
+
+					session_pass_reset = `
+
+					console.log('reset pass failed');
+
+					setTimeout(()=>{
+
+							s('.mail-pass-notsend').style.display = 'block';
+							fadeIn(s('.home-alert'));
+
+					}, `+time_in_home+`);
+
+					`;
+
+					req.session.pass_hash = '';
+					req.session.pass_email_reset = '';
+
+				}
 
 			}
 
-			`;
+			//-----------------------------------------------------
+			//-----------------------------------------------------
+
+			let session_state = '';
+
+			if(session_pass_reset!=''){
+
+				session_state = `
+
+				console.log('session off');
+				function session(data){
+
+					data.users.var[0].lang = '`+lang+`';
+
+					`+session_pass_reset+`
+
+				}
+
+				`;
+
+			}else{
+
+				session_state = `
+
+				console.log('session off');
+				function session(data){
+
+					data.users.var[0].lang = '`+lang+`';
+
+					setTimeout(()=>{
+
+							fadeIn(s('.home-log-content'));
+
+					}, `+time_in_home+`);
+
+				}
+
+				`;
+
+			}
+
+			//-----------------------------------------------------
+			//-----------------------------------------------------
 			if(req.session.name && req.session.email){
 
 
@@ -280,63 +357,11 @@ for(let i=0; i<l(data.path);i++){
 
 					 `+confirm_email_js+`
 
-				}
-
-				`
-
-			}
-
-			//-----------------------------------------------------
-			//-----------------------------------------------------
-
-			if(req.session.pass_hash){
-
-				if(req.session.pass_hash == '-> true'){
-
-					session_state = `
-
-					console.log('reset pass');
-					function session(data){
-
-						data.users.var[0].lang = '`+lang+`';
-						data.users.var[0].email = '`+req.session.pass_email_reset+`';
-
-						setTimeout(()=>{
-
-								fadeIn(s('.change-pass-content'));
-
-						}, `+time_in_home+`);
-
-					}
-
-					`;
-
-					req.session.pass_hash = '-> change_pass';
+					 `+session_pass_reset+`
 
 				}
 
-				if(req.session.pass_hash == '-> false'){
-
-					session_state = `
-
-					console.log('reset pass');
-					function session(data){
-
-						setTimeout(()=>{
-
-								s('.mail-pass-notsend').style.display = 'block';
-								fadeIn(s('.home-alert'));
-
-						}, `+time_in_home+`);
-
-					}
-
-					`;
-
-					req.session.pass_hash = '';
-					req.session.pass_email_reset = '';
-
-				}
+				`;
 
 			}
 
