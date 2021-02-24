@@ -150,6 +150,142 @@ app.get('/validate/email/:hash', function (req, res) {
 //------------------------------------------
 //------------------------------------------
 
+app.post('/search_email', function (req, res) {
+
+  console.log('post -> search_email');
+  var_dump(req.body);
+
+  let cont_email = 0;
+
+  getDB('users', null, function(data, hash){
+
+    for(let i_log=0;i_log<l(data);i_log++){
+
+      if(data[i_log].email==req.body.email){
+
+        cont_email++;
+
+      }
+
+    }
+
+    if(cont_email<1){
+
+      res.send('false');
+      res.end();
+
+    }else{
+
+      res.send('true');
+      res.end();
+
+    }
+
+  });
+
+});
+
+//------------------------------------------
+//------------------------------------------
+
+eval(fs.readFileSync('C:/dd/global_data/json/cyberia/mailer/pass_email.js', 'utf8'));
+// renderPassEmail(lang, email, hash)
+
+app.post('/check_email_forgot', function (req, res) {
+
+  console.log('post -> check_email_forgot');
+  var_dump(req.body);
+
+  if(req.body && req.body.email && req.body.lang){
+
+    //---------------------------------
+    //---------------------------------
+
+    let hash = getHash().split('-')[0];
+
+    let lang = req.body.lang=='es' ? 1 : 0;
+
+    let subject = [
+      'Reset Password',
+      'Restablecer Contraseña']
+    [lang];
+
+    let html_email = renderPassEmailReset(lang, hash);
+
+    //---------------------------------
+    //---------------------------------
+
+    sendEmail({
+
+      to: req.body.email,
+      subject: subject,
+      text: subject,
+      html: html_email
+
+    }, function(){
+
+      console.log(('success mailer: <'+req.body.email+'> '));
+
+      req.session.pass_hash = hash;
+      req.session.pass_email_reset = req.body.email;
+
+      res.send('true');
+      res.end();
+
+    }).catch(function(err) {
+
+      console.log('error mailer: <'+req.body.email+'> ', err);
+
+      res.send('false');
+      res.end();
+
+    });
+
+    //---------------------------------
+    //---------------------------------
+
+  }else{
+
+    res.send('false');
+    res.end();
+
+  }
+
+});
+
+//------------------------------------------
+//------------------------------------------
+
+app.get('/validate/pass/:hash', function (req, res) {
+
+  console.log('get -> reset_email_confirm');
+  var_dump(req.params);
+  var_dump(req.session);
+
+  let response = false;
+  if(req.session.pass_hash && req.params.hash){
+
+    if(req.session.pass_hash == req.params.hash){
+
+      response = true;
+
+    }
+
+  }
+
+  res.send(response);
+  res.end();
+
+  /*res.writeHead(301,
+    {Location: 'https://www.cyberiaonline.com/'}
+  );
+  res.end();*/
+
+});
+
+//------------------------------------------
+//------------------------------------------
+
 
 app.post('/check_email', function (req, res) {
 
