@@ -52,6 +52,8 @@ function setStatic(list){
 		app.use(express.static(staticDir));
 		app.use(staticDir, express.static(dir.get() + staticDir));
 
+		console.log('set static dir -> '+(dir.get() + staticDir));
+
 	}
 
 }
