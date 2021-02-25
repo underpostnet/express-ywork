@@ -117,17 +117,20 @@ app.post('/stream/:id', function(req, res){
 
   let radio_data = '{}';
 
+  console.log('req radio folder -> '+req.params.id);
+
   getRadio(req.params.id, function(data_dir){
 
     radio_data = JSON.stringify(data_dir);
 
   });
 
-  setTimeout(function(){
+  setTimeout(()=>{
 
     res.send(radio_data);
+    res.end();
 
-  }, 1000);
+  }, 5000);
 
 });
 
