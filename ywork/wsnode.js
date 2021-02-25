@@ -155,12 +155,30 @@
 										console.log('username exist failed -> '+name_test);
 										success_register = false;
 
+										let res_obj = {
+											input_name: 'username',
+											adv: ''
+										};
+										res_obj.adv = ['username already exist', 'usuario existente'];
+										USERDATA[id_register].state = 'checkinput';
+										USERDATA[id_register].validator = res_obj;
+										CLIENTS[id_register].send(JSON.stringify(USERDATA[id_register]));
+
 									}
 
 									if(data[ii].email==email_test){
 
 										console.log('email exist failed -> '+email_test);
 										success_register = false;
+
+										let res_obj = {
+											input_name: 'email',
+											adv: ''
+										};
+										res_obj.adv = ['email already exist', 'email existente'];
+										USERDATA[id_register].state = 'checkinput';
+										USERDATA[id_register].validator = res_obj;
+										CLIENTS[id_register].send(JSON.stringify(USERDATA[id_register]));
 
 									}
 
