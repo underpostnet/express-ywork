@@ -57,7 +57,7 @@ app.post('/confirm_email', function (req, res) {
   //------------------------------------------
   //------------------------------------------
 
-  if(req.body.email && req.body.name && req.body.lang && req.session){
+  if(tl(req.body.email) && req.body.name && req.body.lang && req.session){
 
       //---------------------------------
       //---------------------------------
@@ -71,7 +71,7 @@ app.post('/confirm_email', function (req, res) {
         'Confirmar Email']
       [lang];
 
-      let html_email = renderConfirmEmail(lang, req.body.email, req.body.name, hash);
+      let html_email = renderConfirmEmail(lang, tl(req.body.email), req.body.name, hash);
 
       req.session.email_hash = hash;
 
@@ -80,16 +80,16 @@ app.post('/confirm_email', function (req, res) {
 
       sendEmail({
 
-        to: req.body.email,
+        to: tl(req.body.email),
         subject: subject,
         text: subject,
         html: html_email
 
       }, function(){
 
-        console.log(('success mailer: <'+req.body.email+'> '));
+        console.log(('success mailer: <'+tl(req.body.email)+'> '));
 
-        req.session.email = req.body.email;
+        req.session.email = tl(req.body.email);
 
         response = true;
         res.send(JSON.stringify(response));
@@ -97,7 +97,7 @@ app.post('/confirm_email', function (req, res) {
 
       }).catch(function(err) {
 
-        console.log('error mailer: <'+req.body.email+'> ', err);
+        console.log('error mailer: <'+tl(req.body.email)+'> ', err);
 
         res.send(JSON.stringify(response));
         res.end();
@@ -161,7 +161,7 @@ app.post('/search_email', function (req, res) {
 
     for(let i_log=0;i_log<l(data);i_log++){
 
-      if(data[i_log].email==req.body.email){
+      if(data[i_log].email==tl(req.body.email)){
 
         cont_email++;
         req.session.id_users = data[i_log].id_users;
@@ -197,7 +197,7 @@ app.post('/check_email_forgot', function (req, res) {
   console.log('post -> check_email_forgot');
   var_dump(req.body);
 
-  if(req.body && req.body.email && req.body.lang){
+  if(req.body && tl(req.body.email) && req.body.lang){
 
     //---------------------------------
     //---------------------------------
@@ -218,24 +218,24 @@ app.post('/check_email_forgot', function (req, res) {
 
     sendEmail({
 
-      to: req.body.email,
+      to: tl(req.body.email),
       subject: subject,
       text: subject,
       html: html_email
 
     }, function(){
 
-      console.log(('success mailer: <'+req.body.email+'> '));
+      console.log(('success mailer: <'+tl(req.body.email)+'> '));
 
       req.session.pass_hash = hash;
-      req.session.pass_email_reset = req.body.email;
+      req.session.pass_email_reset = tl(req.body.email);
 
       res.send('true');
       res.end();
 
     }).catch(function(err) {
 
-      console.log('error mailer: <'+req.body.email+'> ', err);
+      console.log('error mailer: <'+tl(req.body.email)+'> ', err);
 
       res.send('false');
       res.end();
@@ -295,7 +295,7 @@ app.post('/check_email', function (req, res) {
 
   let cont_email = 0;
 
-  if(req.body && req.body.email){
+  if(req.body && tl(req.body.email)){
 
     //----------------------------------------------------------
     //----------------------------------------------------------
@@ -304,7 +304,7 @@ app.post('/check_email', function (req, res) {
 
       for(let i_log=0;i_log<l(data);i_log++){
 
-        if( (data[i_log].email==req.body.email) && (data[i_log].username!=req.body.username) ){
+        if( (data[i_log].email==tl(req.body.email)) && (data[i_log].username!=req.body.username) ){
 
           cont_email++;
 

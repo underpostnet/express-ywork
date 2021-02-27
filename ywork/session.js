@@ -49,7 +49,7 @@ app.post('/set_session', function (req, res) {
   if(req.body){
 
     req.session.name = req.body.username;
-    req.session.email = req.body.email;
+    req.session.email = tl(req.body.email);
     req.session.confirm_email = req.body.confirm_email=='' ? false : true;
     req.session.lang = req.body.lang;
     req.session.id_users = req.body.id_users;
@@ -79,7 +79,7 @@ app.post('/log_in', function (req, res) {
 
   let response = [false, null];
 
-  if(req.body && req.body.pass && req.body.email){
+  if(req.body && req.body.pass && tl(req.body.email)){
 
     //----------------------------------------------------------
     //----------------------------------------------------------
@@ -88,11 +88,11 @@ app.post('/log_in', function (req, res) {
 
       for(let i_log=0;i_log<l(data);i_log++){
 
-        if( (data[i_log].email==req.body.email) && (data[i_log].pass==req.body.pass) ){
+        if( (data[i_log].email==tl(req.body.email)) && (data[i_log].pass==req.body.pass) ){
 
           response = [true, data[i_log]];
 
-          console.log('log_in success -> '+req.body.email);
+          console.log('log_in success -> '+tl(req.body.email));
           console.log('log_in success -> id: '+data[i_log].id_users);
 
         }
@@ -104,7 +104,7 @@ app.post('/log_in', function (req, res) {
 
       if(!response[0]){
 
-        console.log('log_in failed ->'+req.body.email);
+        console.log('log_in failed ->'+tl(req.body.email));
 
       }
 
@@ -233,11 +233,11 @@ app.post('/change_pass', function (req, res) {
 
   if(req.session.pass_hash){
 
-    if(req.body.email && req.body.pass && (req.session.pass_hash=='-> change_pass')){
+    if(tl(req.body.email) && req.body.pass && (req.session.pass_hash=='-> change_pass')){
 
       update_CHANGE_PASS(req.body.pass, req.session.id_users);
 
-      console.log('update pass -> '+req.body.email);
+      console.log('update pass -> '+tl(req.body.email));
 
       req.session.pass_hash = '';
       req.session.pass_email_reset = '';
