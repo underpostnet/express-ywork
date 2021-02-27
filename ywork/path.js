@@ -156,9 +156,10 @@ for(let i=0; i<l(data.path);i++){
 				<script type='text/javascript'>
 
 					var grecaptchaTest;
+					var siteKey_cap = '`+data.gcap+`';
 					var onloadCallback = function() {
 						grecaptcha.render('test-recaptcha', {
-							'sitekey' : '`+data.gcap+`'
+							'sitekey' : siteKey_cap
 						});
 						grecaptchaTest = grecaptcha;
 					};
