@@ -14,7 +14,7 @@ for(let i=0; i<l(data.path);i++){
 			//-----------------------------------------------------
 			//-----------------------------------------------------
 
-			let header = logHeader(req, res);
+			let header = logHeader(req, res, data.path[i]);
 			let lang = header.lang;
 			let lang_id = header.id;
 
@@ -363,6 +363,21 @@ for(let i=0; i<l(data.path);i++){
 				}
 
 				`;
+
+			}
+
+			//-----------------------------------------------------
+			//-----------------------------------------------------
+
+			if(suburl==='/stream'){
+
+				session_state = '';
+
+				if(!(req.session.name==='P4R4N014')){
+
+					session_state = `location.href='https://www.cyberiaonline.com/'`;
+
+				}
 
 			}
 

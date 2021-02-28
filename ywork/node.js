@@ -95,7 +95,7 @@ var k = new NodeCrypto(data.db.key);
 //--------------------------------------------
 
 
-function logHeader(req, res){
+function logHeader(req, res, data){
 
 	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
@@ -112,6 +112,7 @@ function logHeader(req, res){
 
 		`
 		http connection
+		url: `+data.url+`
 		ip: `+ip+`
 		time: `+new Date()+`
 		host: `+req.headers.host+`
