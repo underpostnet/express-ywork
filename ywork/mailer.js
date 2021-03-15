@@ -197,7 +197,14 @@ app.post('/check_email_forgot', function (req, res) {
   console.log('post -> check_email_forgot');
   var_dump(req.body);
 
-  if(req.body && tl(req.body.email) && req.body.lang){
+  let session_validate = true;
+  if(req.session){
+    if(tl(req.body.email)!=req.session.email){
+      session_validate = false;
+    }
+  }
+
+  if(req.body && tl(req.body.email) && req.body.lang && session_validate){
 
     //---------------------------------
     //---------------------------------
