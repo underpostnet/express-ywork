@@ -21,16 +21,16 @@
   "license": "MIT",
   "homepage": "https://www.cyberiaonline.com/",
   "dependencies": {
-    "crypto-js": "^4.0.0",
-    "express": "^4.17.1",
-    "express-session": "^1.17.1",
-    "mp3-duration": "^1.1.0",
-    "nodemailer": "^6.4.18",
-    "nodemon": "^2.0.7",
-    "peer": "^0.6.1",
-    "pg-promise": "^10.9.2",
-    "socket.io": "^3.1.1",
-    "var_dump": "^1.0.5",
-    "ws": "^7.4.3"
+    "crypto-js": "latest",
+    "express": "latest",
+    "express-session": "latest",
+    "mp3-duration": "latest",
+    "nodemailer": "latest",
+    "nodemon": "latest",
+    "peer": "latest",
+    "pg-promise": "latest",
+    "socket.io": "latest",
+    "var_dump": "latest",
+    "ws": "latest"
   }
 }
