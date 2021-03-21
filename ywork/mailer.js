@@ -198,7 +198,7 @@ app.post('/check_email_forgot', function (req, res) {
   var_dump(req.body);
 
   let session_validate = true;
-  if(req.session){
+  if(req.session.email){
     if(tl(req.body.email)!=req.session.email){
       session_validate = false;
     }
