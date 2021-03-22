@@ -36,6 +36,37 @@ for(let i=0; i<l(data.path);i++){
 			//-----------------------------------------------------
 			//-----------------------------------------------------
 
+			let mod_underpost = '';
+
+			for(let ii=0;ii<l(data.path[i].underpost);ii++){
+
+				mod_underpost = mod_underpost + `<script type='text/javascript'>` + fs.readFileSync(
+
+					('c:/dd/deploy_area/client/'+data.path[i].underpost[ii])
+
+				) + `</script>`;
+
+			}
+
+			//-----------------------------------------------------
+			//-----------------------------------------------------
+
+			let mod_lib = '';
+
+			for(let ii=0;ii<l(data.path[i].lib);ii++){
+
+				mod_lib = mod_lib + `<script type='text/javascript'>` + fs.readFileSync(
+
+					('c:/dd/deploy_area/client/lib/'+data.path[i].lib[ii])
+
+				) + `</script>`;
+
+			}
+
+			//-----------------------------------------------------
+			//-----------------------------------------------------
+
+
 			let microdata = '';
 
 			for(let ii=0;ii<l(data.path[i].microdata);ii++){
@@ -175,21 +206,6 @@ for(let i=0; i<l(data.path);i++){
 
 				`;
 
-			}
-
-			//-----------------------------------------------------
-			//-----------------------------------------------------
-
-			let mod_streamer = '';
-
-			if(data.path[i].streamer){
-				mod_streamer = `
-
-				<script defer src="/peer.js"></script>
-		    <script defer src="/socket.io/socket.io.js"></script>
-
-
-				`;
 			}
 
 			//-----------------------------------------------------
@@ -452,8 +468,6 @@ for(let i=0; i<l(data.path);i++){
 
 				</script>
 
-				`+mod_streamer+`
-
 				`+mod_gcap+`
 
 				`+fonts+`
@@ -468,35 +482,13 @@ for(let i=0; i<l(data.path);i++){
 
 				</style>
 
-				<script type='text/javascript'>
+					`+mod_underpost+`
 
-					`+fs.readFileSync(
+					`+mod_lib+`
 
-						('c:/dd/deploy_area/client/pathfinding-browser.min.js')
+					`+mod_js+`
 
-					)+`
-
-					`+fs.readFileSync(
-
-						('c:/dd/deploy_area/client/util.js')
-
-					)+`
-
-					`+fs.readFileSync(
-
-						('c:/dd/deploy_area/client/vanilla.js')
-
-					)+`
-
-					`+fs.readFileSync(
-
-						('c:/dd/deploy_area/client/websocket.js')
-
-					)+`
-
-				</script>
-
-				`+mod_js+mod_css+`
+					`+mod_css+`
 
 				</head>
 

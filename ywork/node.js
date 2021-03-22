@@ -32,11 +32,11 @@ var dir = {
 
 		if(dir==null){
 
-			return path.join(__dirname, '');
+			return path.join(data.path_file, '');
 
 		}
 
-		return path.join(__dirname, dir);
+		return path.join(data.path_file, dir);
 
 	}
 };
