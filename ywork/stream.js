@@ -9,10 +9,12 @@ const io = require('socket.io')(server);
 io.on('connection', socket => {
     socket.on('join-room', (roomid, peerid, type) => {
         socket.join(roomid);
-        socket.to(roomid).broadcast.emit(type === 1 ? "sender-connected" : "receiver-connected", peerid);
+        // socket.to(roomid).broadcast.emit(type === 1 ? "sender-connected" : "receiver-connected", peerid);
+        socket.to(roomid).emit(type === 1 ? "sender-connected" : "receiver-connected", peerid);
 
         socket.on('disconnect', () => {
-            socket.to(roomid).broadcast.emit(type === 1 ? "sender-disconnected" : "receiver-disconnected", peerid);
+            // socket.to(roomid).broadcast.emit(type === 1 ? "sender-disconnected" : "receiver-disconnected", peerid);
+            socket.to(roomid).emit(type === 1 ? "sender-disconnected" : "receiver-disconnected", peerid);
         });
     });
 });
