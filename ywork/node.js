@@ -104,7 +104,8 @@ function logHeader(req, res, data){
 
 		session_state = `session: on
 		name: `+req.session.name+`
-		email: `+req.session.email;
+		email: `+req.session.email+`
+		id_users: `+req.session.id_users;
 
 	}
 

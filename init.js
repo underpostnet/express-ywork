@@ -25,13 +25,8 @@ eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/stream.js', 'utf8'));
 //------------------------------------------------------------------------------
 
 // truncateDB();
-showDB();
 
-/*insertDB({
-	name: 'NAME_TEST',
-	pass: '123123',
-	email: 'test2@gmail.com'
-})*/
+showDB();
 
 // var_dump(data);
 

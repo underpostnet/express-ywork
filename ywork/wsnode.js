@@ -101,7 +101,7 @@
 
 								for(let ii=0;ii<l(data);ii++){
 
-									if(data[ii].email==obj.validator){
+									if(data[ii].email==tl(obj.validator)){
 
 										for(let iii=0;iii<l(USERDATA);iii++){
 
@@ -139,7 +139,7 @@
 							var_dump(obj.validator);
 
 							let name_test = obj.validator[0][1];
-							let email_test = obj.validator[1][1];
+							let email_test = tl(obj.validator[1][1]);
 							let success_register = true;
 							const id_register = i;
 
@@ -192,7 +192,7 @@
 									insert_USERS(id_register, {
 
 										name: obj.validator[0][1],
-										email: obj.validator[1][1],
+										email: tl(obj.validator[1][1]),
 										pass: obj.validator[2][1]
 
 									}, function(id_register, result){

@@ -228,6 +228,7 @@ app.post('/change_pass', function (req, res) {
 
   console.log('post -> change_pass');
   var_dump(req.body);
+  var_dump(req.session);
 
   let response = false;
 

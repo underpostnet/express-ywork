@@ -164,7 +164,6 @@ app.post('/search_email', function (req, res) {
       if(data[i_log].email==tl(req.body.email)){
 
         cont_email++;
-        req.session.id_users = data[i_log].id_users;
 
       }
 
@@ -270,11 +269,39 @@ app.get('/validate/pass/:hash', function (req, res) {
   var_dump(req.params);
   var_dump(req.session);
 
+  let search_id_user = false;
+
   if(req.session.pass_hash && req.params.hash){
 
     if(req.session.pass_hash == req.params.hash){
 
       req.session.pass_hash = '-> true';
+
+      if(!req.session.id_users){
+
+        search_id_user = true;
+
+        getDB('users', null, function(data, hash){
+
+          for(let i_log=0;i_log<l(data);i_log++){
+
+            if(data[i_log].email==tl(req.session.pass_email_reset)){
+
+              req.session.id_users = data[i_log].id_users;
+              console.log('set id_users -> ', req.session.id_users);
+
+            }
+
+          }
+
+          res.writeHead(301,
+            {Location: 'https://www.cyberiaonline.com/'}
+          );
+          res.end();
+
+        });
+
+      }
 
     }else{
 
@@ -284,10 +311,12 @@ app.get('/validate/pass/:hash', function (req, res) {
 
   }
 
-  res.writeHead(301,
-    {Location: 'https://www.cyberiaonline.com/'}
-  );
-  res.end();
+  if(!search_id_user){
+    res.writeHead(301,
+      {Location: 'https://www.cyberiaonline.com/'}
+    );
+    res.end();
+  }
 
 });
 
