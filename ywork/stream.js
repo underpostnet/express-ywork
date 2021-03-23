@@ -113,8 +113,14 @@ function getRadio(dir, end){
 
               }
 
+              if(l((''+sec))>2){
+
+                sec = ''+sec[0]+sec[1];
+
+              }
 
 
+              console.log('app get ->  /'+file);
               app.get(('/'+file), function(req, res){
 
                 res.sendFile((path_file_radio+file));
@@ -153,13 +159,13 @@ function getRadio(dir, end){
 //--------------------------------------------------------------------
 
 
-app.post('/stream/:id', function(req, res){
+app.post('/stream/:type/:genre', function(req, res){
 
   let radio_data = '{}';
 
-  console.log('req radio folder -> '+req.params.id);
+  console.log('req radio folder -> '+(req.params.type+'/'+req.params.genre));
 
-  getRadio(req.params.id, function(data_dir){
+  getRadio((req.params.type+'/'+req.params.genre), function(data_dir){
 
     radio_data = JSON.stringify(data_dir);
 
@@ -170,7 +176,7 @@ app.post('/stream/:id', function(req, res){
     res.send(radio_data);
     res.end();
 
-  }, 5000);
+  }, 10000);
 
 });
 
