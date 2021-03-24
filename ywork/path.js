@@ -55,11 +55,22 @@ for(let i=0; i<l(data.path);i++){
 
 			for(let ii=0;ii<l(data.path[i].lib);ii++){
 
-				mod_lib = mod_lib + `<script type='text/javascript'>` + fs.readFileSync(
+				if(data.path[i].lib[ii]=='socket.io.js'){
+					mod_lib = `
 
-					('c:/dd/deploy_area/client/lib/'+data.path[i].lib[ii])
+					<script defer src="/socket.io/socket.io.js"></script>
 
-				) + `</script>`;
+					` + mod_lib;
+
+				}else{
+
+					mod_lib = mod_lib + `<script type='text/javascript'>` + fs.readFileSync(
+
+						('c:/dd/deploy_area/client/lib/'+data.path[i].lib[ii])
+
+					) + `</script>`;
+
+				}
 
 			}
 
@@ -400,7 +411,7 @@ for(let i=0; i<l(data.path);i++){
 			//-----------------------------------------------------
 			//-----------------------------------------------------
 
-			res.write((`
+			res.write(reduce(`
 
 				<!DOCTYPE html>
 
