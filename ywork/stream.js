@@ -182,11 +182,11 @@ app.post('/stream/:type/:genre', function(req, res){
 
 
 
+app.get(('/off_line_radio'), function(req, res){
 
+  res.sendFile('c:/xampp/htdocs/cloud/radio/music/large/synthwave/Voyage_3_Chillwave_Synthwave_Retrowave_Mix.mp3');
 
-
-
-
+});
 
 
 
