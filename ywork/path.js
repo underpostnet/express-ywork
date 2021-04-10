@@ -419,6 +419,8 @@ for(let i=0; i<l(data.path);i++){
 
         <head>
 
+				<meta charset='`+data.path[i].charset+`'>
+
         <title>`+data.path[i].title[lang_id]+`</title>
 
 				`+microdata+`
