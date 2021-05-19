@@ -5,6 +5,10 @@
 	wss = new WebSocketServer({port: data.ws_port}),
 	CLIENTS=[], USERDATA=[];
 
+	var update_coin_atk_bot_user = 0;
+	var update_coin_atk_bot = 0;
+	var update_coin_atk_user = 0;
+
 	wss.on('connection', function(ws) {
 
 		CLIENTS.push(ws);
@@ -30,6 +34,14 @@
 						if((!obj.bots.activeServer)&&(obj.state!='checkinput')){
 
 							not_auto_send = i;
+
+							/* checkinput es una accion que solo debe hacer el frontend
+							y esta redundante nunca el cliente devuelve el estado al servidor ws */
+
+							/* si soy el activeServer debido a que tengo multiples hash debo ser capas de recibir
+							varios a un mismo token websocket */
+
+							/* la mayoria de las veces el user no se reenvia msg websocket excepto estas */
 
 						}
 
@@ -226,9 +238,26 @@
 						}
 
 						//-----------------------------------------------------------------
+						// Progress Events
 						//-----------------------------------------------------------------
 
+						if(obj.state=='update-coin-atk-bot-user'){
+							// var_dump(obj);
+							update_coin_atk_bot_user++;
+							console.log('Progress Events  | kill '+update_coin_atk_bot_user+' | bot -> user');
+						}
 
+						if(obj.state=='update-coin-atk-bot'){
+							// var_dump(obj);
+							update_coin_atk_bot++;
+							console.log('Progress Events  | kill '+update_coin_atk_bot+' | user -> bot ');
+						}
+
+						if(obj.state=='update-coin-atk-user'){
+							// var_dump(obj);
+							update_coin_atk_user++;
+							console.log('Progress Events  | kill '+update_coin_atk_user+' | user -> user ');
+						}
 
 
 						//-----------------------------------------------------------------
