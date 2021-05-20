@@ -382,6 +382,7 @@ for(let i=0; i<l(data.path);i++){
 					 data.session.state = true;
 					 data.users.var[0].lang = '`+lang+`';
 					 data.users.var[0].confirm_email = `+req.session.confirm_email+`;
+					 data.users.var[0].coin = `+req.session.koyn+`;
 
 					 `+confirm_email_js+`
 

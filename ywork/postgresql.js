@@ -116,6 +116,26 @@ function update_CHANGE_EMAIL(email, id){
 //------------------------------------
 //------------------------------------
 
+function update_CHANGE_KOYN(koyn, id){
+
+	db.tx(t => {
+		return t.none('UPDATE users SET koyn = $1 WHERE id_users = $2',
+		[koyn, id]);
+	})
+	.then(data => {
+		console.log('success update change koyn cant: '+koyn+' id_user -> '+id);
+		var_dump(data);
+	})
+	.catch(error => {
+		console.log('error update change koyn cant: '+koyn+' id_user -> '+id);
+		var_dump(error);
+	});
+
+}
+
+//------------------------------------
+//------------------------------------
+
 function update_CHANGE_PASS(pass, id){
 
 	db.tx(t => {

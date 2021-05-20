@@ -53,6 +53,12 @@ app.post('/set_session', function (req, res) {
     req.session.confirm_email = req.body.confirm_email=='' ? false : true;
     req.session.lang = req.body.lang;
     req.session.id_users = req.body.id_users;
+    if(req.body.koyn==null){
+      console.log('init koyn null');
+      req.session.koyn = 0;
+    }else {
+      req.session.koyn = req.body.koyn;
+    }
 
     response = true;
 

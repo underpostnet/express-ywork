@@ -19,6 +19,7 @@ eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/seo.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/postgresql.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/wsnode.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/stream.js', 'utf8'));
+eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/koyn.js', 'utf8'));
 
 
 //------------------------------------------------------------------------------
