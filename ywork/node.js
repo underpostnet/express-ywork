@@ -106,7 +106,8 @@ function logHeader(req, res, data){
 		name: `+req.session.name+`
 		email: `+req.session.email+`
 		id_users: `+req.session.id_users+`
-		koyn: `+req.session.koyn;
+		koyn: `+req.session.koyn+`
+		token: `+req.session.token;
 
 	}
 

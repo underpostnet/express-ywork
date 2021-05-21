@@ -377,6 +377,7 @@ for(let i=0; i<l(data.path);i++){
 
 				function session(data){
 
+					 data.token = '`+req.session.token+`';
 					 data.users.var[0].name = '`+req.session.name+`';
 					 data.users.var[0].email = '`+req.session.email+`';
 					 data.session.state = true;

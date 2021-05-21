@@ -46,7 +46,7 @@ app.post('/set_session', function (req, res) {
 
   let response;
 
-  if(req.body){
+  if(req.body && (req.body.token==req.session.token)){
 
     req.session.name = req.body.username;
     req.session.email = tl(req.body.email);
@@ -63,6 +63,9 @@ app.post('/set_session', function (req, res) {
     response = true;
 
   }else{
+
+    console.log('token corrupt ->');
+    console.log(req.body.token);
 
     response = false;
 
@@ -96,7 +99,9 @@ app.post('/log_in', function (req, res) {
 
         if( (data[i_log].email==tl(req.body.email)) && (data[i_log].pass==req.body.pass) ){
 
-          response = [true, data[i_log]];
+          let token = getHash();
+          response = [true, data[i_log], token];
+          req.session.token = token;
 
           console.log('log_in success -> '+tl(req.body.email));
           console.log('log_in success -> id: '+data[i_log].id_users);

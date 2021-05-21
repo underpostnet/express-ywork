@@ -26,6 +26,7 @@ eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/koyn.js', 'utf8'));
 //------------------------------------------------------------------------------
 
 // truncateDB();
+// update_CHANGE_KOYN(0, 2)
 
 showDB();
 
