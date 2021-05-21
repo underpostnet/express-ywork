@@ -9,6 +9,7 @@
 
 let fs = require('fs');
 var data = JSON.parse(fs.readFileSync('C:/dd/global_data/json/cyberia/cyberia.json', 'utf8'));
+eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/console.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/cyberia/microdata.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/client/util.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/node.js', 'utf8'));
@@ -19,7 +20,9 @@ eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/seo.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/postgresql.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/wsnode.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/stream.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/koyn.js', 'utf8'));
+eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/progress/controller.js', 'utf8'));
+eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/progress/updates/koyn.js', 'utf8'));
+eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/progress/updates/life.js', 'utf8'));
 
 
 //------------------------------------------------------------------------------

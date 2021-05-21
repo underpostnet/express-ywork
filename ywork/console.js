@@ -20,6 +20,35 @@ colors.setTheme({
   error: ['red','underline']
 });
 
+
+function log(type, str){
+
+  if(type=='error'){
+    // console.log('error log ->');
+    console.log(colors.error(str));
+
+  }
+  else if(type=='warn'){
+    // console.log('warn log ->');
+    console.log(colors.warn(str));
+
+  }
+  else if(type=='info'){
+    // console.log('info log ->');
+    console.log(colors.info(str));
+
+  }else if(type=='ws'){
+    // console.log('ws log ->');
+    console.log(colors.data(str));
+
+  }else {
+    console.log('undefined log ->');
+    console.log(str);
+    console.log('-- end undefined log --');
+  }
+
+}
+
 // outputs red text
 // console.log(colors.error("this is an error"));
 

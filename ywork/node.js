@@ -111,7 +111,7 @@ function logHeader(req, res, data){
 
 	}
 
-	console.log(
+	log('info',
 
 		`
 		http connection
