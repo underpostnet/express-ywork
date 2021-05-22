@@ -71,11 +71,10 @@ for(let i=0; i<l(data.path);i++){
 
 			for(let ii=0;ii<l(data.path[i].underpost);ii++){
 
-				mod_underpost = mod_underpost + `<script type='text/javascript'>` + fs.readFileSync(
-
-					('c:/dd/deploy_area/client/'+data.path[i].underpost[ii])
-
-				) + `</script>`;
+				mod_underpost = mod_underpost
+				//+ `<script type='text/javascript'>`
+				+ fs.readFileSync(('c:/dd/deploy_area/client/'+data.path[i].underpost[ii]))
+				//+ `</script>`;
 
 			}
 
@@ -83,23 +82,23 @@ for(let i=0; i<l(data.path);i++){
 			//-----------------------------------------------------
 
 			let mod_lib = '';
+			let mod_socket_io = '';
 
 			for(let ii=0;ii<l(data.path[i].lib);ii++){
 
 				if(data.path[i].lib[ii]=='socket.io.js'){
-					mod_lib = `
+					mod_socket_io = `
 
 					<script defer src="/socket.io/socket.io.js"></script>
 
-					` + mod_lib;
+					`;
 
 				}else{
 
-					mod_lib = mod_lib + `<script type='text/javascript'>` + fs.readFileSync(
-
-						('c:/dd/deploy_area/client/lib/'+data.path[i].lib[ii])
-
-					) + `</script>`;
+					mod_lib = mod_lib
+					//+ `<script type='text/javascript'>`
+					+ fs.readFileSync(('c:/dd/deploy_area/client/lib/'+data.path[i].lib[ii]))
+					//+ `</script>`;
 
 				}
 
@@ -190,7 +189,8 @@ for(let i=0; i<l(data.path);i++){
 			//-----------------------------------------------------
 			//-----------------------------------------------------
 
-			let mod_js = '<script type="text/javascript">';
+			// let mod_js = '<script type="text/javascript">';
+			let mod_js = '';
 			for(let ii=0;ii<l(data.path[i].modules);ii++){
 
 				mod_js = mod_js + fs.readFileSync(
@@ -200,7 +200,7 @@ for(let i=0; i<l(data.path);i++){
 				);
 
 			}
-			mod_js = mod_js + '</script>';
+			// mod_js = mod_js + '</script>';
 
 			//-----------------------------------------------------
 			//-----------------------------------------------------
@@ -460,11 +460,7 @@ for(let i=0; i<l(data.path);i++){
 
 				</style>
 
-					`+mod_underpost+`
-
-					`+mod_lib+`
-
-					`+mod_js+`
+					`+mod_socket_io+`
 
 					`+mod_css+`
 
@@ -477,6 +473,12 @@ for(let i=0; i<l(data.path);i++){
 				<script type='text/javascript' async defer>
 
 					((()=> {
+
+					`+mod_underpost+`
+
+					`+mod_lib+`
+
+					`+mod_js+`
 
 					`+session_state+`
 
