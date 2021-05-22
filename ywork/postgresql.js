@@ -2,6 +2,7 @@
 var pgp = require("pg-promise")(/*options*/);
 var connect = "postgres://"+data.db.username+":"+data.db.password+"@"+data.db.host+":"+data.db.port+"/"+data.db.database+"";
 var db = pgp(connect);
+// https://vitaly-t.github.io/pg-promise/Database.html
 
 //------------------------------------
 //------------------------------------
@@ -19,6 +20,7 @@ function showDB(){
 			db_data[i].email = k.decr((''+db_data[i].email).trim());
 			db_data[i].confirm_email = k.decr((''+db_data[i].confirm_email).trim());
 			db_data[i].pass = k.decr((''+db_data[i].pass).trim());
+			db_data[i].createdat = k.decr((''+db_data[i].createdat).trim());
 
 		}
 
@@ -69,6 +71,52 @@ function getDB(table, hash, end){
 
 		var_dump(error);
 
+	});
+
+}
+
+function get_USER(email, pass, fn){
+
+  /*db.task('my-task', t => {
+      return t.one('SELECT id_users FROM users WHERE email = $1', k.encr(email))
+          .then(user => {
+              return t.any('SELECT * FROM users WHERE id_users = $1', user.id_users);
+          });
+  })
+  .then(data => {
+			console.log('success get_USER ->');
+	 	  var_dump(data);
+			fn(data);
+  })
+  .catch(error => {
+			console.log('error get_USER ->');
+			console.log(error);
+			fn(error);
+  });*/
+
+
+	return db.any('SELECT * FROM users WHERE email = $1 and pass = $2',
+	[k.encr(email), k.encr(pass)],
+	row => row).then(data => {
+		if(l(data)==1){
+			log('info', 'success get_USER ->');
+			console.log(data[0]);
+			fn({success: true, content: data[0]});
+		}else{
+			if(l(data)>1){
+				log('error', ('duplicated user db -> '+email));
+			}
+			if(l(data)<1){
+				log('error', ("user doesn't exist -> "+email));
+			}
+			var_dump(data);
+			fn({success: false, content: data});
+		}
+	})
+	.catch(error => {
+		log('error','error get_USER ->');
+		console.log(error);
+		fn({success: false, content: error});
 	});
 
 }
@@ -178,9 +226,9 @@ function update_CHANGE_PASS(pass, id){
 
 function insert_USERS(id_register, obj, end){
 
-	db.one('INSERT INTO users(id_users, username, pass, email) VALUES(DEFAULT, $1, $2, $3) RETURNING id_users',
+	db.one('INSERT INTO users(id_users, username, pass, email, createdat) VALUES(DEFAULT, $1, $2, $3, $4) RETURNING id_users',
 
-	[k.encr(obj.name), k.encr(obj.pass), k.encr(obj.email)])
+	[k.encr(obj.name), k.encr(obj.pass), k.encr(obj.email), k.encr(new Date().toString())])
 
 	.then(data => {
 
@@ -192,7 +240,8 @@ function insert_USERS(id_register, obj, end){
 	.catch(error => {
 
 		console.log('fail register:');
-		var_dump(error);
+		//var_dump(error);
+		console.log(error);
 		end(id_register, false);
 
 	});

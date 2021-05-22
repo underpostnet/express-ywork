@@ -219,6 +219,7 @@
 											adv: ['', '']
 										};
 
+										// set session y frontend solo reload ->
 										USERDATA[id_register].state = 'register';
 										USERDATA[id_register].validator = res_obj;
 										CLIENTS[id_register].send(JSON.stringify(USERDATA[id_register]));

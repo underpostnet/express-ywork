@@ -1,5 +1,16 @@
 
+/*
 
+session(options)
+
+https://expressjs.com/en/resources/middleware/session.html
+
+Create a session middleware with the given options.
+
+Note Session data is not saved in the cookie itself,
+just the session ID. Session data is stored server-side.
+
+*/
 
 var session = require('express-session');
 
@@ -37,127 +48,72 @@ var auth = function(req, res, next) {
 
 };
 
-
-//------------------------------------------------------------------------------
-//------------------------------------------------------------------------------
-
-
-app.post('/set_session', function (req, res) {
-
-  console.log('post -> set_session');
-  var_dump(req.body);
-
-  let response;
-
-  if(req.body && (req.body.token==req.session.token)){
-
-    req.session.name = req.body.username;
-    req.session.email = tl(req.body.email);
-    req.session.confirm_email = req.body.confirm_email=='' ? false : true;
-    req.session.lang = req.body.lang;
-    req.session.id_users = req.body.id_users;
-
-    //--------------------------------------------------------------------------
-    if(req.body.koyn==null){
-      console.log('init koyn null');
-      req.session.koyn = 0;
-    }else {
-      req.session.koyn = req.body.koyn;
-    }
-    //--------------------------------------------------------------------------
-    if(req.body.life==null){
-      console.log('init life null');
-      req.session.life = 100;
-    }else {
-      req.session.life = req.body.life;
-    }
-    //--------------------------------------------------------------------------
-    if(req.body.max_life==null){
-      console.log('init max_life null');
-      req.session.max_life = 100;
-    }else {
-      req.session.max_life = req.body.max_life;
-    }
-
-
-
-    response = true;
-
-  }else{
-
-    console.log('token corrupt ->');
-    console.log(req.body.token);
-
-    response = false;
-
-  }
-
-  res.send(JSON.stringify(response));
-  res.end();
-
-});
-
-
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
 
 app.post('/log_in', function (req, res) {
-
-  console.log('post -> log_in');
+  log('info', 'POST -> log_in');
   var_dump(req.body);
+  let response = false;
+  if(req.body && req.body.pass && req.body.email){
+    //--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    let email = tl(req.body.email);
+    let pass = req.body.pass;
 
-  let response = [false, null];
+    get_USER(email, pass, function(dbResp){
+      if(dbResp.success){
 
-  if(req.body && req.body.pass && tl(req.body.email)){
+        log('info', 'Login Success ->');
+        response = true;
+        let user = dbResp.content;
+        let token = getHash();
+        req.session.token = token;
 
-    //----------------------------------------------------------
-    //----------------------------------------------------------
+        //--------------------------------------------------------------------------
+        req.session.name = k.decr(user.username);
+        req.session.email = tl(k.decr(user.email));
+        req.session.confirm_email = user.confirm_email=='' ? false : true;
+        req.session.lang = user.lang;
+        req.session.id_users = user.id_users;
 
-    getDB('users', null, function(data, hash){
-
-      for(let i_log=0;i_log<l(data);i_log++){
-
-        if( (data[i_log].email==tl(req.body.email)) && (data[i_log].pass==req.body.pass) ){
-
-          let token = getHash();
-          response = [true, data[i_log], token];
-          req.session.token = token;
-
-          console.log('log_in success -> '+tl(req.body.email));
-          console.log('log_in success -> id: '+data[i_log].id_users);
-
+        //--------------------------------------------------------------------------
+        if(user.koyn==null){
+          console.log('init koyn null');
+          req.session.koyn = 0;
+        }else {
+          req.session.koyn = user.koyn;
+        }
+        //--------------------------------------------------------------------------
+        if(user.life==null){
+          console.log('init life null');
+          req.session.life = 100;
+        }else {
+          req.session.life = user.life;
+        }
+        //--------------------------------------------------------------------------
+        if(user.max_life==null){
+          console.log('init max_life null');
+          req.session.max_life = 100;
+        }else {
+          req.session.max_life = user.max_life;
         }
 
-      }
+        res.write(JSONstr(response));
+        res.end();
 
-      //----------------------------------------------------------
-      //----------------------------------------------------------
-
-      if(!response[0]){
-
-        console.log('log_in failed ->'+tl(req.body.email));
-
-      }
-
-      res.send(JSON.stringify(response));
-      res.end();
-
-      //----------------------------------------------------------
-      //----------------------------------------------------------
-
+      }else{
+        res.write(JSONstr(response));
+        res.end();
+      }  
     });
-
-    //----------------------------------------------------------
-    //----------------------------------------------------------
-
+    //--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
   }else{
-
-    res.send(JSON.stringify(response));
+    res.write(JSONstr(response));
     res.end();
-
   }
-
 });
 
 

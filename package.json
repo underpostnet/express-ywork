@@ -21,7 +21,6 @@
   "license": "MIT",
   "homepage": "https://www.cyberiaonline.com/",
   "dependencies": {
-    "crypto-js": "latest",
     "colors": "latest",
     "express": "latest",
     "express-session": "latest",

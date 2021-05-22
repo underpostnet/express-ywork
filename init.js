@@ -12,6 +12,7 @@ var data = JSON.parse(fs.readFileSync('C:/dd/global_data/json/cyberia/cyberia.js
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/console.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/cyberia/microdata.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/client/util.js', 'utf8'));
+eval(fs.readFileSync('C:/dd/deploy_area/cypherpunk/crypto/crypto.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/node.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/session/sessionOff.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/session/sessionOn.js', 'utf8'));
@@ -35,7 +36,33 @@ eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/progress/updates/life.js', 'u
 
 showDB();
 
+// k.info();
+
 // var_dump(data);
+
+/*
+
+get_USER('fcoverdugoa@gmail.com', '123123', function(response){
+
+  console.log('get_USER ->');
+  console.log(response);
+
+});
+
+console.log('insert_USERS ->');
+insert_USERS(342, {
+  name: 'Francisco',
+  pass:'123123',
+  email: 'fcoverdugoa@gmail.com'
+}, function(id_register, success){
+
+  console.log('result ->');
+  console.log(success);
+
+});
+
+
+*/
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

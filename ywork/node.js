@@ -1,20 +1,3 @@
-/*
-
-npm install express
-
-npm install nodemon
-
-npm install path
-
-npm install ws
-
-npm install pg-promise
-
-npm install var_dump
-
-npm install crypto-js
-
-*/
 
 //--------------------------------------------
 //--------------------------------------------
@@ -70,30 +53,34 @@ app.use(bodyParser.json());
 //--------------------------------------------
 //--------------------------------------------
 
-let CryptoJS = require("crypto-js");
-
-class NodeCrypto {
-
-	constructor(key) {
-		this.key = key;
+var k = {
+	encr: function(content){
+		return encrypt(content, data.db.key, Buffer.from(data.db.iv, "utf8")).content;
+	},
+	decr: function(content){
+		return decrypt({
+			content: content,
+			iv: Buffer.from(data.db.iv, "utf8").toString('hex')
+		}, data.db.key, Buffer.from(data.db.iv, "utf8"));
+	},
+	info: function(){
+		log('info', 'DB ENCRYPT INFO ->');
+		log('info', 'buffer iv ->');
+		console.log(Buffer.from(data.db.iv, "utf8"));
+		log('info','key char str length -> '+l(data.db.key));
+		log('info','iv char str length -> '+l(data.db.iv));
 	}
-
-	encr(content){
-		return CryptoJS.AES.encrypt(content, this.key).toString();
-	}
-
-	decr(content){
-		let bytes  = CryptoJS.AES.decrypt(content, this.key);
-		return  bytes.toString(CryptoJS.enc.Utf8);
-	}
-
-}
-
-var k = new NodeCrypto(data.db.key);
+	/*
+	let test = 'asda';
+	console.log(k.encr(test));
+	console.log(k.encr(test));
+	console.log(k.decr(k.encr(test)));
+	console.log(k.decr(k.encr(test)));
+	*/
+};
 
 //--------------------------------------------
 //--------------------------------------------
-
 
 function logHeader(req, res, data){
 
