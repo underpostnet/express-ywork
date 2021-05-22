@@ -13,7 +13,10 @@ var session = require('express-session');
 app.use(session({
   secret: data.secret_session,
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie : {
+        maxAge: 1000* 60 * 60 *24 * 365
+    }
 }));
 
 // session Authentication and Authorization Middleware
@@ -53,12 +56,30 @@ app.post('/set_session', function (req, res) {
     req.session.confirm_email = req.body.confirm_email=='' ? false : true;
     req.session.lang = req.body.lang;
     req.session.id_users = req.body.id_users;
+
+    //--------------------------------------------------------------------------
     if(req.body.koyn==null){
       console.log('init koyn null');
       req.session.koyn = 0;
     }else {
       req.session.koyn = req.body.koyn;
     }
+    //--------------------------------------------------------------------------
+    if(req.body.life==null){
+      console.log('init life null');
+      req.session.life = 100;
+    }else {
+      req.session.life = req.body.life;
+    }
+    //--------------------------------------------------------------------------
+    if(req.body.max_life==null){
+      console.log('init max_life null');
+      req.session.max_life = 100;
+    }else {
+      req.session.max_life = req.body.max_life;
+    }
+
+
 
     response = true;
 

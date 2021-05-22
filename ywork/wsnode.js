@@ -241,6 +241,9 @@
 						// Progress Events
 						//-----------------------------------------------------------------
 
+						// LOS EVENTOS DE KOYN SOLO SE EJECUTAN
+						// SI EXISTE KOYN > 0 POR TRANSFERIR
+
 						if(obj.state=='update-coin-atk-bot-user'){
 							// var_dump(obj);
 							update_coin_atk_bot_user++;

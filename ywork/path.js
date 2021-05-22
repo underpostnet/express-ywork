@@ -311,39 +311,9 @@ for(let i=0; i<l(data.path);i++){
 			let session_state = '';
 
 			if(session_pass_reset!=''){
-
-				session_state = `
-
-				console.log('session off');
-				function session(data){
-
-					data.users.var[0].lang = '`+lang+`';
-
-					`+session_pass_reset+`
-
-				}
-
-				`;
-
+				session_state = sessionOffPassReset(i, req, res, lang, session_pass_reset);
 			}else{
-
-				session_state = `
-
-				console.log('session off');
-				function session(data){
-
-					data.users.var[0].lang = '`+lang+`';
-
-					setTimeout(()=>{
-
-							fadeIn(s('.home-log-content'));
-
-					}, `+time_in_home+`);
-
-				}
-
-				`;
-
+				session_state = sessionOff(i, req, res, lang, time_in_home);
 			}
 
 			//-----------------------------------------------------
@@ -399,30 +369,7 @@ for(let i=0; i<l(data.path);i++){
 				//---------------------------------------------
 				//---------------------------------------------
 
-				session_state = `
-
-				console.log('session on');
-				console.log('name -> `+req.session.name+`');
-				console.log('email -> `+req.session.email+`');
-				console.log('confirm_email -> `+req.session.confirm_email+`');
-
-				function session(data){
-
-					 data.token = '`+req.session.token+`';
-					 data.users.var[0].name = '`+req.session.name+`';
-					 data.users.var[0].email = '`+req.session.email+`';
-					 data.session.state = true;
-					 data.users.var[0].lang = '`+lang+`';
-					 data.users.var[0].confirm_email = `+req.session.confirm_email+`;
-					 data.users.var[0].coin = `+req.session.koyn+`;
-
-					 `+confirm_email_js+`
-
-					 `+session_pass_reset+`
-
-				}
-
-				`;
+				session_state = sessionOn(i, req, res, lang, confirm_email_js, session_pass_reset);
 
 			}
 

@@ -136,6 +136,26 @@ function update_CHANGE_KOYN(koyn, id){
 //------------------------------------
 //------------------------------------
 
+function update_CHANGE_LIFE(life, max_life , id){
+
+	db.tx(t => {
+		return t.none('UPDATE users SET life = $1, max_life = $2 WHERE id_users = $3',
+		[life, max_life, id]);
+	})
+	.then(data => {
+		console.log('success update change life: '+life+' max_life: '+max_life+' id_user -> '+id);
+		var_dump(data);
+	})
+	.catch(error => {
+		console.log('error update change life: '+life+' max_life: '+max_life+' id_user -> '+id);
+		var_dump(error);
+	});
+
+}
+
+//------------------------------------
+//------------------------------------
+
 function update_CHANGE_PASS(pass, id){
 
 	db.tx(t => {
