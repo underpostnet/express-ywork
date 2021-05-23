@@ -74,7 +74,7 @@ app.post('/log_in', function (req, res) {
         //--------------------------------------------------------------------------
         req.session.name = k.decr(user.username);
         req.session.email = tl(k.decr(user.email));
-        req.session.confirm_email = user.confirm_email=='' ? false : true;
+        req.session.confirm_email = user.confirm_email==null ? false : true;
         req.session.lang = user.lang;
         req.session.id_users = user.id_users;
 
@@ -106,7 +106,7 @@ app.post('/log_in', function (req, res) {
       }else{
         res.write(JSONstr(response));
         res.end();
-      }  
+      }
     });
     //--------------------------------------------------------------------------
     //--------------------------------------------------------------------------
