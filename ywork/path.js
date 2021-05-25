@@ -45,7 +45,7 @@ for(let i=0; i<l(data.path);i++){
 			//-----------------------------------------------------
 			//-----------------------------------------------------
 
-			let header = logHeader(req, res, data.path[i]);
+			let header = logHeader(req, res, data.path[i], true);
 			let lang = header.lang;
 			let lang_id = header.id;
 

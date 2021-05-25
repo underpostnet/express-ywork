@@ -26,6 +26,7 @@ eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/stream.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/progress/controller.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/progress/updates/koyn.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/progress/updates/life.js', 'utf8'));
+eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/koyn.js', 'utf8'));
 
 
 //------------------------------------------------------------------------------
@@ -34,7 +35,7 @@ eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/progress/updates/life.js', 'u
 // truncateDB();
 // update_CHANGE_KOYN(0, 2)
 
-showDB();
+// showDB();
 
 // k.info();
 

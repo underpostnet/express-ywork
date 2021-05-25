@@ -82,7 +82,7 @@ var k = {
 //--------------------------------------------
 //--------------------------------------------
 
-function logHeader(req, res, data){
+function logHeader(req, res, data, header){
 
 	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
@@ -123,12 +123,16 @@ function logHeader(req, res, data){
 
 	}
 
-	res.writeHead(200, {
+	if(header){
+		res.writeHead(200, {
 
-		'Content-Type': 'text/html; charset=utf-8',
-		'Content-Language': (''+lang)
+			'Content-Type': 'text/html; charset=utf-8',
+			'Content-Language': (''+lang)
 
-	});
+		});		
+	}
+
+	// res.setHeader('Content-Type', 'application/json');
 
 	return {lang: lang, id: id};
 

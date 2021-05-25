@@ -75,6 +75,24 @@ function getDB(table, hash, end){
 
 }
 
+//------------------------------------
+//------------------------------------
+
+async function getKoynDB(fn){
+	db.map(('SELECT * FROM users'), [], row => row)
+	.then(data => {
+		log('warn', 'success getKoynDB() | time: '+(new Date().toLocaleString()));
+		fn(data);
+	})
+	.catch(error => {
+		log('error', 'failed getKoynDB() | time: '+(new Date().toLocaleString()));
+		console.log(jsonLog(error));
+	});
+}
+
+//------------------------------------
+//------------------------------------
+
 function get_USER(email, pass, fn){
 
   /*db.task('my-task', t => {
