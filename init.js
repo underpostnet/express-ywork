@@ -12,7 +12,7 @@ var data = JSON.parse(fs.readFileSync('C:/dd/global_data/json/cyberia/cyberia.js
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/console.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/cyberia/microdata.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/client/util.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/cypherpunk/crypto/crypto.js', 'utf8'));
+eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/crypto.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/node.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/session/sessionOff.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/session/sessionOn.js', 'utf8'));
