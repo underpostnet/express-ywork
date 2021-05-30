@@ -60,86 +60,40 @@
 						//------------------------------------------------------------------
 
 						if(obj.state=='checkinput/username'){
-
 							send_all = false;
-
 							let res_obj = {
 								input_name: 'username',
 								adv: ''
 							};
-
-							getDB('users', USERDATA[i].users.var[0].hash, function(data, hash){
-
-								for(let ii=0;ii<l(data);ii++){
-
-									if(data[ii].username==obj.validator){
-
-										for(let iii=0;iii<l(USERDATA);iii++){
-
-											if(USERDATA[iii]!=null){
-
-												if(USERDATA[iii].users.var[0].hash==hash){
-
-													res_obj.adv = ['username already exist', 'usuario existente'];
-													USERDATA[iii].state = 'checkinput';
-													USERDATA[iii].validator = res_obj;
-													CLIENTS[iii].send(JSON.stringify(USERDATA[iii]));
-
-												}
-
-											}
-
-										}
-
-									}
-
+							ws_search_USERNAME(obj.validator, USERDATA[i], CLIENTS[i], function(result){
+								if(result.success){
+									//console.log(result.wsData);
+									res_obj.adv = ['username already exist', 'usuario existente'];
+									result.wsData.state = 'checkinput';
+									result.wsData.validator = res_obj;
+									result.wsClient.send(JSON.stringify(result.wsData));
 								}
-
 							});
-
 						}
 
 						//-----------------------------------------------------------------
 						//-----------------------------------------------------------------
 
 						if(obj.state=='checkinput/email'){
-
 							send_all = false;
-
 							let res_obj = {
 								input_name: 'email',
 								adv: ''
 							};
-
-							getDB('users', USERDATA[i].users.var[0].hash, function(data, hash){
-
-								for(let ii=0;ii<l(data);ii++){
-
-									if(data[ii].email==tl(obj.validator)){
-
-										for(let iii=0;iii<l(USERDATA);iii++){
-
-											if(USERDATA[iii]!=null){
-
-												if(USERDATA[iii].users.var[0].hash==hash){
-
-													res_obj.adv = ['email already exist', 'email existente'];
-													USERDATA[iii].state = 'checkinput';
-													USERDATA[iii].validator = res_obj;
-													CLIENTS[iii].send(JSON.stringify(USERDATA[iii]));
-
-												}
-
-											}
-
-										}
-
-									}
-
+							ws_search_EMAIL(obj.validator, USERDATA[i], CLIENTS[i], function(result){
+								if(result.success){
+									//console.log(result.wsData);
+									res_obj.adv = ['email already exist', 'email existente'];
+									result.wsData.state = 'checkinput';
+									result.wsData.validator = res_obj;
+									result.wsClient.send(JSON.stringify(result.wsData));
 								}
-
 							});
-
 						}
 
 						//-----------------------------------------------------------------

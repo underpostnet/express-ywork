@@ -93,6 +93,58 @@ async function getKoynDB(fn){
 //------------------------------------
 //------------------------------------
 
+
+function ws_search_USERNAME(name, ws_user_data, ws_user_client, fn){
+
+	return db.any('SELECT * FROM users WHERE username = $1',
+	[k.encr(name)],
+	row => row).then(data => {
+		//log('info', 'success ws_search_USERNAME ->');
+		//jsonLog(data);
+		if(l(data)>0){
+			fn({success: true, content: data, wsData: ws_user_data, wsClient: ws_user_client});
+		}else{
+			fn({success: false, content: data, wsData: ws_user_data, wsClient: ws_user_client});
+		}
+	})
+	.catch(error => {
+		log('error','error ws_search_USERNAME ->');
+		console.log(error);
+		fn({success: false, content: error, wsData: ws_user_data, wsClient: ws_user_client});
+	});
+
+}
+
+
+//------------------------------------
+//------------------------------------
+
+
+function ws_search_EMAIL(email, ws_user_data, ws_user_client, fn){
+
+	return db.any('SELECT * FROM users WHERE email = $1',
+	[k.encr(tl(email))],
+	row => row).then(data => {
+		//log('info', 'success ws_search_EMAIL ->');
+		//jsonLog(data);
+		if(l(data)>0){
+			fn({success: true, content: data, wsData: ws_user_data, wsClient: ws_user_client});
+		}else{
+			fn({success: false, content: data, wsData: ws_user_data, wsClient: ws_user_client});
+		}
+	})
+	.catch(error => {
+		log('error','error ws_search_EMAIL ->');
+		console.log(error);
+		fn({success: false, content: error, wsData: ws_user_data, wsClient: ws_user_client});
+	});
+
+}
+
+
+//------------------------------------
+//------------------------------------
+
 function get_USER(email, pass, fn){
 
   /*db.task('my-task', t => {
@@ -114,7 +166,7 @@ function get_USER(email, pass, fn){
 
 
 	return db.any('SELECT * FROM users WHERE email = $1 and pass = $2',
-	[k.encr(email), k.encr(pass)],
+	[k.encr(tl(email)), k.encr(pass)],
 	row => row).then(data => {
 		if(l(data)==1){
 			log('info', 'success get_USER ->');
