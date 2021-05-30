@@ -1,9 +1,11 @@
 
 
 
-	var WebSocketServer = require('ws').Server,
-	wss = new WebSocketServer({port: data.ws_port}),
-	CLIENTS=[], USERDATA=[];
+	var WebSocket = require('ws');
+
+	var wss = new WebSocket.Server({port: data.ws_port});
+	var CLIENTS=[];
+	var USERDATA=[];
 
 	var update_coin_atk_bot_user = 0;
 	var update_coin_atk_bot = 0;

@@ -1,8 +1,6 @@
 var crypto = require('crypto');
 
 var algorithm = 'aes-256-ctr';
-// const secretKey = 'vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3';
-// var iv = crypto.randomBytes(16);
 
 var encrypt = (text, secretKey, iv) => {
 
@@ -24,8 +22,3 @@ var decrypt = (hash, secretKey) => {
 
     return decrpyted.toString();
 };
-
-/*module.exports = {
-    encrypt,
-    decrypt
-};*/

@@ -18,6 +18,8 @@ eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/session/sessionOff.js', 'utf8
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/session/sessionOn.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/session/session.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/mailer.js', 'utf8'));
+eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/redirect.js', 'utf8'));
+eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/modJsCssController.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/path.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/seo.js', 'utf8'));
 eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/postgresql.js', 'utf8'));
@@ -62,6 +64,18 @@ insert_USERS(342, {
 
 });
 
+console.log('insert_USERS ->');
+insert_USERS(342, {
+  name: data.bot_server.name,
+  pass: data.bot_server.pass,
+  email: data.bot_server.email
+}, function(id_register, success){
+
+  console.log('result ->');
+  console.log(success);
+
+});
+
 
 */
 
@@ -71,13 +85,12 @@ insert_USERS(342, {
 
 server.listen(data.http_port);
 
-console.log('');
+log('warn','HTTP SERVER ONLINE -> PORT:'+data.http_port);
+log('warn','WS SERVER ONLINE -> PORT:'+data.ws_port);
+log('warn','PEER SERVER ONLINE -> PORT:'+data.peer_port);
+log('warn','WS KOYN SERVER ONLINE -> PORT:'+data.ws_koyn_port);
 
-console.log('HTTP SERVER ONLINE -> PORT:'+data.http_port);
-console.log('WS SERVER ONLINE -> PORT:'+data.ws_port);
-console.log('PEER SERVER ONLINE -> PORT:'+data.peer_port);
 
-console.log('');
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

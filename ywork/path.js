@@ -14,40 +14,16 @@ for(let i=0; i<l(data.path);i++){
 			//-----------------------------------------------------
 			//-----------------------------------------------------
 
-			if(suburl==='/stream'){
-
-				if(!(req.session.name==='P4R4N014')){
-
-					//session_state = `location.href='https://www.cyberiaonline.com/'`;
-
-					/*
-
-					res.writeHead(301,
-						{Location: 'https://www.cyberiaonline.com/'}
-					);
-					res.end();
-
-					*/
-
-					// res.json();
-					// res.redirect('https://www.cyberiaonline.com/');
-					// res.end();
-
-					return res.redirect("https://www.cyberiaonline.com/");
-
-					// res.writeHead(302, {location: 'https://www.cyberiaonline.com/'});
-					// res.end();
-
-				}
-
-			}
-
-			//-----------------------------------------------------
-			//-----------------------------------------------------
+			redirectController(suburl, req, res, function(){
 
 			let header = logHeader(req, res, data.path[i], true);
 			let lang = header.lang;
 			let lang_id = header.id;
+
+			//-----------------------------------------------------
+			//-----------------------------------------------------
+
+
 
 			//-----------------------------------------------------
 			//-----------------------------------------------------
@@ -191,29 +167,11 @@ for(let i=0; i<l(data.path);i++){
 
 			// let mod_js = '<script type="text/javascript">';
 			let mod_js = '';
-			for(let ii=0;ii<l(data.path[i].modules);ii++){
-
-				mod_js = mod_js + fs.readFileSync(
-
-					(data.path_file+'modules/'+data.path[i].modules[ii]+'/main.js')
-
-				);
-
-			}
-			// mod_js = mod_js + '</script>';
-
-			//-----------------------------------------------------
-			//-----------------------------------------------------
-
 			let mod_css = '<style>';
 			for(let ii=0;ii<l(data.path[i].modules);ii++){
-
-				mod_css = mod_css + fs.readFileSync(
-
-					(data.path_file+'modules/'+data.path[i].modules[ii]+'/style.css')
-
-				);
-
+				let JsCssController = modJsCssController(req, mod_js, mod_css, data.path[i].modules[ii]);
+				mod_css = JsCssController.css;
+				mod_js = JsCssController.js;
 			}
 			mod_css = mod_css + '</style>';
 
@@ -500,6 +458,7 @@ for(let i=0; i<l(data.path);i++){
 
 			res.end();
 
+			});
 
 		});
 
