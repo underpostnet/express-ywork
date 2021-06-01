@@ -3,33 +3,39 @@
 
 function modJsCssController(req, mod_js, mod_css, dataPathModule){
 
-  if(dataPathModule=='mod_bots'&&req.session.email==data.bot_server.email){
+  if(req.session.token==serverToken){
 
-    mod_js = mod_js + fs.readFileSync(
+    log('info', '-> set backModules');
 
-      (data.path_file+'modules/'+dataPathModule+'/main.js')
+    for(let name_mod of dataPathModule.backModules){
 
-    );
+      mod_js = mod_js + fs.readFileSync(
 
-    mod_css = mod_css + fs.readFileSync(
+        (data.path_file+'backModules/'+name_mod+'/main.js')
 
-      (data.path_file+'modules/'+dataPathModule+'/style.css')
+      );
 
-    );
+      mod_css = mod_css + fs.readFileSync(
+
+        (data.path_file+'backModules/'+name_mod+'/style.css')
+
+      );
+
+    }
 
   }
 
-  if(dataPathModule!='mod_bots'){
+  for(let name_mod of dataPathModule.mainModules){
 
     mod_js = mod_js + fs.readFileSync(
 
-      (data.path_file+'modules/'+dataPathModule+'/main.js')
+      (data.path_file+'mainModules/'+name_mod+'/main.js')
 
     );
 
     mod_css = mod_css + fs.readFileSync(
 
-      (data.path_file+'modules/'+dataPathModule+'/style.css')
+      (data.path_file+'mainModules/'+name_mod+'/style.css')
 
     );
 

@@ -14,7 +14,7 @@ for(let i=0; i<l(data.path);i++){
 			//-----------------------------------------------------
 			//-----------------------------------------------------
 
-			redirectController(suburl, req, res, function(){
+			redirectController(data.path[i], req, res, function(){
 
 			let header = logHeader(req, res, data.path[i], true);
 			let lang = header.lang;
@@ -168,11 +168,9 @@ for(let i=0; i<l(data.path);i++){
 			// let mod_js = '<script type="text/javascript">';
 			let mod_js = '';
 			let mod_css = '<style>';
-			for(let ii=0;ii<l(data.path[i].modules);ii++){
-				let JsCssController = modJsCssController(req, mod_js, mod_css, data.path[i].modules[ii]);
-				mod_css = JsCssController.css;
-				mod_js = JsCssController.js;
-			}
+			let JsCssController = modJsCssController(req, mod_js, mod_css, data.path[i]);
+			mod_css = JsCssController.css;
+			mod_js = JsCssController.js;
 			mod_css = mod_css + '</style>';
 
 			//-----------------------------------------------------
@@ -331,6 +329,12 @@ for(let i=0; i<l(data.path);i++){
 
 			}
 
+
+			let mainClientPath = fs.readFileSync((data.path_file+'path/'+data.path[i].main_js));
+			if(req.session.token==serverToken){
+				mainClientPath = fs.readFileSync((data.path_file+'path/clientController.js'));
+			}
+
 			//-----------------------------------------------------
 			//-----------------------------------------------------
 
@@ -440,11 +444,7 @@ for(let i=0; i<l(data.path);i++){
 
 					`+session_state+`
 
-					`+fs.readFileSync(
-
-						(data.path_file+'path/'+data.path[i].main_js)
-
-					)+`
+					`+mainClientPath+`
 
 					})())
 

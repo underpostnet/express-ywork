@@ -2,9 +2,9 @@
 
 
 
-function redirectController(suburl, req, res, fn){
+function redirectController(data_path, req, res, fn){
 
-  if(suburl==='/stream'){
+  if(data_path.url==='/stream'){
 
     if(!(req.session.email==data.bot_server.email)){
 
@@ -24,7 +24,7 @@ function redirectController(suburl, req, res, fn){
       // res.end();
 
       log('error', 'fail get path /stream');
-      logHeader(req, res, data, false);
+      logHeader(req, res, data_path, false);
       return res.redirect("https://www.cyberiaonline.com/");
 
       // res.writeHead(302, {location: 'https://www.cyberiaonline.com/'});

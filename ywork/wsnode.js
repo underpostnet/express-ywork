@@ -223,6 +223,23 @@
 						//-----------------------------------------------------------------
 						//-----------------------------------------------------------------
 
+						if((obj.users.var[0].status=='bot'&&obj.token!=serverToken)){
+
+							try{
+								log('error', 'token ws server bot corrupt -> '+obj.users.var[0].email);
+							}catch (err){
+								console.log(err);								
+							}
+							send_all = false;
+							USERDATA[i].state = 'close';
+							USERDATA[i].validator = ['Corrupt Client', 'Cliente Corrupto'];
+							ws.send(JSON.stringify(USERDATA[i]));
+
+						}
+
+						//-----------------------------------------------------------------
+						//-----------------------------------------------------------------
+
 					}
 
 				}

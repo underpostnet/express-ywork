@@ -51,6 +51,65 @@ var auth = function(req, res, next) {
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+var serverToken = getHash();
+log('info', 'set Init token ws server Bot -> '+serverToken);
+function logIn(email, pass, req, res){
+  let response = false;
+  get_USER(email, pass, function(dbResp){
+    if(dbResp.success){
+
+      log('info', 'Login Success ->');
+      response = true;
+      let user = dbResp.content;
+      let token = getHash();
+      req.session.token = token;
+
+
+      //--------------------------------------------------------------------------
+      if(k.decr(user.email)==data.bot_server.email){
+        log('info', 'set serverToken -> '+token);
+        serverToken = token;
+      }
+
+      //--------------------------------------------------------------------------
+      req.session.name = k.decr(user.username);
+      req.session.email = tl(k.decr(user.email));
+      req.session.confirm_email = user.confirm_email==null ? false : true;
+      req.session.lang = user.lang;
+      req.session.id_users = user.id_users;
+
+      //--------------------------------------------------------------------------
+      if(user.koyn==null){
+        console.log('init koyn null');
+        req.session.koyn = 0;
+      }else {
+        req.session.koyn = user.koyn;
+      }
+      //--------------------------------------------------------------------------
+      if(user.life==null){
+        console.log('init life null');
+        req.session.life = 100;
+      }else {
+        req.session.life = user.life;
+      }
+      //--------------------------------------------------------------------------
+      if(user.max_life==null){
+        console.log('init max_life null');
+        req.session.max_life = 100;
+      }else {
+        req.session.max_life = user.max_life;
+      }
+
+      res.write(JSONstr(response));
+      res.end();
+
+    }else{
+      res.write(JSONstr(response));
+      res.end();
+    }
+  });
+};
+
 
 app.post('/log_in', function (req, res) {
   log('info', 'POST -> log_in');
@@ -61,53 +120,7 @@ app.post('/log_in', function (req, res) {
     //--------------------------------------------------------------------------
     let email = tl(req.body.email);
     let pass = req.body.pass;
-
-    get_USER(email, pass, function(dbResp){
-      if(dbResp.success){
-
-        log('info', 'Login Success ->');
-        response = true;
-        let user = dbResp.content;
-        let token = getHash();
-        req.session.token = token;
-
-        //--------------------------------------------------------------------------
-        req.session.name = k.decr(user.username);
-        req.session.email = tl(k.decr(user.email));
-        req.session.confirm_email = user.confirm_email==null ? false : true;
-        req.session.lang = user.lang;
-        req.session.id_users = user.id_users;
-
-        //--------------------------------------------------------------------------
-        if(user.koyn==null){
-          console.log('init koyn null');
-          req.session.koyn = 0;
-        }else {
-          req.session.koyn = user.koyn;
-        }
-        //--------------------------------------------------------------------------
-        if(user.life==null){
-          console.log('init life null');
-          req.session.life = 100;
-        }else {
-          req.session.life = user.life;
-        }
-        //--------------------------------------------------------------------------
-        if(user.max_life==null){
-          console.log('init max_life null');
-          req.session.max_life = 100;
-        }else {
-          req.session.max_life = user.max_life;
-        }
-
-        res.write(JSONstr(response));
-        res.end();
-
-      }else{
-        res.write(JSONstr(response));
-        res.end();
-      }
-    });
+    logIn(email, pass, req, res);
     //--------------------------------------------------------------------------
     //--------------------------------------------------------------------------
   }else{
@@ -116,6 +129,13 @@ app.post('/log_in', function (req, res) {
   }
 });
 
+
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+
+app.get('/server', function(req, res){
+  logIn(data.bot_server.email, data.bot_server.pass, req, res);
+});
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
@@ -175,7 +195,8 @@ app.post('/check_duplicate', function (req, res) {
 
           ){
 
-          USERDATA[index_dup].state = 'duplicated';
+          USERDATA[index_dup].state = 'close';
+          USERDATA[index_dup].validator = ['Duplicate Session', 'Session Duplicada'];
 
           CLIENTS[index_dup].send(JSON.stringify(USERDATA[index_dup]));
 
