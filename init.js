@@ -12,8 +12,8 @@ var data = JSON.parse(fs.readFileSync('C:/dd/global_data/json/cyberia/cyberia.js
 var microdata = JSON.parse(fs.readFileSync(data.dataPath+'microdata.json', 'utf8'));
 eval(fs.readFileSync(data.underpostPath+'util.js', 'utf8'));
 var serverToken = getHash();
-
 var serverMod = (name) =>{return fs.readFileSync(data.serverPath+name, 'utf8')};
+
 eval(serverMod('console.js'));
 eval(serverMod('crypto.js'));
 eval(serverMod('node.js'));

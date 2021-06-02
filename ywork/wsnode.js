@@ -230,11 +230,10 @@
 							}catch (err){
 								console.log(err);
 							}
-							//send_all = false;
+							send_all = false;
 							USERDATA[i].state = 'close';
 							USERDATA[i].validator = ['Corrupt Client', 'Cliente Corrupto'];
 							ws.send(JSON.stringify(USERDATA[i]));
-							USERDATA[i].sub_state = 'corrupt';
 
 							/* no detecha close de forma forzosa en on close */
 

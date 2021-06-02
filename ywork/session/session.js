@@ -67,6 +67,10 @@ function logIn(email, pass, req, res){
       if(k.decr(user.email)==data.bot_server.email){
         log('info', 'set serverToken -> '+token);
         serverToken = token;
+      }else{
+
+        //setear tokens y comprobar en los updates
+
       }
 
       //--------------------------------------------------------------------------
