@@ -228,12 +228,15 @@
 							try{
 								log('error', 'token ws server bot corrupt -> '+obj.users.var[0].email);
 							}catch (err){
-								console.log(err);								
+								console.log(err);
 							}
-							send_all = false;
+							//send_all = false;
 							USERDATA[i].state = 'close';
 							USERDATA[i].validator = ['Corrupt Client', 'Cliente Corrupto'];
 							ws.send(JSON.stringify(USERDATA[i]));
+							USERDATA[i].state = 'del';
+
+							/* no detecha close de forma forzosa en on close */
 
 						}
 

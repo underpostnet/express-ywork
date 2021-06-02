@@ -13,24 +13,25 @@ var microdata = JSON.parse(fs.readFileSync(data.dataPath+'microdata.json', 'utf8
 eval(fs.readFileSync(data.underpostPath+'util.js', 'utf8'));
 var serverToken = getHash();
 
-eval(fs.readFileSync(data.serverPath+'console.js', 'utf8'));
-eval(fs.readFileSync(data.serverPath+'crypto.js', 'utf8'));
-eval(fs.readFileSync(data.serverPath+'node.js', 'utf8'));
-eval(fs.readFileSync(data.serverPath+'session/sessionOff.js', 'utf8'));
-eval(fs.readFileSync(data.serverPath+'session/sessionOn.js', 'utf8'));
-eval(fs.readFileSync(data.serverPath+'session/session.js', 'utf8'));
-eval(fs.readFileSync(data.serverPath+'mailer.js', 'utf8'));
-eval(fs.readFileSync(data.serverPath+'redirect.js', 'utf8'));
-eval(fs.readFileSync(data.serverPath+'modJsCssController.js', 'utf8'));
-eval(fs.readFileSync(data.serverPath+'path.js', 'utf8'));
-eval(fs.readFileSync(data.serverPath+'seo.js', 'utf8'));
-eval(fs.readFileSync(data.serverPath+'postgresql.js', 'utf8'));
-eval(fs.readFileSync(data.serverPath+'wsnode.js', 'utf8'));
-eval(fs.readFileSync(data.serverPath+'stream.js', 'utf8'));
-eval(fs.readFileSync(data.serverPath+'progress/controller.js', 'utf8'));
-eval(fs.readFileSync(data.serverPath+'progress/updates/koyn.js', 'utf8'));
-eval(fs.readFileSync(data.serverPath+'progress/updates/life.js', 'utf8'));
-eval(fs.readFileSync(data.serverPath+'koyn.js', 'utf8'));
+var serverMod = (name) =>{return fs.readFileSync(data.serverPath+name, 'utf8')};
+eval(serverMod('console.js'));
+eval(serverMod('crypto.js'));
+eval(serverMod('node.js'));
+eval(serverMod('session/sessionOff.js'));
+eval(serverMod('session/sessionOn.js'));
+eval(serverMod('session/session.js'));
+eval(serverMod('mailer.js'));
+eval(serverMod('redirect.js'));
+eval(serverMod('modJsCssController.js'));
+eval(serverMod('path.js'));
+eval(serverMod('seo.js'));
+eval(serverMod('postgresql.js'));
+eval(serverMod('wsnode.js'));
+eval(serverMod('stream.js'));
+eval(serverMod('progress/controller.js'));
+eval(serverMod('progress/updates/koyn.js'));
+eval(serverMod('progress/updates/life.js'));
+eval(serverMod('koyn.js'));
 
 
 //------------------------------------------------------------------------------
