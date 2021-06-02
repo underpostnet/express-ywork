@@ -14,7 +14,7 @@ for(let i=0; i<l(data.path);i++){
 			//-----------------------------------------------------
 			//-----------------------------------------------------
 
-			redirectController(data.path[i], req, res, function(){
+			redirectController(data, i, req, res, function(mainClientPath){
 
 			let header = logHeader(req, res, data.path[i], true);
 			let lang = header.lang;
@@ -49,7 +49,7 @@ for(let i=0; i<l(data.path);i++){
 
 				mod_underpost = mod_underpost
 				//+ `<script type='text/javascript'>`
-				+ fs.readFileSync(('c:/dd/deploy_area/client/'+data.path[i].underpost[ii]))
+				+ fs.readFileSync((data.underpostPath+data.path[i].underpost[ii]))
 				//+ `</script>`;
 
 			}
@@ -73,7 +73,7 @@ for(let i=0; i<l(data.path);i++){
 
 					mod_lib = mod_lib
 					//+ `<script type='text/javascript'>`
-					+ fs.readFileSync(('c:/dd/deploy_area/client/lib/'+data.path[i].lib[ii]))
+					+ fs.readFileSync((data.underpostPath+'lib/'+data.path[i].lib[ii]))
 					//+ `</script>`;
 
 				}
@@ -84,15 +84,15 @@ for(let i=0; i<l(data.path);i++){
 			//-----------------------------------------------------
 
 
-			let microdata = '';
+			let renderMicrodata = '';
 
-			for(let ii=0;ii<l(data.path[i].microdata);ii++){
+			for(let jsonMicrodata of microdata){
 
-				microdata = microdata + `
+				renderMicrodata = renderMicrodata + `
 
 				<script type="application/ld+json">
 
-				`+main_microdata[ii]+`
+				`+JSONstr(jsonMicrodata)+`
 
 				</script>
 
@@ -329,12 +329,6 @@ for(let i=0; i<l(data.path);i++){
 
 			}
 
-
-			let mainClientPath = fs.readFileSync((data.path_file+'path/'+data.path[i].main_js));
-			if(req.session.token==serverToken){
-				mainClientPath = fs.readFileSync((data.path_file+'path/clientController.js'));
-			}
-
 			//-----------------------------------------------------
 			//-----------------------------------------------------
 
@@ -350,7 +344,7 @@ for(let i=0; i<l(data.path);i++){
 
         <title>`+data.path[i].title[lang_id]+`</title>
 
-				`+microdata+`
+				`+renderMicrodata+`
 
 				<meta name ='title' content='`+data.path[i].title[lang_id]+`' />
 				<meta name ='description' content='`+data.path[i].description[lang_id]+`' />
@@ -416,7 +410,7 @@ for(let i=0; i<l(data.path);i++){
 
 					`+fs.readFileSync(
 
-						'c:/dd/deploy_area/client/style/'+data.path[i].main_css
+						data.underpostPath+'style/'+data.path[i].main_css
 
 					)+`
 

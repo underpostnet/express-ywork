@@ -51,8 +51,6 @@ var auth = function(req, res, next) {
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-var serverToken = getHash();
-log('info', 'set Init token ws server Bot -> '+serverToken);
 function logIn(email, pass, req, res){
   let response = false;
   get_USER(email, pass, function(dbResp){

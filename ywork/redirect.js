@@ -2,38 +2,20 @@
 
 
 
-function redirectController(data_path, req, res, fn){
+function redirectController(data, i, req, res, fn){
 
-  if(data_path.url==='/stream'){
-
-    if(!(req.session.email==data.bot_server.email)){
-
-      //session_state = `location.href='https://www.cyberiaonline.com/'`;
-
-      /*
-
-      res.writeHead(301,
-        {Location: 'https://www.cyberiaonline.com/'}
-      );
-      res.end();
-
-      */
-
-      // res.json();
-      // res.redirect('https://www.cyberiaonline.com/');
-      // res.end();
-
-      log('error', 'fail get path /stream');
-      logHeader(req, res, data_path, false);
-      return res.redirect("https://www.cyberiaonline.com/");
-
-      // res.writeHead(302, {location: 'https://www.cyberiaonline.com/'});
-      // res.end();
-
-    }
-
+  let back = (req.session.token==serverToken) ? true : false;
+  if(back){
+    mainClientPath = fs.readFileSync((data.clientPath+'path/'+data.path[i].main_path+'/back.js'));
+  }else{
+    mainClientPath = fs.readFileSync((data.clientPath+'path/'+data.path[i].main_path+'/main.js'));
   }
 
-  fn();
+  if( (!back) && (data.path[i].url==='/stream') ){
+    log('error', 'fail get path /stream');
+    return res.redirect("/");
+    res.end();
+  }
 
+  fn(mainClientPath);
 }

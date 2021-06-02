@@ -45,7 +45,7 @@ async function sendEmail(obj, fn) {
 
 
 
-eval(fs.readFileSync('C:/dd/global_data/json/cyberia/mailer/confirm_email.js', 'utf8'));
+eval(fs.readFileSync(data.dataPath+'mailer/confirm_email.js', 'utf8'));
 // renderConfirmEmail(lang, email, name, hash)
 
 app.post('/confirm_email', function (req, res) {
@@ -188,7 +188,7 @@ app.post('/search_email', function (req, res) {
 //------------------------------------------
 //------------------------------------------
 
-eval(fs.readFileSync('C:/dd/global_data/json/cyberia/mailer/pass_email.js', 'utf8'));
+eval(fs.readFileSync(data.dataPath+'mailer/pass_email.js', 'utf8'));
 // renderPassEmail(lang, email, hash)
 
 app.post('/check_email_forgot', function (req, res) {

@@ -11,13 +11,13 @@ function modJsCssController(req, mod_js, mod_css, dataPathModule){
 
       mod_js = mod_js + fs.readFileSync(
 
-        (data.path_file+'backModules/'+name_mod+'/main.js')
+        (data.clientPath+'modules/back/'+name_mod+'/main.js')
 
       );
 
       mod_css = mod_css + fs.readFileSync(
 
-        (data.path_file+'backModules/'+name_mod+'/style.css')
+        (data.clientPath+'modules/back/'+name_mod+'/style.css')
 
       );
 
@@ -29,13 +29,13 @@ function modJsCssController(req, mod_js, mod_css, dataPathModule){
 
     mod_js = mod_js + fs.readFileSync(
 
-      (data.path_file+'mainModules/'+name_mod+'/main.js')
+      (data.clientPath+'modules/main/'+name_mod+'/main.js')
 
     );
 
     mod_css = mod_css + fs.readFileSync(
 
-      (data.path_file+'mainModules/'+name_mod+'/style.css')
+      (data.clientPath+'modules/main/'+name_mod+'/style.css')
 
     );
 

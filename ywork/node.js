@@ -15,11 +15,11 @@ var dir = {
 
 		if(dir==null){
 
-			return path.join(data.path_file, '');
+			return path.join(data.clientPath, '');
 
 		}
 
-		return path.join(data.path_file, dir);
+		return path.join(data.clientPath, dir);
 
 	}
 };
@@ -129,7 +129,7 @@ function logHeader(req, res, data, header){
 			'Content-Type': 'text/html; charset=utf-8',
 			'Content-Language': (''+lang)
 
-		});		
+		});
 	}
 
 	// res.setHeader('Content-Type', 'application/json');

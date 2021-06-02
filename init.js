@@ -9,26 +9,28 @@
 
 let fs = require('fs');
 var data = JSON.parse(fs.readFileSync('C:/dd/global_data/json/cyberia/cyberia.json', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/console.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/node/cyberia/microdata.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/client/util.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/crypto.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/node.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/session/sessionOff.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/session/sessionOn.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/session/session.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/mailer.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/redirect.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/modJsCssController.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/path.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/seo.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/postgresql.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/wsnode.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/stream.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/progress/controller.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/progress/updates/koyn.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/progress/updates/life.js', 'utf8'));
-eval(fs.readFileSync('C:/dd/deploy_area/node/ywork/koyn.js', 'utf8'));
+var microdata = JSON.parse(fs.readFileSync(data.dataPath+'microdata.json', 'utf8'));
+eval(fs.readFileSync(data.underpostPath+'util.js', 'utf8'));
+var serverToken = getHash();
+
+eval(fs.readFileSync(data.serverPath+'console.js', 'utf8'));
+eval(fs.readFileSync(data.serverPath+'crypto.js', 'utf8'));
+eval(fs.readFileSync(data.serverPath+'node.js', 'utf8'));
+eval(fs.readFileSync(data.serverPath+'session/sessionOff.js', 'utf8'));
+eval(fs.readFileSync(data.serverPath+'session/sessionOn.js', 'utf8'));
+eval(fs.readFileSync(data.serverPath+'session/session.js', 'utf8'));
+eval(fs.readFileSync(data.serverPath+'mailer.js', 'utf8'));
+eval(fs.readFileSync(data.serverPath+'redirect.js', 'utf8'));
+eval(fs.readFileSync(data.serverPath+'modJsCssController.js', 'utf8'));
+eval(fs.readFileSync(data.serverPath+'path.js', 'utf8'));
+eval(fs.readFileSync(data.serverPath+'seo.js', 'utf8'));
+eval(fs.readFileSync(data.serverPath+'postgresql.js', 'utf8'));
+eval(fs.readFileSync(data.serverPath+'wsnode.js', 'utf8'));
+eval(fs.readFileSync(data.serverPath+'stream.js', 'utf8'));
+eval(fs.readFileSync(data.serverPath+'progress/controller.js', 'utf8'));
+eval(fs.readFileSync(data.serverPath+'progress/updates/koyn.js', 'utf8'));
+eval(fs.readFileSync(data.serverPath+'progress/updates/life.js', 'utf8'));
+eval(fs.readFileSync(data.serverPath+'koyn.js', 'utf8'));
 
 
 //------------------------------------------------------------------------------
@@ -84,6 +86,8 @@ insert_USERS(342, {
 
 
 server.listen(data.http_port);
+
+log('info', 'set verver token -> '+serverToken);
 
 log('warn','HTTP SERVER ONLINE -> PORT:'+data.http_port);
 log('warn','WS SERVER ONLINE -> PORT:'+data.ws_port);

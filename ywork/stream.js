@@ -29,8 +29,8 @@ const { PeerServer } = require('peer');
 const peerServer = PeerServer({
   port: data.peer_port,
   ssl: {
-    key: fs.readFileSync(('c:/dd/virtual_machine/SSL/'+data.ssl_folder+'/ssl/key.key')),
-    cert: fs.readFileSync(('c:/dd/virtual_machine/SSL/'+data.ssl_folder+'/ssl/crt.crt'))
+    key: fs.readFileSync((data.sslKeyPath)),
+    cert: fs.readFileSync((data.sslCertPath))
   }
 });
 
@@ -59,7 +59,7 @@ function getSizeMB(path, name_file){
 
 function getRadio(dir, end){
 
-  let path_file_radio = 'c:/xampp/htdocs/cloud/radio/music/'+dir+'/';
+  let path_file_radio = data.radioPath+dir+'/';
   //id duracion nombre
 
   let data_dir = [];
@@ -184,7 +184,7 @@ app.post('/stream/:type/:genre', function(req, res){
 
 app.get(('/off_line_radio'), function(req, res){
 
-  res.sendFile('c:/xampp/htdocs/cloud/radio/music/large/synthwave/Voyage_3_Chillwave_Synthwave_Retrowave_Mix.mp3');
+  res.sendFile(data.radioPath+'large/synthwave/Voyage_3_Chillwave_Synthwave_Retrowave_Mix.mp3');
 
 });
 
