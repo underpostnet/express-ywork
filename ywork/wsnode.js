@@ -234,7 +234,7 @@
 							USERDATA[i].state = 'close';
 							USERDATA[i].validator = ['Corrupt Client', 'Cliente Corrupto'];
 							ws.send(JSON.stringify(USERDATA[i]));
-							USERDATA[i].state = 'corrupt';
+							USERDATA[i].sub_state = 'corrupt';
 
 							/* no detecha close de forma forzosa en on close */
 
