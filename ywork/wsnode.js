@@ -229,7 +229,7 @@
 							wsBan(ws, i);
 						}
 
-						if( (obj.users.var[0].status!='bot') && (!validateToken(obj.data.token)) ){
+						if( (obj.users.var[0].status!='bot') && (!validateToken(obj.token)) ){
 							log('error', 'token ws corrupt -> '+obj.token);
 							send_all = false;
 							wsBan(ws, i);
