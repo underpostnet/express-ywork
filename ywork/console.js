@@ -14,7 +14,7 @@ colors.setTheme({
   prompt: 'grey',
   info: 'green',
   data: 'grey',
-  help: 'cyan',
+  help: 'magenta',
   warn: 'yellow',
   debug: 'blue',
   error: ['red','underline']
@@ -31,6 +31,14 @@ function log(type, str){
   else if(type=='warn'){
     // console.log('warn log ->');
     console.log(colors.warn(str));
+
+  }
+  else if(type=='chat'){
+    console.log(colors.help(str));
+
+  }
+  else if(type=='progress'){
+    console.log(colors.verbose(str));
 
   }
   else if(type=='info'){

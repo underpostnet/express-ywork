@@ -84,12 +84,14 @@ var k = {
 
 function generateToken(req){
 	if(!req.session.token){
-		log('info', 'generateToken -> '+req.headers.host);
 		let token = getHash();
 	  req.session.token = token;
 		if(req.headers.host===data.url.split('//')[1]){
 	    usersToken.push(token);
-	  }
+			log('info', 'generate valid token -> host:'+req.headers.host+' token:'+req.session.token);
+	  }else{
+			log('error', 'generate corrupt token -> host:'+req.headers.host+' token:'+req.session.token);
+		}
 	}
 }
 

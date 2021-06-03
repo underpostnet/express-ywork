@@ -33,7 +33,15 @@
 
 					if(CLIENTS[i]==ws){
 
+
+
+						// meta info ws obj ------------------------------------------------
 						USERDATA[i]=obj;
+						let name_ = obj.users.var[0].name==null ? obj.token : (obj.users.var[0].name+'<'+obj.users.var[0].email+'>');
+						let date_ = new Date().toISOString();
+						// end -------------------------------------------------------------
+
+
 
 						if((!obj.bots.activeServer)&&(obj.state!='checkinput')){
 
@@ -197,32 +205,59 @@
 						}
 
 						//-----------------------------------------------------------------
-						// Progress Events
+						// KOYN
 						//-----------------------------------------------------------------
 
 						// LOS EVENTOS DE KOYN SOLO SE EJECUTAN
 						// SI EXISTE KOYN > 0 POR TRANSFERIR
 
+						/*
+
+						var update_coin_atk_bot_user = 0;
+						var update_coin_atk_bot = 0;
+						var update_coin_atk_user = 0;
+
+						contadores definidos antes
+
+						*/
+
 						if(obj.state=='update-coin-atk-bot-user'){
 							// var_dump(obj);
 							update_coin_atk_bot_user++;
-							console.log('Progress Events  | kill '+update_coin_atk_bot_user+' | bot -> user');
+							log('progress', 'Progress Events  '+date_+' | kill Drop koyn | cont:'+update_coin_atk_bot_user+' | bot -> user');
 						}
 
 						if(obj.state=='update-coin-atk-bot'){
 							// var_dump(obj);
 							update_coin_atk_bot++;
-							console.log('Progress Events  | kill '+update_coin_atk_bot+' | user -> bot ');
+							log('progress', 'Progress Events  '+date_+' | kill Drop Koyn | cont:'+update_coin_atk_bot+' | user -> bot ');
 						}
 
 						if(obj.state=='update-coin-atk-user'){
 							// var_dump(obj);
 							update_coin_atk_user++;
-							console.log('Progress Events  | kill '+update_coin_atk_user+' | user -> user ');
+							log('progress', 'Progress Events  '+date_+' | kill Drop koyn | cont:'+update_coin_atk_user+' | user -> user ');
 						}
 
+						//-----------------------------------------------------------------
+						// INFO SERVER
+						//-----------------------------------------------------------------
+
+						if(obj.state=='info-server-life'){
+							send_all = false;
+							log('progress', 'Progress Events '+date_+' | Life Change | name:'+name_+' life:'+obj.validator.life);
+						}
 
 						//-----------------------------------------------------------------
+						// CHAT
+						//-----------------------------------------------------------------
+
+						if(obj.state=='msg'){
+							log('chat', 'Chat Events | '+date_+' '+name_+': '+obj.chat.msg.msg_chat);
+						}
+
+						//-----------------------------------------------------------------
+						// CORS
 						//-----------------------------------------------------------------
 
 						if( (obj.users.var[0].status=='bot') && (obj.token!=serverToken) ){
@@ -239,6 +274,14 @@
 						}
 
 						//-----------------------------------------------------------------
+						// DEL
+						//-----------------------------------------------------------------
+
+						if(obj.state=='del'){
+							console.log(' DEL WS ('+date_+') -> '+name_);
+						}
+
+						//-----------------------------------------------------------------
 						//-----------------------------------------------------------------
 
 					}
@@ -249,8 +292,10 @@
 
 			} catch(err){
 
-				log('error', 'ws obj corrupt');
+				log('error', 'wsnode error obj ->');
 				console.log(message);
+				log('error', 'wsnode error msg ->')
+				console.log(err);
 
 				}
 
