@@ -96,7 +96,7 @@ insert_USERS(342, {
 
 server.listen(data.http_port);
 console.log('argv', process.argv);
-log('info', 'set verver token -> '+serverToken);
+log('info', 'set server token -> '+serverToken);
 let mode = dev ? 'DEV MODE' : 'PROD MODE';
 log('warn','HTTP '+mode+' SERVER ONLINE -> PORT:'+data.http_port);
 log('warn','WS '+mode+' SERVER ONLINE -> PORT:'+data.ws_port);
