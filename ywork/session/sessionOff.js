@@ -9,6 +9,7 @@ function sessionOffPassReset(i, req, res, lang, session_pass_reset){
 
     data.users.var[0].lang = '`+lang+`';
     data.bots = { activeServer: false };
+    data.token = '`+req.session.token+`';
 
     `+session_pass_reset+`
 
@@ -26,6 +27,7 @@ function sessionOff(i, req, res, lang, time_in_home){
 
     data.users.var[0].lang = '`+lang+`';
     data.bots = { activeServer: false };
+    data.token = '`+req.session.token+`';
 
     setTimeout(()=>{
 

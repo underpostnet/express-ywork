@@ -13,6 +13,8 @@ function redirectController(data, i, req, res, fn){
 
   if( (!back) && (data.path[i].url==='/stream') ){
     log('error', 'fail get path /stream');
+    logHeader(req, res, data.path[i], false);
+    log('warn', 'redirect -> /')
     return res.redirect("/");
     res.end();
   }

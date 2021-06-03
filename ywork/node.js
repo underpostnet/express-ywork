@@ -82,6 +82,44 @@ var k = {
 //--------------------------------------------
 //--------------------------------------------
 
+function generateToken(req){
+	if(!req.session.token){
+		log('info', 'generateToken -> '+req.headers.host);
+		let token = getHash();
+	  req.session.token = token;
+		if(req.headers.host===data.url.split('//')[1]){
+	    usersToken.push(token);
+	  }
+	}
+}
+
+function validateToken(token){
+  for(let check of usersToken){
+    if(check===token){
+      return true;
+    }
+  }
+  return false;
+}
+
+function validateLogToken(token){
+	for(let check of logUsersToken){
+		if(check===token){
+      return true;
+    }
+	}
+	return false;
+}
+
+function wsBan(ws, i){
+	USERDATA[i].state = 'close';
+	USERDATA[i].validator = ['Corrupt Client', 'Cliente Corrupto'];
+	ws.send(JSON.stringify(USERDATA[i]));
+}
+
+//--------------------------------------------
+//--------------------------------------------
+
 function logHeader(req, res, data, header){
 
 	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -93,8 +131,7 @@ function logHeader(req, res, data, header){
 		name: `+req.session.name+`
 		email: `+req.session.email+`
 		id_users: `+req.session.id_users+`
-		koyn: `+req.session.koyn+`
-		token: `+req.session.token;
+		koyn: `+req.session.koyn;
 
 	}
 
@@ -107,6 +144,7 @@ function logHeader(req, res, data, header){
 		time: `+new Date()+`
 		host: `+req.headers.host+`
 		lang: `+req.acceptsLanguages()+`
+		token: `+req.session.token+`
 		`+session_state+`
 
 		`

@@ -56,21 +56,19 @@ function logIn(email, pass, req, res){
   get_USER(email, pass, function(dbResp){
     if(dbResp.success){
 
+      if(validateToken(req.session.token)){
+
       log('info', 'Login Success ->');
       response = true;
       let user = dbResp.content;
-      let token = getHash();
-      req.session.token = token;
-
 
       //--------------------------------------------------------------------------
       if(k.decr(user.email)==data.bot_server.email){
-        log('info', 'set serverToken -> '+token);
-        serverToken = token;
+        log('info', 'set serverToken -> '+req.session.token);
+        serverToken = req.session.token;
       }else{
-
-        //setear tokens y comprobar en los updates
-
+        log('info', 'set logUsersToken -> '+req.session.token);
+        logUsersToken.push(req.session.token);
       }
 
       //--------------------------------------------------------------------------
@@ -104,6 +102,14 @@ function logIn(email, pass, req, res){
 
       res.write(JSONstr(response));
       res.end();
+
+    }else{
+
+      log('error', 'corrupt token login -> '+req.session.token);
+      res.write(JSONstr(response));
+      res.end();
+
+    }
 
     }else{
       res.write(JSONstr(response));

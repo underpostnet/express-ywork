@@ -223,20 +223,16 @@
 						//-----------------------------------------------------------------
 						//-----------------------------------------------------------------
 
-						if((obj.users.var[0].status=='bot'&&obj.token!=serverToken)){
-
-							try{
-								log('error', 'token ws server bot corrupt -> '+obj.users.var[0].email);
-							}catch (err){
-								console.log(err);
-							}
+						if( (obj.users.var[0].status=='bot') && (obj.token!=serverToken) ){
+							log('error', 'token ws corrupt -> '+obj.token);
 							send_all = false;
-							USERDATA[i].state = 'close';
-							USERDATA[i].validator = ['Corrupt Client', 'Cliente Corrupto'];
-							ws.send(JSON.stringify(USERDATA[i]));
+							wsBan(ws, i);
+						}
 
-							/* no detecha close de forma forzosa en on close */
-
+						if( (obj.users.var[0].status!='bot') && (!validateToken(obj.data.token)) ){
+							log('error', 'token ws corrupt -> '+obj.token);
+							send_all = false;
+							wsBan(ws, i);
 						}
 
 						//-----------------------------------------------------------------
