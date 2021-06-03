@@ -4,8 +4,9 @@
   "version": "2.0.0",
   "main": "./cyberia/init.js",
   "scripts": {
-    "start": "node init.js",
-    "dev": "nodemon init.js"
+    "prod":"node init.js p",
+    "start": "nodemon init.js p",
+    "dev": "nodemon init.js d"
   },
   "repository": {
     "type": "git",

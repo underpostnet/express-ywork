@@ -6,15 +6,14 @@
 // C Y B E R I A o n l i n e
 //------------------------------------------------------------------------------
 
-
 let fs = require('fs');
 var data = JSON.parse(fs.readFileSync('C:/dd/global_data/json/cyberia/cyberia.json', 'utf8'));
 var microdata = JSON.parse(fs.readFileSync(data.dataPath+'microdata.json', 'utf8'));
 eval(fs.readFileSync(data.underpostPath+'util.js', 'utf8'));
-var dev = false;
-var ws_host = 'wss://'+data.url.split('//')[1]+'/cyon';
+var dev = process.argv.slice(2)[0]=='d' ? true: false;
+var ws_host = 'wss://'+data.url.split('//')[1]+'/'+data.ws_host_path;
 if(dev){
-  data.url = 'localhost';
+  data.url = data.http_host_dev;
   ws_host = 'ws://'+data.url+':'+data.ws_port;
   data.url = 'http://'+data.url+':'+data.http_port;
 }
@@ -96,13 +95,13 @@ insert_USERS(342, {
 
 
 server.listen(data.http_port);
-
+console.log('argv', process.argv);
 log('info', 'set verver token -> '+serverToken);
-
-log('warn','HTTP SERVER ONLINE -> PORT:'+data.http_port);
-log('warn','WS SERVER ONLINE -> PORT:'+data.ws_port);
-log('warn','PEER SERVER ONLINE -> PORT:'+data.peer_port);
-log('warn','WS KOYN SERVER ONLINE -> PORT:'+data.ws_koyn_port);
+let mode = dev ? 'DEV MODE' : 'PROD MODE';
+log('warn','HTTP '+mode+' SERVER ONLINE -> PORT:'+data.http_port);
+log('warn','WS '+mode+' SERVER ONLINE -> PORT:'+data.ws_port);
+log('warn','PEER '+mode+' SERVER ONLINE -> PORT:'+data.peer_port);
+log('warn','WS KOYN SERVER '+mode+' ONLINE -> PORT:'+data.ws_koyn_port);
 
 
 
