@@ -11,6 +11,13 @@ let fs = require('fs');
 var data = JSON.parse(fs.readFileSync('C:/dd/global_data/json/cyberia/cyberia.json', 'utf8'));
 var microdata = JSON.parse(fs.readFileSync(data.dataPath+'microdata.json', 'utf8'));
 eval(fs.readFileSync(data.underpostPath+'util.js', 'utf8'));
+var dev = false;
+var ws_host = 'wss://'+data.url.split('//')[1]+'/cyon';
+if(dev){
+  data.url = 'localhost';
+  ws_host = 'ws://'+data.url+':'+data.ws_port;
+  data.url = 'http://'+data.url+':'+data.http_port;
+}
 var serverToken = getHash();
 var usersToken = [];
 var logUsersToken = [];

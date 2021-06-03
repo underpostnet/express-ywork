@@ -44,6 +44,7 @@ function sessionOn(i, req, res, lang, confirm_email_js, session_pass_reset){
      data.users.var[0].coin = `+req.session.koyn+`;
      data.users.var[0].life = `+req.session.life+`;
      data.users.var[0].max_life = `+req.session.max_life+`;
+     data.ws.host = '`+ws_host+`';
 
 
      `+bot_server+`

@@ -21,6 +21,8 @@
 
 			if(isJSON(message)){
 
+				try {
+
 				send_all = true;
 				not_auto_send = null;
 
@@ -224,12 +226,13 @@
 						//-----------------------------------------------------------------
 
 						if( (obj.users.var[0].status=='bot') && (obj.token!=serverToken) ){
+							// en este caso no != 'del' ya que lo envia el user server
 							log('error', 'token ws corrupt -> '+obj.token);
 							send_all = false;
 							wsBan(ws, i);
 						}
 
-						if( (obj.users.var[0].status!='bot') && (!validateToken(obj.token)) ){
+						if( (obj.users.var[0].status!='bot') && (obj.state!='del') && (!validateToken(obj.token)) ){
 							log('error', 'token ws corrupt -> '+obj.token);
 							send_all = false;
 							wsBan(ws, i);
@@ -243,6 +246,13 @@
 				}
 
 				if(send_all){sendAll(message, not_auto_send);}
+
+			} catch(err){
+
+				log('error', 'ws obj corrupt');
+				console.log(message);
+
+				}
 
 			}
 
