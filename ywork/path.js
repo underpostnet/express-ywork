@@ -436,6 +436,8 @@ for(let i=0; i<l(data.path);i++){
 
 					`+mainClientPath+`
 
+					data.dev = `+dev+`;
+
 					})())
 
 				</script>
