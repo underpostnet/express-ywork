@@ -19,7 +19,7 @@
     "https",
     "wss",
     "ws",
-    "exress"
+    "express"
   ],
   "author": "Francisco Verdugo <fcoverdugoa@underpost.net> (https://underpost.net/)",
   "license": "MIT",
