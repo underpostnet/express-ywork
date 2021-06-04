@@ -1,9 +1,11 @@
 
-
-
-
 //------------------------------------------------------------------------------
-// C Y B E R I A o n l i n e
+//
+//      Ywork NodeJS Express Server
+//
+//      Developed By Francisco Verdugo <fcoverdugoa@underpost.net>
+//      https://github.com/underpostnet/express-ywork
+//
 //------------------------------------------------------------------------------
 
 let fs = require('fs');
@@ -20,80 +22,12 @@ if(dev){
 var serverToken = getHash();
 var usersToken = [];
 var logUsersToken = [];
-var yWork = (name) =>{return fs.readFileSync(data.serverPath+name, 'utf8')};
-
-eval(yWork('console.js'));
-eval(yWork('crypto.js'));
-eval(yWork('node.js'));
-eval(yWork('session/sessionOff.js'));
-eval(yWork('session/sessionOn.js'));
-eval(yWork('session/session.js'));
-eval(yWork('mailer.js'));
-eval(yWork('redirect.js'));
-eval(yWork('modJsCssController.js'));
-eval(yWork('path.js'));
-eval(yWork('seo.js'));
-eval(yWork('postgresql.js'));
-eval(yWork('wsnode.js'));
-eval(yWork('stream.js'));
-eval(yWork('progress/controller.js'));
-eval(yWork('progress/updates/koyn.js'));
-eval(yWork('progress/updates/life.js'));
-eval(yWork('koyn.js'));
-
-
-//------------------------------------------------------------------------------
-//------------------------------------------------------------------------------
-
-// truncateDB();
-// update_CHANGE_KOYN(0, 2)
-
-// showDB();
-
-// k.info();
-
-// var_dump(data);
-
-/*
-
-get_USER('fcoverdugoa@gmail.com', '123123', function(response){
-
-  console.log('get_USER ->');
-  console.log(response);
-
-});
-
-console.log('insert_USERS ->');
-insert_USERS(342, {
-  name: 'Francisco',
-  pass:'123123',
-  email: 'fcoverdugoa@gmail.com'
-}, function(id_register, success){
-
-  console.log('result ->');
-  console.log(success);
-
-});
-
-console.log('insert_USERS ->');
-insert_USERS(342, {
-  name: data.bot_server.name,
-  pass: data.bot_server.pass,
-  email: data.bot_server.email
-}, function(id_register, success){
-
-  console.log('result ->');
-  console.log(success);
-
-});
-
-
-*/
-
-//------------------------------------------------------------------------------
-//------------------------------------------------------------------------------
-
-
+var loadServerMod = (name) =>{return fs.readFileSync(data.serverPath+name, 'utf8')};
+var ServerMods = JSON.parse(fs.readFileSync(data.dataPath+'serverMods.json', 'utf8'));
+for(let mod of ServerMods){
+  console.log('Load server module -> '+mod);
+  eval(loadServerMod(mod));
+}
 server.listen(data.http_port);
 console.log('argv', process.argv);
 log('progress', 'yWork v1.5');
@@ -103,8 +37,6 @@ log('warn','HTTP '+mode+' SERVER ONLINE -> PORT:'+data.http_port);
 log('warn','WS '+mode+' SERVER ONLINE -> PORT:'+data.ws_port);
 log('warn','PEER '+mode+' SERVER ONLINE -> PORT:'+data.peer_port);
 log('warn','WS KOYN SERVER '+mode+' ONLINE -> PORT:'+data.ws_koyn_port);
-
-
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

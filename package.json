@@ -1,8 +1,8 @@
 {
-  "name": "CYBERIA",
-  "description": "massively multiplayer online role-playing game",
-  "version": "2.0.0",
-  "main": "./cyberia/init.js",
+  "name": "express-ywork",
+  "description": "Nodejs express server Framework",
+  "version": "1.5.0",
+  "main": "./init.js",
   "scripts": {
     "prod":"node init.js p",
     "start": "nodemon init.js p",
@@ -13,15 +13,17 @@
     "url": "https://github.com/underpostnet/express-ywork"
   },
   "keywords": [
-    "cyberia",
-    "online",
-    "mmorpg",
-    "game",
-    "cyberpunk"
+    "nodejs",
+    "server",
+    "http",
+    "https",
+    "wss",
+    "ws",
+    "exress"
   ],
   "author": "Francisco Verdugo <fcoverdugoa@underpost.net> (https://underpost.net/)",
   "license": "MIT",
-  "homepage": "https://www.cyberiaonline.com/",
+  "homepage": "https://underpost.net/",
   "dependencies": {
     "colors": "latest",
     "express": "latest",
