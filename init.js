@@ -20,26 +20,26 @@ if(dev){
 var serverToken = getHash();
 var usersToken = [];
 var logUsersToken = [];
-var serverMod = (name) =>{return fs.readFileSync(data.serverPath+name, 'utf8')};
+var yWork = (name) =>{return fs.readFileSync(data.serverPath+name, 'utf8')};
 
-eval(serverMod('console.js'));
-eval(serverMod('crypto.js'));
-eval(serverMod('node.js'));
-eval(serverMod('session/sessionOff.js'));
-eval(serverMod('session/sessionOn.js'));
-eval(serverMod('session/session.js'));
-eval(serverMod('mailer.js'));
-eval(serverMod('redirect.js'));
-eval(serverMod('modJsCssController.js'));
-eval(serverMod('path.js'));
-eval(serverMod('seo.js'));
-eval(serverMod('postgresql.js'));
-eval(serverMod('wsnode.js'));
-eval(serverMod('stream.js'));
-eval(serverMod('progress/controller.js'));
-eval(serverMod('progress/updates/koyn.js'));
-eval(serverMod('progress/updates/life.js'));
-eval(serverMod('koyn.js'));
+eval(yWork('console.js'));
+eval(yWork('crypto.js'));
+eval(yWork('node.js'));
+eval(yWork('session/sessionOff.js'));
+eval(yWork('session/sessionOn.js'));
+eval(yWork('session/session.js'));
+eval(yWork('mailer.js'));
+eval(yWork('redirect.js'));
+eval(yWork('modJsCssController.js'));
+eval(yWork('path.js'));
+eval(yWork('seo.js'));
+eval(yWork('postgresql.js'));
+eval(yWork('wsnode.js'));
+eval(yWork('stream.js'));
+eval(yWork('progress/controller.js'));
+eval(yWork('progress/updates/koyn.js'));
+eval(yWork('progress/updates/life.js'));
+eval(yWork('koyn.js'));
 
 
 //------------------------------------------------------------------------------
@@ -96,6 +96,7 @@ insert_USERS(342, {
 
 server.listen(data.http_port);
 console.log('argv', process.argv);
+log('progress', 'yWork v1.5');
 log('info', 'set server token -> '+serverToken);
 let mode = dev ? 'DEV MODE' : 'PROD MODE';
 log('warn','HTTP '+mode+' SERVER ONLINE -> PORT:'+data.http_port);
