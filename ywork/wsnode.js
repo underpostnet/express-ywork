@@ -10,6 +10,7 @@
 	var update_coin_atk_bot_user = 0;
 	var update_coin_atk_bot = 0;
 	var update_coin_atk_user = 0;
+	var latency_cont_test = 0;
 
 	wss.on('connection', function(ws) {
 
@@ -271,6 +272,49 @@
 							log('error', 'token ws corrupt -> '+obj.token);
 							send_all = false;
 							wsBan(ws, i);
+						}
+
+						//-----------------------------------------------------------------
+						// SERVER LATENCY PING TEST
+						//-----------------------------------------------------------------
+
+						if( (obj.state=='server-latency-ping-req') && (obj.users.var[0].status=='botServer') ) {
+
+							log('warn', 'server latency test ping req cont:'+latency_cont_test);
+							console.log(obj.validator);
+							latency_cont_test++;
+							send_all = false;
+
+							for(hash_ of obj.validator){
+								if(hash_!=null){
+									let ind_=0;
+									for(let user_ of USERDATA){
+										if(user_!=null){
+											if(hash_==user_.users.var[0].hash){
+												CLIENTS[ind_].send(JSONstr(obj));
+											}
+										}
+										ind_++;
+									}
+								}
+							}
+
+						}
+
+						if(obj.state=='server-latency-ping-resp'){
+
+							console.log('server latency test ping resp hash:'+obj.users.var[0].hash);
+							let ind_ = 0;
+							for(let user_ of USERDATA){
+								if(user_!=null){
+									if(user_.users.var[0].status=='botServer'){
+										CLIENTS[ind_].send(JSONstr(obj));
+									}
+								}
+								ind_++;
+							}
+							send_all = false;
+
 						}
 
 						//-----------------------------------------------------------------
