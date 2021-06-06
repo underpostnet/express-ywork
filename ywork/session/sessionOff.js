@@ -11,6 +11,7 @@ function sessionOffPassReset(i, req, res, lang, session_pass_reset){
     data.bots = { activeServer: false };
     data.token = '`+req.session.token+`';
     data.ws.host = '`+ws_host+`';
+    data.interval_client_ping = `+ping.interval_client_ping+`;
 
     `+session_pass_reset+`
 
@@ -30,6 +31,7 @@ function sessionOff(i, req, res, lang, time_in_home){
     data.bots = { activeServer: false };
     data.token = '`+req.session.token+`';
     data.ws.host = '`+ws_host+`';
+    data.interval_client_ping = `+ping.interval_client_ping+`;
 
     setTimeout(()=>{
 

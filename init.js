@@ -19,6 +19,11 @@ if(dev){
   ws_host = 'ws://'+data.url+':'+data.ws_port;
   data.url = 'http://'+data.url+':'+data.http_port;
 }
+var ping = {
+  interval_server_req: 10000,
+  timeout_check_resp: 500,
+  interval_client_ping: 5000
+};
 var serverToken = getHash();
 var usersToken = [];
 var logUsersToken = [];

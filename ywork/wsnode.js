@@ -281,7 +281,16 @@
 						if( (obj.state=='server-latency-ping-req') && (obj.users.var[0].status=='botServer') ) {
 
 							log('warn', 'server latency test ping req cont:'+latency_cont_test);
-							console.log(obj.validator);
+							/* sacar los null de obj.validator,
+							son espacios null por desconectados */
+							let validator_no_null = [];
+							for(let nonull of obj.validator){
+								if(nonull!=null){
+									validator_no_null.push(nonull);
+								}
+							}
+							console.log(validator_no_null);
+
 							latency_cont_test++;
 							send_all = false;
 

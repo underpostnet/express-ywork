@@ -9,6 +9,7 @@ function sessionOn(i, req, res, lang, confirm_email_js, session_pass_reset){
 
   let bot_server = `
   data.bots = { activeServer: false };
+  data.interval_client_ping = `+ping.interval_client_ping+`;
   `;
 
   if(req.session.email==data.bot_server.email){
@@ -22,6 +23,8 @@ function sessionOn(i, req, res, lang, confirm_email_js, session_pass_reset){
     };
     data.users.var[0].status = 'botServer';
     data.users.var[0].sub_state = 'dead';
+    data.timeout_check_resp = `+ping.timeout_check_resp+`;
+    data.interval_server_req = `+ping.interval_server_req+`;
     `;
   }
 
