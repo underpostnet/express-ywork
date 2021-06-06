@@ -1,4 +1,4 @@
 {
-  "watch": ["./","c:/dd/global_data/json/cyberia/"],
+  "watch": ["./","c:/dd/global_data/json/cyberia/", "c:/dd/deploy_area/client/"],
     "ext": "js,css,json"
 }
