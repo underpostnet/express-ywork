@@ -284,7 +284,7 @@
 							/* sacar los null de obj.validator,
 							son espacios null por desconectados */
 							let validator_no_null = [];
-							for(let nonull of obj.validator){
+							for(let nonull of obj.validator.hash_test){
 								if(nonull!=null){
 									validator_no_null.push(nonull);
 								}
@@ -294,7 +294,7 @@
 							latency_cont_test++;
 							send_all = false;
 
-							for(hash_ of obj.validator){
+							for(let hash_ of obj.validator.hash_test){
 								if(hash_!=null){
 									let ind_=0;
 									for(let user_ of USERDATA){
@@ -309,6 +309,8 @@
 							}
 
 						}
+
+						//------------------------------------------------------------------
 
 						if(obj.state=='server-latency-ping-resp'){
 
