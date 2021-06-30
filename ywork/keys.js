@@ -88,14 +88,38 @@ function signData(content){
     time: new Date().getTime(),
     data: k.encr(JSONstr(content))
   });
-  return JSONstr({
-      doc: formData,
-      sign: encryptStringWithRsaPrivateKey(
-        SHA256(formData).toString(),
-        pathPrivateKey,
-        data.keys.key_pass
-      )
-    })
+  let sendMsg = JSONstr({
+    doc: formData,
+    sign: encryptStringWithRsaPrivateKey(
+      SHA256(formData).toString(),
+      pathPrivateKey,
+      data.keys.key_pass
+    )
+  });
+  verifyData(sendMsg);
+  return sendMsg;
+}
+
+function verifyData(content){
+  let test = JSON.parse(content);
+  if(
+    SHA256(test.doc).toString()
+    ==
+    decryptStringWithRsaPublicKey(test.sign, pathPublicKey)
+  ){
+    log('progress','success verify data -> time:'+JSON.parse(test.doc).time);
+    console.log(k.decr(JSON.parse(test.doc).data));
+    return true;
+  }else{
+    log('error','error verify data -> time:'+JSON.parse(test.doc).time);
+    console.log(k.decr(JSON.parse(test.doc).data));
+    return false;
+  }
+}
+
+function logSingleData(test, id, attr){
+  /* logSingleData(test, 0, "username"); */
+  console.log(  k.decr(JSON.parse(k.decr(JSON.parse(test.doc).data))[id][attr])  );
 }
 
 //------------------------------------------------------------------------------
