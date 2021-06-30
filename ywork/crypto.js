@@ -22,3 +22,32 @@ var decrypt = (hash, secretKey) => {
 
     return decrpyted.toString();
 };
+
+//--------------------------------------------
+//--------------------------------------------
+
+var k = {
+	encr: function(content){
+		return encrypt(content, data.db.key, Buffer.from(data.db.iv, "utf8")).content;
+	},
+	decr: function(content){
+		return decrypt({
+			content: content,
+			iv: Buffer.from(data.db.iv, "utf8").toString('hex')
+		}, data.db.key, Buffer.from(data.db.iv, "utf8"));
+	},
+	info: function(){
+		log('info', 'DB ENCRYPT INFO ->');
+		log('info', 'buffer iv ->');
+		console.log(Buffer.from(data.db.iv, "utf8"));
+		log('info','key char str length -> '+l(data.db.key));
+		log('info','iv char str length -> '+l(data.db.iv));
+	}
+	/*
+	let test = 'asda';
+	console.log(k.encr(test));
+	console.log(k.encr(test));
+	console.log(k.decr(k.encr(test)));
+	console.log(k.decr(k.encr(test)));
+	*/
+};

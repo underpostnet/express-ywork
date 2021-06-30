@@ -4,7 +4,7 @@
   "version": "1.5.0",
   "main": "./init.js",
   "scripts": {
-    "prod":"node init.js p",
+    "prod": "node init.js p",
     "start": "nodemon init.js p",
     "dev": "nodemon init.js d"
   },
@@ -35,6 +35,7 @@
     "pg-promise": "latest",
     "socket.io": "latest",
     "var_dump": "latest",
-    "ws": "latest"
+    "ws": "latest",
+    "crypto-js": "latest"
   }
 }
