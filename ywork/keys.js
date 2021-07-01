@@ -85,7 +85,7 @@ testKeys("test");
 
 function signData(content){
   let formData = JSONstr({
-    time: new Date().getTime(),
+    date: new Date().getTime(),
     data: k.encr(JSONstr(content))
   });
   let sendMsg = JSONstr({
@@ -107,11 +107,11 @@ function verifyData(content){
     ==
     decryptStringWithRsaPublicKey(test.sign, pathPublicKey)
   ){
-    log('progress','success verify data -> time:'+JSON.parse(test.doc).time);
+    log('progress','success verify data -> date:'+JSON.parse(test.doc).date);
     console.log(k.decr(JSON.parse(test.doc).data));
     return true;
   }else{
-    log('error','error verify data -> time:'+JSON.parse(test.doc).time);
+    log('error','error verify data -> date:'+JSON.parse(test.doc).date);
     console.log(k.decr(JSON.parse(test.doc).data));
     return false;
   }
