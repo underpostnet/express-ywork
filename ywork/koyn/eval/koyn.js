@@ -5,7 +5,7 @@
 
 app.get('/koyn',  auth, (req, res) => {
   log('info', 'GET -> /koyn');
-  logHeader(req, res, data, false);
+  logApiHeader(req, res, '/koyn', false);
   getKoynDB((dataKoyn)=>{
     res.setHeader('Content-Type', 'application/json');
     res.end(signData(dataKoyn));

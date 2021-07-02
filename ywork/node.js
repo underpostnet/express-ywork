@@ -148,3 +148,71 @@ function logHeader(req, res, data, header){
 	return {lang: lang, id: id};
 
 }
+
+
+
+//--------------------------------------------
+//--------------------------------------------
+
+function logApiHeader(req, res, path, header){
+
+	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+	let session_state = 'session: off';
+	if(req.session.name && req.session.email){
+
+		session_state = `session: on
+		name: `+req.session.name+`
+		email: `+req.session.email+`
+		id_users: `+req.session.id_users+`
+		koyn: `+req.session.koyn;
+
+	}
+
+	log('info',
+
+		`
+		http connection
+		url: `+path+`
+		ip: `+ip+`
+		time: `+new Date()+`
+		host: `+req.headers.host+`
+		lang: `+req.acceptsLanguages()+`
+		token: `+req.session.token+`
+		`+session_state+`
+
+		`
+
+	);
+
+	let lang = ''+req.acceptsLanguages();
+	let id = 1;
+	lang = lang.split('-')[0];
+	if(!(lang=='es')){
+
+		lang = 'en';
+		id = 0;
+
+	}
+
+	if(header){
+		res.writeHead(200, {
+
+			'Content-Type': 'text/html; charset=utf-8',
+			'Content-Language': (''+lang)
+
+		});
+	}
+
+	// res.setHeader('Content-Type', 'application/json');
+
+	return {lang: lang, id: id};
+
+}
+
+
+
+
+
+// -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
