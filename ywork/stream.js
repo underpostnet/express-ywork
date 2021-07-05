@@ -159,20 +159,28 @@ function getRadio(dir, end){
 //--------------------------------------------------------------------
 
 
-async function getDataRadio(req, res){
-  await new Promise((resolve)=>{
-    getRadio((req.params.type+'/'+req.params.genre), function(data_dir){
-      res.send(JSON.stringify(data_dir));
-      resolve();
-    });
-  });
-  res.end();
-}
-
 app.post('/stream/:type/:genre', function(req, res){
+
+  let radio_data = '{}';
+
   console.log('req radio folder -> '+(req.params.type+'/'+req.params.genre));
-  getDataRadio(req, res);
+
+  getRadio((req.params.type+'/'+req.params.genre), function(data_dir){
+
+    radio_data = JSON.stringify(data_dir);
+
+  });
+
+  setTimeout(()=>{
+
+    res.send(radio_data);
+    res.end();
+
+  }, 10000);
+
 });
+
+
 
 app.get(('/off_line_radio'), function(req, res){
 
