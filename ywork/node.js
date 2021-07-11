@@ -95,6 +95,8 @@ function wsBan(ws, i){
 
 function logHeader(req, res, data, header){
 
+	generateToken(req);
+
 	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
 	let session_state = 'session: off';
@@ -155,6 +157,8 @@ function logHeader(req, res, data, header){
 //--------------------------------------------
 
 function logApiHeader(req, res, path, header){
+
+	generateToken(req);
 
 	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
